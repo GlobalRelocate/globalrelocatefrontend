@@ -53,10 +53,13 @@ export const StreamingMessage = ({ text = "", isStreaming }) => {
   }, [isStreaming, text]);
 
   return (
-    <div className="relative">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-        {displayedText || "▌"}
-      </ReactMarkdown>
+    <div className="relative prose prose-sm max-w-full">
+      <div className="prose prose-md max-w-none text-gray-900 leading-relaxed">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {displayedText || "▌"}
+        </ReactMarkdown>
+      </div>
+
       {isStreaming && (
         <span className="absolute bottom-0 ml-1 animate-pulse text-gray-400">
           ▌

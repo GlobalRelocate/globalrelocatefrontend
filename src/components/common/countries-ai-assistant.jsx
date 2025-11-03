@@ -32,7 +32,6 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
 
   const chatContainerRef = useRef(null);
 
-  const [isSending, setIsSending] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [localMessages, setLocalMessages] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -281,10 +280,7 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
       </div>
 
       {/* Chat area */}
-      <div
-        className="flex-grow overflow-auto md:px-4 px-2 mt-4"
-        ref={chatContainerRef}
-      >
+      <div className="overflow-auto md:px-4 px-2" ref={chatContainerRef}>
         {!currentSession && localMessages?.length < 1 ? (
           <div className="text-center my-24 flex items-center justify-center gap-3">
             <div className="flex flex-col items-center gap-y-6">

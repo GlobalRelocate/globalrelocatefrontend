@@ -348,11 +348,11 @@ function CountryDetails() {
                     {getCountryName(countryData?.slug, selectedLanguage.code)}{" "}
                     {t("userDashboard.country.overview")}
                   </h2>
-                  <p className="text-[#222222]">
+                  <div className="text-[#222222] prose prose-md max-w-none leading-relaxed">
                     {countryData.overview === "No overview available"
                       ? t("userDashboard.country.noOverview")
                       : formatTextToParagraphs(countryData.overview)}
-                  </p>
+                  </div>
 
                   <div className="mt-20 mb-6">
                     <hr />
