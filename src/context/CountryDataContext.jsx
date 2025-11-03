@@ -128,6 +128,7 @@ export const CountryDataProvider = ({ children }) => {
     <CountryDataContext.Provider
       value={{
         countries,
+        fetchCountries,
         loading,
         page,
         setPage,

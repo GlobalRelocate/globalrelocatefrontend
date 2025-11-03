@@ -5,6 +5,8 @@ import { useLanguage } from "./LanguageContext";
 
 const CountryAiChatContext = createContext();
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 export const CountryAiChatProvider = ({ children, countrySlug }) => {
   const [sessions, setSessions] = useState([]);
   const [currentSession, setCurrentSession] = useState(null);
@@ -50,19 +52,212 @@ export const CountryAiChatProvider = ({ children, countrySlug }) => {
   };
 
   // Ask AI
+  // const askAI = async (sessionId, content) => {
+  //   if (!countrySlug || !sessionId) return;
+  //   setLoading(true);
+  //   try {
+  //     if (content) {
+  //       await axiosInstance.post(
+  //         `/countries/${countrySlug}/ai-assistant/${sessionId}`,
+  //         { message: content, language: selectedLanguage.name }
+  //       );
+  //     }
+  //     await fetchSingleSession(sessionId);
+  //   } catch (error) {
+  //     toast.error(error?.response?.data?.message || error?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const askAI = async (sessionId, content) => {
+  //   if (!countrySlug || !sessionId) return;
+  //   setLoading(true);
+
+  //   try {
+  //     // Immediately add user's message
+  //     setMessages((prev) => [...prev, { senderId: "user", message: content }]);
+
+  //     const url = `${baseURL}/countries/${countrySlug}/ai-assistant/${sessionId}`;
+  //     const user = JSON.parse(localStorage.getItem("user")); // adjust to your auth setup
+
+  //     // Start streaming request (SSE style)
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         ...(user.token ? { Authorization: `Bearer ${user.token}` } : {}),
+  //       },
+  //       body: JSON.stringify({
+  //         message: content,
+  //         language: selectedLanguage.name,
+  //       }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP ${response.status}`);
+  //     }
+
+  //     // 🧠 Stream reader setup
+  //     const reader = response.body.getReader();
+  //     const decoder = new TextDecoder("utf-8");
+  //     let fullText = "";
+  //     let partialMessage = "";
+
+  //     // Add placeholder for streaming response
+  //     setMessages((prev) => [...prev, { senderId: "aichatId", message: "" }]);
+
+  //     while (true) {
+  //       const { done, value } = await reader.read();
+  //       if (done) break;
+  //       const chunk = decoder.decode(value, { stream: true });
+
+  //       // Split on event lines
+  //       const events = chunk.split("\n\n");
+  //       for (const evt of events) {
+  //         if (!evt.trim()) continue;
+  //         if (evt.startsWith("data:")) {
+  //           const data = JSON.parse(evt.replace("data: ", ""));
+  //           if (data.chunk) {
+  //             fullText += data.chunk;
+  //             partialMessage += data.chunk;
+
+  //             // Update the last AI message progressively
+  //             setMessages((prev) => {
+  //               const updated = [...prev];
+  //               const last = updated[updated.length - 1];
+  //               if (last && last.senderId === "aichatId") {
+  //                 last.message = partialMessage;
+  //               }
+  //               return updated;
+  //             });
+  //           }
+  //         } else if (evt.startsWith("event: done")) {
+  //           console.log("Streaming complete");
+  //         } else if (evt.startsWith("event: error")) {
+  //           const errorData = JSON.parse(evt.replace("data: ", ""));
+  //           console.error("Stream error:", errorData);
+  //           toast.error(errorData?.message || "AI stream error");
+  //         }
+  //       }
+  //     }
+
+  //     // Final message save
+  //     setMessages((prev) => {
+  //       const updated = [...prev];
+  //       const last = updated[updated.length - 1];
+  //       if (last && last.senderId === "aichatId") {
+  //         last.message = fullText.trim();
+  //       }
+  //       return updated;
+  //     });
+  //   } catch (error) {
+  //     console.error("AI streaming error:", error);
+  //     toast.error("Failed to stream AI response.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const askAI = async (sessionId, content) => {
     if (!countrySlug || !sessionId) return;
     setLoading(true);
+
     try {
-      if (content) {
-        await axiosInstance.post(
-          `/countries/${countrySlug}/ai-assistant/${sessionId}`,
-          { message: content, language: selectedLanguage.name }
-        );
+      // Add user's message immediately
+      setMessages((prev) => [...prev, { senderId: "user", message: content }]);
+
+      // Add placeholder AI message
+      setMessages((prev) => [
+        ...prev,
+        { senderId: "aichatId", message: "", isStreaming: true },
+      ]);
+
+      const url = `${baseURL}/countries/${countrySlug}/ai-assistant/${sessionId}`;
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {}),
+        },
+        body: JSON.stringify({
+          message: content,
+          language: selectedLanguage.name,
+        }),
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      // 🔹 Stream setup
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      let fullText = "";
+      const bufferRef = { current: "" };
+      let animationFrameId;
+
+      // 🔹 Smooth animation loop (runs ~60fps)
+      const animate = () => {
+        if (bufferRef.current) {
+          setMessages((prev) => {
+            const updated = [...prev];
+            const last = updated[updated.length - 1];
+            if (last && last.senderId === "aichatId") {
+              last.message += bufferRef.current;
+            }
+            return updated;
+          });
+          bufferRef.current = "";
+        }
+        animationFrameId = requestAnimationFrame(animate);
+      };
+
+      animationFrameId = requestAnimationFrame(animate);
+
+      // 🔹 Read stream
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const events = chunk.split("\n\n");
+
+        for (const evt of events) {
+          if (!evt.trim()) continue;
+
+          if (evt.startsWith("data:")) {
+            const data = JSON.parse(evt.replace("data: ", ""));
+            if (data.chunk) {
+              fullText += data.chunk;
+              bufferRef.current += data.chunk; // only buffer, don’t render instantly
+            }
+          } else if (evt.startsWith("event: done")) {
+            console.log("Streaming complete");
+          } else if (evt.startsWith("event: error")) {
+            const errorData = JSON.parse(evt.replace("data: ", ""));
+            console.error("Stream error:", errorData);
+            toast.error(errorData?.message || "AI stream error");
+          }
+        }
       }
-      await fetchSingleSession(sessionId);
+
+      cancelAnimationFrame(animationFrameId);
+
+      // 🔹 Finalize message
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last && last.senderId === "aichatId") {
+          last.message = fullText.trim();
+          last.isStreaming = false;
+        }
+        return updated;
+      });
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      console.error("AI streaming error:", error);
+      toast.error("Failed to stream AI response.");
     } finally {
       setLoading(false);
     }

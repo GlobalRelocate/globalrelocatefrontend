@@ -8,10 +8,13 @@ import nigeria from "../../assets/images/nigeria.png";
 import swizerland from "../../assets/images/swizerland.png";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { getCountryCode } from "@/data/country-translations";
+import { loadCountryImages } from "@/lib/country-images";
 
 function Favorites() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [countryImages, setCountryImages] = useState({});
 
   const { favourites } = useCountryData();
   const { t } = useTranslation();
@@ -23,11 +26,14 @@ function Favorites() {
     ) || [];
 
   useEffect(() => {
-    // Optional: handle errors if needed
     if (!favourites) {
       setError(new Error("Favorites not found"));
     }
   }, [favourites]);
+
+  useEffect(() => {
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, []);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -57,7 +63,7 @@ function Favorites() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 py-10">
+        <div className="grid grid-cols-2 xl:grid-cols-4 gap-10 py-10">
           {filteredFavorites.map((country) => (
             <CountriesDashCard
               key={country.countryId}
@@ -71,7 +77,10 @@ function Favorites() {
                 })
               }
               images={
-                country.countryImages && country.countryImages.length > 0
+                countryImages[getCountryCode(country.countrySlug)] &&
+                countryImages[getCountryCode(country.countrySlug)].length > 0
+                  ? countryImages[getCountryCode(country.countrySlug)]
+                  : country.countryImages?.length > 0
                   ? country.countryImages
                   : [swizerland, nigeria, swizerland, nigeria]
               }

@@ -18,11 +18,13 @@ export default function TaxSummary({
   taxData,
   countryCode = "DE",
   countryFlag,
+  currency,
   timePeriod = "month", // "year" | "month"
 }) {
   const [viewMode, setViewMode] = useState(timePeriod);
   const { t } = useTranslation();
   const { selectedLanguage } = useLanguage();
+  const countryCurrency = currency || "EUR";
 
   const countryName = getCountryName(countryCode, selectedLanguage.code);
   const isYear = viewMode === t("userDashboard.tax.year").toLowerCase();
@@ -79,15 +81,16 @@ export default function TaxSummary({
             <li key={key} className="flex justify-between">
               <span>{t(`userDashboard.tax.${formatLabel(key)}`)}</span>
               <span className="font-semibold text-[#5762D5]">
-                € {fmt(value)} / {viewMode}
+                {countryCurrency} {fmt(value)} / {viewMode}
               </span>
             </li>
           ))}
+
           {totalValue && (
             <li className="flex justify-between font-bold pt-2">
               <span>{t("userDashboard.tax.total")}</span>
               <span className="text-[#5762D5]">
-                € {fmt(totalValue)} / {viewMode}
+                {countryCurrency} {fmt(totalValue)} / {viewMode}
               </span>
             </li>
           )}
@@ -149,7 +152,7 @@ export default function TaxSummary({
             <div className="text-sm font-medium mb-6">
               {t(`userDashboard.tax.grossIncome`)}:{" "}
               <p className="text-lg text-[#5762D5] mt-2 font-bold">
-                € {fmt(gross)} / {viewMode}
+                {countryCurrency} {fmt(gross)} / {viewMode}
               </p>
             </div>
 
@@ -172,7 +175,7 @@ export default function TaxSummary({
             <div className="flex justify-between text-sm mb-4">
               <span>{t(`userDashboard.tax.totalTax`)}</span>
               <span className="text-[#5762D5] font-semibold">
-                € {fmt(totalTax)} / {viewMode}
+                {countryCurrency} {fmt(totalTax)} / {viewMode}
               </span>
             </div>
 
@@ -183,7 +186,7 @@ export default function TaxSummary({
                   {t(`userDashboard.tax.netIncome`)}
                 </div>
                 <div className="text-lg font-bold text-[#5762D5]">
-                  € {fmt(netIncome)} / {viewMode}
+                  {countryCurrency} {fmt(netIncome)} / {viewMode}
                 </div>
               </div>
               <div>
@@ -203,13 +206,19 @@ export default function TaxSummary({
             {/* Summary Text */}
             <p className="mb-6 text-[15px]">
               {t("userDashboard.tax.summaryText1")}{" "}
-              <strong>€ {fmt(gross)}</strong>{" "}
+              <strong>
+                {countryCurrency} {fmt(gross)}
+              </strong>{" "}
               {t("userDashboard.tax.summaryText2")} {viewMode}.{" "}
               {t("userDashboard.tax.summaryText4")}{" "}
-              <strong>€ {fmt(totalTax)}</strong>.{" "}
-              {t("userDashboard.tax.summaryText5")}{" "}
-              <strong>€ {fmt(netIncome)}</strong>.{" "}
-              {t("userDashboard.tax.summaryText7")}{" "}
+              <strong>
+                {countryCurrency} {fmt(totalTax)}
+              </strong>
+              . {t("userDashboard.tax.summaryText5")}{" "}
+              <strong>
+                {countryCurrency} {fmt(netIncome)}
+              </strong>
+              . {t("userDashboard.tax.summaryText7")}{" "}
               <strong>{averageTaxRate.toFixed(1)}%</strong>.
             </p>
 

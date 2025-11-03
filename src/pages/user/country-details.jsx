@@ -24,8 +24,12 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { CountryAiChatProvider } from "@/context/CountryAIChatContext";
 import CountriesAIAssistant from "@/components/common/countries-ai-assistant";
+import { CarouselIndicators } from "@/lib/helpers";
+import { getOrdinalSuffix } from "@/lib/utils";
+import { loadCountryImages } from "@/lib/country-images";
+import { formatTextToParagraphs } from "@/utils/formatText";
 
-const baseURL = import.meta.env.VITE_API_URL;
+const apiURL = import.meta.env.VITE_API_URL;
 
 function CountryDetails() {
   const { id } = useParams();
@@ -47,12 +51,7 @@ function CountryDetails() {
   const [countryCode, setCountryCode] = useState(null);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [passportRanking, setPassportRanking] = useState();
-
-  function getOrdinalSuffix(n) {
-    const s = ["th", "st", "nd", "rd"];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-  }
+  const [countryImages, setCountryImages] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -109,8 +108,7 @@ function CountryDetails() {
       try {
         await navigator.share({
           title: "Check out this country!",
-          text:
-            "Get detailed information about relocating to this country on GlobalRelocate.",
+          text: "Get detailed information about relocating to this country on GlobalRelocate.",
           url: window.location.href,
         });
       } catch (error) {
@@ -147,23 +145,6 @@ function CountryDetails() {
     }
   };
 
-  // Custom CarouselIndicators component
-  const CarouselIndicators = ({ currentIndex, total, onClick }) => {
-    return (
-      <div className="flex absolute bottom-4 left-1/2 transform -translate-x-1/2 justify-center mt-2">
-        {Array.from({ length: total }).map((_, index) => (
-          <button
-            key={index}
-            className={`w-6 h-1 shadow rounded-md mx-1 ${
-              currentIndex === index ? "bg-black" : "bg-gray-300"
-            }`}
-            onClick={() => onClick(index)}
-          />
-        ))}
-      </div>
-    );
-  };
-
   useEffect(() => {
     if (!api) {
       return;
@@ -176,6 +157,11 @@ function CountryDetails() {
       setCurrentIndex(api.selectedScrollSnap());
     });
   }, [api]);
+
+  useEffect(() => {
+    if (!countryCode) return;
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, [countryCode]);
 
   const continents = {
     Africa: t("userDashboard.continents.africa"),
@@ -280,7 +266,8 @@ function CountryDetails() {
           </>
         ) : (
           <>
-            {countryData?.images.length > 0 ? (
+            {countryImages &&
+            countryImages[getCountryCode(countryData?.slug)] ? (
               <Carousel
                 opts={{
                   loop: true,
@@ -294,17 +281,17 @@ function CountryDetails() {
                 setApi={setApi}
               >
                 <CarouselContent className="rounded-2xl">
-                  {countryData.images.map((item, i) => {
-                    return (
+                  {countryImages[getCountryCode(countryData.slug)]?.map(
+                    (item, i) => (
                       <CarouselItem key={i} className="rounded-2xl pb-6">
                         <img
                           src={item}
-                          alt="Images"
-                          className="w-full h-full mt-5 rounded-2xl"
+                          alt="Country"
+                          className="w-full h-full mt-5 rounded-2xl object-cover"
                         />
                       </CarouselItem>
-                    );
-                  })}
+                    )
+                  )}
                 </CarouselContent>
                 <div className="absolute top-0 bottom-0 left-0 right-0 overflow-hidden">
                   <CarouselPrevious className="absolute left-0 h-full w-[60px] rounded-none bg-transparent border-0 hover:bg-transparent" />
@@ -364,7 +351,7 @@ function CountryDetails() {
                   <p className="text-[#222222]">
                     {countryData.overview === "No overview available"
                       ? t("userDashboard.country.noOverview")
-                      : countryData.overview}
+                      : formatTextToParagraphs(countryData.overview)}
                   </p>
 
                   <div className="mt-20 mb-6">
@@ -449,8 +436,9 @@ function CountryDetails() {
                         </h3>
                         <div className="mt-8">
                           <p>
-                            {countryData.CountryAdditionalInfo.internetSpeed ??
-                              t("userDashboard.country.noDataAvailable")}
+                            {formatTextToParagraphs(
+                              countryData.CountryAdditionalInfo.internetSpeed
+                            ) ?? t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
 
@@ -464,8 +452,10 @@ function CountryDetails() {
                           <p>
                             {countryData.CountryAdditionalInfo
                               .publicTransportEfficiency
-                              ? countryData.CountryAdditionalInfo
-                                  .publicTransportEfficiency
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .publicTransportEfficiency
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -480,8 +470,10 @@ function CountryDetails() {
                               .compulsorySchooling &&
                             countryData.CountryAdditionalInfo
                               .compulsorySchooling !== "Unknown"
-                              ? countryData.CountryAdditionalInfo
-                                  .compulsorySchooling
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .compulsorySchooling
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -495,7 +487,10 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.homeschooling &&
                             countryData.CountryAdditionalInfo.homeSchooling !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.homeschooling
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .homeschooling
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -510,8 +505,10 @@ function CountryDetails() {
                               .animalTransport &&
                             countryData.CountryAdditionalInfo
                               .animalTransport !== "Unknown"
-                              ? countryData.CountryAdditionalInfo
-                                  .animalTransport
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .animalTransport
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -525,7 +522,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.quarantine &&
                             countryData.CountryAdditionalInfo.quarantine !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.quarantine
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.quarantine
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -540,8 +539,10 @@ function CountryDetails() {
                               .vaccinationRequirements &&
                             countryData.CountryAdditionalInfo
                               .vaccinationRequirements !== "Unknown"
-                              ? countryData.CountryAdditionalInfo
-                                  .vaccinationRequirements
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .vaccinationRequirements
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -556,8 +557,10 @@ function CountryDetails() {
                               .necessaryDocuments &&
                             countryData.CountryAdditionalInfo
                               .necessaryDocuments !== "Unknown"
-                              ? countryData.CountryAdditionalInfo
-                                  .necessaryDocuments
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .necessaryDocuments
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -571,7 +574,10 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.transportCosts &&
                             countryData.CountryAdditionalInfo.transportCosts !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.transportCosts
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .transportCosts
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -585,7 +591,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.education &&
                             countryData.CountryAdditionalInfo.education !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.education
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.education
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -599,7 +607,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.sport &&
                             countryData.CountryAdditionalInfo.sport !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.sport
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.sport
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -613,7 +623,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.music &&
                             countryData.CountryAdditionalInfo.music !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.music
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.music
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -627,7 +639,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.adaptation &&
                             countryData.CountryAdditionalInfo.adaptation !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.adaptation
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.adaptation
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -641,7 +655,9 @@ function CountryDetails() {
                             {countryData.CountryAdditionalInfo.racism &&
                             countryData.CountryAdditionalInfo.racism !==
                               "Unknown"
-                              ? countryData.CountryAdditionalInfo.racism
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.racism
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -882,7 +898,7 @@ function CountryDetails() {
                             <div className="flex items-center justify-start gap-x-6 flex-wrap gap-y-2">
                               <div className="rounded-lg h-[250px] w-[180px] my-5">
                                 <img
-                                  src={`${baseURL}/image/fetch/${countryCode.toLowerCase()}`}
+                                  src={`${apiURL}/image/fetch/${countryCode.toLowerCase()}`}
                                   alt={countryData?.slug}
                                   className="w-full h-full"
                                 />

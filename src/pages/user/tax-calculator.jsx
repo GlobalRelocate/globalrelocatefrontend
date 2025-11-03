@@ -19,146 +19,21 @@ import {
 } from "@/components/ui/accordion";
 import TaxSummary from "@/components/ui/tax-summary";
 import { calculateTaxAPI } from "@/services/api";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { schema } from "@/schema/zodSchema";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 /**
  * Zod schema (used for validation only) - mirrors the JSON schema you provided.
  * Note: we use z.coerce where user input is a string but must be numeric.
  */
-const schema = z.object({
-  description: z.string(),
-  employeeInputs: z.object({
-    grossSalaryMonthlyEUR: z.coerce
-      .number()
-      .positive("Gross salary is required and must be > 0"),
-    accountingPeriod: z.enum(["Monthly", "Yearly"]),
-    taxYearSelection: z.string().nonempty(),
-    employeeAge: z.coerce.number().min(16, "Age must be >= 16"),
-    annualTaxAllowanceEUR: z.coerce.number().min(0),
-    monetaryBenefitsMonthlyEUR: z.coerce.number().min(0),
-  }),
-  familyAndTaxStatus: z.object({
-    maritalStatusDetails: z.object({
-      status: z.enum(["Unmarried", "Married", "Divorced", "Widowed"]),
-      taxClass: z.enum(["I", "II", "III", "IV", "V", "VI"]),
-      isSoleWageEarner: z.boolean().optional(),
-      isDualWageEarner: z.boolean().optional(),
-      widowedSpouseDeathYear: z
-        .union([
-          z.coerce
-            .number()
-            .int()
-            .optional(),
-          z.null(),
-        ])
-        .nullable()
-        .optional(),
-    }),
-    spouseTaxClass: z.union([
-      z.enum(["III", "IV", "V"]),
-      z.null(),
-      z.string().optional(),
-    ]),
-    hasChildren: z.boolean(),
-    childrenU25Count: z.coerce
-      .number()
-      .min(0)
-      .max(6),
-    childAllowanceFactor: z.coerce
-      .number()
-      .min(0)
-      .max(6),
-  }),
-  insuranceAndSurcharges: z
-    .object({
-      state: z.string().nonempty(),
-      churchTaxLiability: z.object({
-        isLiable: z.boolean(),
-      }),
-      healthInsurance: z.object({
-        type: z.enum([
-          "CompulsoryStatutory",
-          "PrivatelyInsured",
-          "VoluntarilyInsuredByLaw",
-        ]),
-        statutoryDetails: z.object({
-          additionalContributionName: z.string().optional(),
-          additionalContributionRatePercent: z.coerce
-            .number()
-            .min(0)
-            .optional(),
-        }),
-        privateDetails: z.object({
-          monthlyPremiumEUR: z.coerce
-            .number()
-            .min(0)
-            .optional(),
-          employerParticipation: z.boolean().optional(),
-        }),
-        voluntaryDetails: z.object({
-          // spelled per your schema ("voluntaryDetails")
-          additionalContributionName: z.string().optional(),
-          additionalContributionRatePercent: z.coerce
-            .number()
-            .min(0)
-            .optional(),
-        }),
-      }),
-      pensionScheme: z.enum([
-        "NotCompulsorilyInsured",
-        "CompulsoryStatutoryInsurance",
-        "OnlyEmployerCompulsoryShare",
-        "OnlyEmployeeCompulsoryShare",
-      ]),
-      unemploymentInsurance: z.enum([
-        "NotCompulsorilyInsured",
-        "CompulsoryStatutoryInsurance",
-        "OnlyEmployerCompulsoryShare",
-        "OnlyEmployeeCompulsoryShare",
-      ]),
-      occupationalPensionMonthlyEUR: z.coerce
-        .number()
-        .min(0)
-        .optional(),
-      surcharges: z.object({
-        U1_rate_percent: z.coerce
-          .number()
-          .min(0)
-          .optional(),
-        U2_rate_percent: z.coerce
-          .number()
-          .min(0)
-          .optional(),
-      }),
-      bgContributionRatePercent: z.coerce
-        .number()
-        .min(0)
-        .optional(),
-    })
-    .superRefine((val, ctx) => {
-      // Additional runtime checks: if churchTaxLiability.isLiable true, nothing to require here because your schema only stores isLiable.
-      // If healthInsurance.type === 'PrivatelyInsured' ensure privateDetails.monthlyPremiumEUR exists (basic check)
-      if (val.healthInsurance?.type === "PrivatelyInsured") {
-        const mp = val.healthInsurance.privateDetails?.monthlyPremiumEUR;
-        if (mp === undefined || Number.isNaN(mp)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message:
-              "Private monthly premium is required for PrivatelyInsured type",
-            path: ["healthInsurance", "privateDetails", "monthlyPremiumEUR"],
-          });
-        }
-      }
-    }),
-});
 
 export default function TaxCalculator() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [country, setCountry] = useState("Germany");
   const [taxSummary, setTaxSummary] = useState(null);
   const taxSummaryRef = useRef(null);
 
@@ -226,14 +101,48 @@ export default function TaxCalculator() {
 
   const watched = watch();
 
+  const countryFlag = [
+    {
+      Germany: "🇩🇪",
+      Nigeria: "🇳🇬",
+      "United States": "🇺🇸",
+      "United Kingdom": "🇬🇧",
+      Canada: "🇨🇦",
+      Switzerland: "🇨🇭",
+    },
+  ];
+
+  const countryCode = [
+    {
+      Germany: "DE",
+      Nigeria: "NG",
+      "United States": "US",
+      "United Kingdom": "GB",
+      Canada: "CA",
+      Switzerland: "CH",
+    },
+  ];
+
+  const countryCurrency = [
+    {
+      Germany: "EUR",
+      Nigeria: "NGN",
+      "United States": "USD",
+      "United Kingdom": "GBP",
+      Canada: "CAD",
+      Switzerland: "CHF",
+    },
+  ];
+
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      const res = await calculateTaxAPI(data);
+      const res = await calculateTaxAPI(country, data);
       setTaxSummary({
         taxData: res.data.output,
-        countryCode: "DE",
-        countryFlag: "🇩🇪",
+        countryCode: countryCode[0][country],
+        countryFlag: countryFlag[0][country],
+        currency: countryCurrency[0][country],
       });
       setLoading(false);
       taxSummaryRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -256,9 +165,51 @@ export default function TaxCalculator() {
     ) : null;
   };
 
+  const selectedProvider = watch(
+    "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionName"
+  );
+
+  // Automatically update rate when provider changes
+  useEffect(() => {
+    const selected = HEALTH_INSURANCE_RATES.find(
+      (rate) => rate.providerName === selectedProvider
+    );
+    if (selected) {
+      setValue(
+        "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionRatePercent",
+        selected.additionalRatePercent
+      );
+    }
+  }, [selectedProvider, setValue]);
+
+  const HEALTH_INSURANCE_RATES = [
+    { providerName: "AOK Bayern", additionalRatePercent: 2.69 },
+    { providerName: "AOK Baden-Württemberg", additionalRatePercent: 2.6 },
+    { providerName: "AOK Hessen", additionalRatePercent: 2.49 },
+    { providerName: "AOK Niedersachsen", additionalRatePercent: 2.7 },
+    { providerName: "AOK Nordost", additionalRatePercent: 3.5 },
+    { providerName: "AOK Nordwest", additionalRatePercent: 2.79 },
+    { providerName: "AOK Plus", additionalRatePercent: 3.1 },
+    { providerName: "AOK Rh.-Pfalz/Saarland", additionalRatePercent: 2.47 },
+    { providerName: "AOK Rheinland/Hamburg", additionalRatePercent: 2.99 },
+    { providerName: "Bahn BKK", additionalRatePercent: 3.4 },
+    { providerName: "Barmer", additionalRatePercent: 3.29 },
+    { providerName: "Mobil Krankenkasse", additionalRatePercent: 3.89 },
+    { providerName: "DAK-Gesundheit", additionalRatePercent: 2.8 },
+    { providerName: "hkk Krankenkasse", additionalRatePercent: 2.19 },
+    { providerName: "IKK Classic", additionalRatePercent: 3.4 },
+    { providerName: "IKK Südwest", additionalRatePercent: 3.25 },
+    { providerName: "KKH Kaufm. Krankenkasse", additionalRatePercent: 3.78 },
+    { providerName: "Knappschaft", additionalRatePercent: 4.4 },
+    { providerName: "mhplus Krankenkasse", additionalRatePercent: 2.56 },
+    { providerName: "SBK - Siemens BKK", additionalRatePercent: 2.9 },
+    { providerName: "Techniker Krankenkasse", additionalRatePercent: 2.45 },
+    { providerName: "VIACTIV Krankenkasse", additionalRatePercent: 3.27 },
+  ];
+
   return (
     <DashboardLayout>
-      <div className="flex flex-col lg:flex-row gap-8 px-4">
+      <div className="flex flex-col order-last xl:flex-row xl:order-first gap-8 px-4">
         {/* Form column */}
         <div className="w-full rounded-2xl overflow-hidden bg-white shadow-sm">
           <div className="bg-[#5762D5] text-white px-6 py-6">
@@ -272,6 +223,35 @@ export default function TaxCalculator() {
           </div>
 
           <div className="bg-[#F8F8F8] px-6 py-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">
+                {t("userDashboard.tax.country")}
+              </label>
+              <Select
+                className="h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                defaultValue={country}
+                onValueChange={(v) => setCountry(v)}
+              >
+                <SelectTrigger className="h-12">
+                  <SelectValue placeholder={t("userDashboard.tax.country")} />
+                </SelectTrigger>
+
+                <SelectContent>
+                  {[
+                    "Germany",
+                    "Nigeria",
+                    "United States",
+                    "United Kingdom",
+                    "Canada",
+                    "Switzerland",
+                  ].map((countryName, index) => (
+                    <SelectItem key={index} value={countryName}>
+                      {countryName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <Accordion
                 type="single"
@@ -665,375 +645,417 @@ export default function TaxCalculator() {
                 </AccordionItem>
 
                 {/* Insurance & Surcharges */}
-                <AccordionItem value="insurance">
-                  <AccordionTrigger className="text-left">
-                    {t("userDashboard.tax.insuranceAndSurcharges")}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.state")}
-                        </label>
-                        <Select
-                          defaultValue={
-                            watched.insuranceAndSurcharges?.state ||
-                            "Nordrhein-Westfalen"
-                          }
-                          onValueChange={(v) =>
-                            setValue("insuranceAndSurcharges.state", v)
-                          }
-                        >
-                          <SelectTrigger className="h-12">
-                            <SelectValue
-                              placeholder={t("userDashboard.tax.state")}
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {[
-                              "Baden-Wurttemberg",
-                              "Bayern",
-                              "Berlin",
-                              "Brandenburg",
-                              "Bremen",
-                              "Hamburg",
-                              "Hessen",
-                              "Mecklenburg-Vorpommern",
-                              "Niedersachsen",
-                              "Nordrhein-Westfalen",
-                              "Rheinland-Pfalz",
-                              "Saarland",
-                              "Sachsen",
-                              "Sachsen-Anhalt",
-                              "Schleswig-Holstein",
-                              "Thuringen",
-                            ].map((s) => (
-                              <SelectItem key={s} value={s}>
-                                {s}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.churchTaxLiability")}
-                        </label>
-                        <div className="flex items-center gap-3">
-                          <Switch
-                            checked={
-                              watched.insuranceAndSurcharges?.churchTaxLiability
-                                ?.isLiable ?? false
-                            }
-                            onCheckedChange={(v) => {
-                              setValue(
-                                "insuranceAndSurcharges.churchTaxLiability.isLiable",
-                                v
-                              );
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.healthInsurance")}
-                        </label>
-                        <Select
-                          defaultValue={
-                            watched.insuranceAndSurcharges?.healthInsurance
-                              ?.type || "CompulsoryStatutory"
-                          }
-                          onValueChange={(v) =>
-                            setValue(
-                              "insuranceAndSurcharges.healthInsurance.type",
-                              v
-                            )
-                          }
-                        >
-                          <SelectTrigger className="h-12">
-                            <SelectValue
-                              placeholder={t(
-                                "userDashboard.tax.healthInsurance"
-                              )}
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="CompulsoryStatutory">
-                              {t(
-                                "userDashboard.tax.healthInsuranceTypes.compulsoryStatutory"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="PrivatelyInsured">
-                              {t(
-                                "userDashboard.tax.healthInsuranceTypes.privatelyInsured"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="VoluntarilyInsuredByLaw">
-                              {t(
-                                "userDashboard.tax.healthInsuranceTypes.voluntarilyInsuredByLaw"
-                              )}
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.additionalContributionName")}
-                        </label>
-                        <Input
-                          {...register(
-                            "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionName"
-                          )}
-                          className="h-12"
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.additionalContributionRate")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionRatePercent"
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Private-only fields */}
-                    {watched.insuranceAndSurcharges?.healthInsurance?.type ===
-                      "PrivatelyInsured" && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {country === "Germany" && (
+                  <AccordionItem value="insurance">
+                    <AccordionTrigger className="text-left">
+                      {t("userDashboard.tax.insuranceAndSurcharges")}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-3">
                           <label className="block text-sm font-medium mb-1">
-                            {t("userDashboard.tax.monthlyPremium")}
+                            {t("userDashboard.tax.state")}
+                          </label>
+                          <Select
+                            defaultValue={
+                              watched.insuranceAndSurcharges?.state ||
+                              "Nordrhein-Westfalen"
+                            }
+                            onValueChange={(v) =>
+                              setValue("insuranceAndSurcharges.state", v)
+                            }
+                          >
+                            <SelectTrigger className="h-12">
+                              <SelectValue
+                                placeholder={t("userDashboard.tax.state")}
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {[
+                                "Baden-Wurttemberg",
+                                "Bayern",
+                                "Berlin",
+                                "Brandenburg",
+                                "Bremen",
+                                "Hamburg",
+                                "Hessen",
+                                "Mecklenburg-Vorpommern",
+                                "Niedersachsen",
+                                "Nordrhein-Westfalen",
+                                "Rheinland-Pfalz",
+                                "Saarland",
+                                "Sachsen",
+                                "Sachsen-Anhalt",
+                                "Schleswig-Holstein",
+                                "Thuringen",
+                              ].map((s) => (
+                                <SelectItem key={s} value={s}>
+                                  {s}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.churchTaxLiability")}
+                          </label>
+                          <div className="flex items-center gap-3">
+                            <Switch
+                              checked={
+                                watched.insuranceAndSurcharges
+                                  ?.churchTaxLiability?.isLiable ?? false
+                              }
+                              onCheckedChange={(v) => {
+                                setValue(
+                                  "insuranceAndSurcharges.churchTaxLiability.isLiable",
+                                  v
+                                );
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.healthInsurance")}
+                          </label>
+                          <Select
+                            defaultValue={
+                              watched.insuranceAndSurcharges?.healthInsurance
+                                ?.type || "CompulsoryStatutory"
+                            }
+                            onValueChange={(v) =>
+                              setValue(
+                                "insuranceAndSurcharges.healthInsurance.type",
+                                v
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-12">
+                              <SelectValue
+                                placeholder={t(
+                                  "userDashboard.tax.healthInsurance"
+                                )}
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="CompulsoryStatutory">
+                                {t(
+                                  "userDashboard.tax.healthInsuranceTypes.compulsoryStatutory"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="PrivatelyInsured">
+                                {t(
+                                  "userDashboard.tax.healthInsuranceTypes.privatelyInsured"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="VoluntarilyInsuredByLaw">
+                                {t(
+                                  "userDashboard.tax.healthInsuranceTypes.voluntarilyInsuredByLaw"
+                                )}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Provider dropdown */}
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.additionalContributionName")}
+                          </label>
+                          <Select
+                            {...register(
+                              "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionName"
+                            )}
+                            className="h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                            defaultValue={
+                              watched.insuranceAndSurcharges?.healthInsurance
+                                ?.statutoryDetails?.additionalContributionName
+                            }
+                            onValueChange={(v) =>
+                              setValue(
+                                "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionName",
+                                v
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-12">
+                              <SelectValue
+                                placeholder={t(
+                                  "userDashboard.tax.additionalContributionName"
+                                )}
+                              />
+                            </SelectTrigger>
+
+                            <SelectContent>
+                              {HEALTH_INSURANCE_RATES.map(
+                                ({ providerName }) => (
+                                  <SelectItem
+                                    key={providerName}
+                                    value={providerName}
+                                  >
+                                    {providerName}
+                                  </SelectItem>
+                                )
+                              )}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Rate */}
+                        <div className="space-y-3">
+                          {" "}
+                          <label className="block text-sm font-medium mb-1">
+                            {" "}
+                            {t(
+                              "userDashboard.tax.additionalContributionRate"
+                            )}{" "}
+                          </label>{" "}
+                          <Input
+                            type="number"
+                            className="h-12"
+                            readOnly
+                            {...register(
+                              "insuranceAndSurcharges.healthInsurance.statutoryDetails.additionalContributionRatePercent"
+                            )}
+                          />{" "}
+                        </div>
+                      </div>
+
+                      {/* Private-only fields */}
+                      {watched.insuranceAndSurcharges?.healthInsurance?.type ===
+                        "PrivatelyInsured" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                          <div className="space-y-3">
+                            <label className="block text-sm font-medium mb-1">
+                              {t("userDashboard.tax.monthlyPremium")}
+                            </label>
+                            <Input
+                              type="number"
+                              className="h-12"
+                              step="0.01"
+                              {...register(
+                                "insuranceAndSurcharges.healthInsurance.privateDetails.monthlyPremiumEUR"
+                              )}
+                            />
+                            <FieldErr path="insuranceAndSurcharges.healthInsurance.privateDetails.monthlyPremiumEUR" />
+                          </div>
+
+                          <div className="space-y-3">
+                            <label className="block text-sm font-medium mb-1">
+                              {t("userDashboard.tax.employerParticipation")}
+                            </label>
+                            <div className="flex items-center gap-3">
+                              <Switch
+                                checked={
+                                  watched.insuranceAndSurcharges
+                                    ?.healthInsurance?.privateDetails
+                                    ?.employerParticipation ?? false
+                                }
+                                onCheckedChange={(v) =>
+                                  setValue(
+                                    "insuranceAndSurcharges.healthInsurance.privateDetails.employerParticipation",
+                                    v
+                                  )
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.voluntaryContribution")}
+                          </label>
+                          <Input
+                            {...register(
+                              "insuranceAndSurcharges.healthInsurance.voluntaryDetails.additionalContributionName"
+                            )}
+                            className="h-12"
+                          />
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.voluntaryContributionRate")}
                           </label>
                           <Input
                             type="number"
                             className="h-12"
                             step="0.01"
                             {...register(
-                              "insuranceAndSurcharges.healthInsurance.privateDetails.monthlyPremiumEUR"
+                              "insuranceAndSurcharges.healthInsurance.voluntaryDetails.additionalContributionRatePercent"
                             )}
                           />
-                          <FieldErr path="insuranceAndSurcharges.healthInsurance.privateDetails.monthlyPremiumEUR" />
                         </div>
 
                         <div className="space-y-3">
                           <label className="block text-sm font-medium mb-1">
-                            {t("userDashboard.tax.employerParticipation")}
+                            {t("userDashboard.tax.pensionScheme.title")}
                           </label>
-                          <div className="flex items-center gap-3">
-                            <Switch
-                              checked={
-                                watched.insuranceAndSurcharges?.healthInsurance
-                                  ?.privateDetails?.employerParticipation ??
-                                false
-                              }
-                              onCheckedChange={(v) =>
-                                setValue(
-                                  "insuranceAndSurcharges.healthInsurance.privateDetails.employerParticipation",
-                                  v
-                                )
-                              }
-                            />
-                          </div>
+                          <Select
+                            defaultValue={
+                              watched.insuranceAndSurcharges?.pensionScheme ||
+                              "CompulsoryStatutoryInsurance"
+                            }
+                            onValueChange={(v) =>
+                              setValue(
+                                "insuranceAndSurcharges.pensionScheme",
+                                v
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-12">
+                              <SelectValue
+                                placeholder={t(
+                                  "userDashboard.tax.pensionScheme.title"
+                                )}
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="CompulsoryStatutoryInsurance">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.compulsoryStatutoryInsurance"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="NotCompulsorilyInsured">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.notCompulsorilyInsured"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="OnlyEmployerCompulsoryShare">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.onlyEmployerCompulsoryShare"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="OnlyEmployeeCompulsoryShare">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.onlyEmployeeCompulsoryShare"
+                                )}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
-                    )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.voluntaryContribution")}
-                        </label>
-                        <Input
-                          {...register(
-                            "insuranceAndSurcharges.healthInsurance.voluntaryDetails.additionalContributionName"
-                          )}
-                          className="h-12"
-                        />
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.unemploymentInsurance")}
+                          </label>
+                          <Select
+                            defaultValue={
+                              watched.insuranceAndSurcharges
+                                ?.unemploymentInsurance ||
+                              "CompulsoryStatutoryInsurance"
+                            }
+                            onValueChange={(v) =>
+                              setValue(
+                                "insuranceAndSurcharges.unemploymentInsurance",
+                                v
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-12">
+                              <SelectValue
+                                placeholder={t(
+                                  "userDashboard.tax.unemploymentInsurance"
+                                )}
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="CompulsoryStatutoryInsurance">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.compulsoryStatutoryInsurance"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="NotCompulsorilyInsured">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.notCompulsorilyInsured"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="OnlyEmployerCompulsoryShare">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.onlyEmployerCompulsoryShare"
+                                )}
+                              </SelectItem>
+                              <SelectItem value="OnlyEmployeeCompulsoryShare">
+                                {t(
+                                  "userDashboard.tax.pensionScheme.onlyEmployeeCompulsoryShare"
+                                )}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.occupationalPensionMonthly")}
+                          </label>
+                          <Input
+                            type="number"
+                            className="h-12"
+                            step="0.01"
+                            {...register(
+                              "insuranceAndSurcharges.occupationalPensionMonthlyEUR"
+                            )}
+                          />
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.U1_rate_percent")}
+                          </label>
+                          <Input
+                            type="number"
+                            className="h-12"
+                            step="0.01"
+                            {...register(
+                              "insuranceAndSurcharges.surcharges.U1_rate_percent"
+                            )}
+                          />
+                        </div>
                       </div>
 
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.voluntaryContributionRate")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.healthInsurance.voluntaryDetails.additionalContributionRatePercent"
-                          )}
-                        />
-                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.U2_rate_percent")}
+                          </label>
+                          <Input
+                            type="number"
+                            className="h-12"
+                            step="0.01"
+                            {...register(
+                              "insuranceAndSurcharges.surcharges.U2_rate_percent"
+                            )}
+                          />
+                        </div>
 
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.pensionScheme.title")}
-                        </label>
-                        <Select
-                          defaultValue={
-                            watched.insuranceAndSurcharges?.pensionScheme ||
-                            "CompulsoryStatutoryInsurance"
-                          }
-                          onValueChange={(v) =>
-                            setValue("insuranceAndSurcharges.pensionScheme", v)
-                          }
-                        >
-                          <SelectTrigger className="h-12">
-                            <SelectValue
-                              placeholder={t(
-                                "userDashboard.tax.pensionScheme.title"
-                              )}
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="CompulsoryStatutoryInsurance">
-                              {t(
-                                "userDashboard.tax.pensionScheme.compulsoryStatutoryInsurance"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="NotCompulsorilyInsured">
-                              {t(
-                                "userDashboard.tax.pensionScheme.notCompulsorilyInsured"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="OnlyEmployerCompulsoryShare">
-                              {t(
-                                "userDashboard.tax.pensionScheme.onlyEmployerCompulsoryShare"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="OnlyEmployeeCompulsoryShare">
-                              {t(
-                                "userDashboard.tax.pensionScheme.onlyEmployeeCompulsoryShare"
-                              )}
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <div className="space-y-3">
+                          <label className="block text-sm font-medium mb-1">
+                            {t("userDashboard.tax.bgContributionRate")}
+                          </label>
+                          <Input
+                            type="number"
+                            className="h-12"
+                            step="0.01"
+                            {...register(
+                              "insuranceAndSurcharges.bgContributionRatePercent"
+                            )}
+                          />
+                        </div>
+                        <div />
                       </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.unemploymentInsurance")}
-                        </label>
-                        <Select
-                          defaultValue={
-                            watched.insuranceAndSurcharges
-                              ?.unemploymentInsurance ||
-                            "CompulsoryStatutoryInsurance"
-                          }
-                          onValueChange={(v) =>
-                            setValue(
-                              "insuranceAndSurcharges.unemploymentInsurance",
-                              v
-                            )
-                          }
-                        >
-                          <SelectTrigger className="h-12">
-                            <SelectValue
-                              placeholder={t(
-                                "userDashboard.tax.unemploymentInsurance"
-                              )}
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="CompulsoryStatutoryInsurance">
-                              {t(
-                                "userDashboard.tax.pensionScheme.compulsoryStatutoryInsurance"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="NotCompulsorilyInsured">
-                              {t(
-                                "userDashboard.tax.pensionScheme.notCompulsorilyInsured"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="OnlyEmployerCompulsoryShare">
-                              {t(
-                                "userDashboard.tax.pensionScheme.onlyEmployerCompulsoryShare"
-                              )}
-                            </SelectItem>
-                            <SelectItem value="OnlyEmployeeCompulsoryShare">
-                              {t(
-                                "userDashboard.tax.pensionScheme.onlyEmployeeCompulsoryShare"
-                              )}
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.occupationalPensionMonthly")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.occupationalPensionMonthlyEUR"
-                          )}
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.U1_rate_percent")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.surcharges.U1_rate_percent"
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.U2_rate_percent")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.surcharges.U2_rate_percent"
-                          )}
-                        />
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="block text-sm font-medium mb-1">
-                          {t("userDashboard.tax.bgContributionRate")}
-                        </label>
-                        <Input
-                          type="number"
-                          className="h-12"
-                          step="0.01"
-                          {...register(
-                            "insuranceAndSurcharges.bgContributionRatePercent"
-                          )}
-                        />
-                      </div>
-                      <div />
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                    </AccordionContent>
+                  </AccordionItem>
+                )}
               </Accordion>
 
               <div className="flex justify-end">
@@ -1054,7 +1076,7 @@ export default function TaxCalculator() {
         </div>
 
         {/* Sidebar */}
-        <aside className="w-full lg:w-5/12">
+        <aside className="w-full xl:w-5/12 order-first xl:order-last">
           <h3 className="text-xl font-semibold">
             <i className="far fa-info-circle mr-2" />
             {t("userDashboard.tax.usageGuide") || "Usage Guide"}

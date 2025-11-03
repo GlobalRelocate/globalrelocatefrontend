@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { StreamingMessage } from "@/lib/helpers";
 
 export default function CountriesAIAssistant({ countryName, countrySlug }) {
   const {
@@ -58,10 +59,24 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
     }
   }, [countrySlug]);
 
-  // Sync local messages with context messages
+  // Auto-scroll when messages change
   useEffect(() => {
     setLocalMessages(messages);
-    scrollToBottom();
+
+    if (!chatContainerRef.current) return;
+    if (!isAtBottom) return; // Only auto-scroll if user was already at bottom
+
+    const container = chatContainerRef.current;
+    const scroll = () => {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
+    };
+
+    // Slight delay allows DOM layout to settle
+    const timeout = setTimeout(scroll, 100);
+    return () => clearTimeout(timeout);
   }, [messages]);
 
   // Scroll listener to toggle “scroll to bottom” button
@@ -78,11 +93,20 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToBottom = () => {
+  useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
         top: chatContainerRef.current.scrollHeight,
         behavior: "smooth",
+      });
+    }
+  }, [messages]);
+
+  const scrollToBottom = (behavior = "smooth") => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior,
       });
     }
   };
@@ -117,7 +141,7 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
       { senderId: "user", message: content },
     ]);
 
-    scrollToBottom();
+    scrollToBottom("instant");
 
     try {
       await askAI(sessionId, content);
@@ -127,6 +151,12 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
       setIsSending(false);
     }
   };
+
+  useEffect(() => {
+    if (localMessages.length > 0) {
+      requestAnimationFrame(() => scrollToBottom());
+    }
+  }, [localMessages]);
 
   const handleStartNewSession = () => {
     setCurrentSession(null);
@@ -211,37 +241,43 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
           </DropdownMenu>
         </div>
 
-        <div className="flex gap-3 items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="rounded-[12px]">
-                <i className="fas fa-ellipsis-h" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuGroup>
-                <DropdownMenuItem
-                  onClick={handleRenameSession}
-                  className="cursor-pointer"
+        {currentSession && (
+          <div className="flex gap-3 items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-[12px]"
                 >
-                  {t("userDashboard.ai.rename")}
-                  <DropdownMenuShortcut>
-                    <i className="fas fa-edit" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={handleDeleteSession}
-                  className="cursor-pointer"
-                >
-                  {t("userDashboard.ai.deleteConversation")}
-                  <DropdownMenuShortcut>
-                    <i className="fas fa-trash" />
-                  </DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+                  <i className="fas fa-ellipsis-h" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    onClick={handleRenameSession}
+                    className="cursor-pointer"
+                  >
+                    {t("userDashboard.ai.rename")}
+                    <DropdownMenuShortcut>
+                      <i className="fas fa-edit" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleDeleteSession}
+                    className="cursor-pointer"
+                  >
+                    {t("userDashboard.ai.deleteConversation")}
+                    <DropdownMenuShortcut>
+                      <i className="fas fa-trash" />
+                    </DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </div>
 
       {/* Chat area */}
@@ -277,21 +313,20 @@ export default function CountriesAIAssistant({ countryName, countrySlug }) {
                         : "bg-blue-500 text-white max-w-[85%] rounded-2xl"
                     }`}
                   >
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {msg.message}
-                    </ReactMarkdown>
+                    {msg.senderId === "aichatId" ? (
+                      <StreamingMessage
+                        text={msg.message}
+                        isStreaming={msg.isStreaming}
+                      />
+                    ) : (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {msg.message}
+                      </ReactMarkdown>
+                    )}
                   </div>
                 </div>
               </div>
             ))}
-
-            {isSending && (
-              <div className="flex justify-start my-3">
-                <div className="px-3 py-2 rounded-2xl bg-[#EEEFF8] text-black">
-                  <div className="typing-animation">...</div>
-                </div>
-              </div>
-            )}
           </div>
         )}
       </div>

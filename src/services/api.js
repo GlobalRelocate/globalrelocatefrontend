@@ -916,7 +916,11 @@ export const getSubscriptionDetails = async () => {
   }
 
   try {
-    const response = await api.get(endpoint);
+    const response = await api.get(endpoint, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     // console.log("Subscription details fetched successfully:", response);
     return response;
   } catch (error) {
@@ -1371,9 +1375,8 @@ export const getCommentLikes = async (postId, commentId) => {
   }
 };
 
-export const calculateTaxAPI = async (data) => {
-  const endpoint = "/tax/calculate-german";
-  // console.log("Calculating tax at:", `${VITE_API_URL}${endpoint}`);
+export const calculateTaxAPI = async (country, data) => {
+  const endpoint = `/tax/calculate/${country}`;
 
   try {
     if (!data) {
@@ -1381,7 +1384,6 @@ export const calculateTaxAPI = async (data) => {
     }
 
     const response = await api.post(endpoint, data);
-    // console.log("Tax calculation successful:", response);
     return response;
   } catch (error) {
     if (error instanceof CustomAPIError) {

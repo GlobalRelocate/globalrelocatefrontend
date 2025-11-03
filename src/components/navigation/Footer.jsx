@@ -9,11 +9,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import axios from "axios";
+import { getCountryName } from "@/data/country-translations";
+import { useLanguage } from "@/context/LanguageContext";
 
 const api = import.meta.env.VITE_API_URL;
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { selectedLanguage } = useLanguage();
   const [email, setEmail] = useState("");
   const [randomCountries, setRandomCountries] = useState([]);
 
@@ -89,7 +92,7 @@ export default function Footer() {
                       to={`/user/countries/${country.slug}`}
                       className="block hover:text-white transition-colors"
                     >
-                      {country.name}
+                      {getCountryName(country.slug, selectedLanguage?.code)}
                     </Link>
                   </li>
                 ))}

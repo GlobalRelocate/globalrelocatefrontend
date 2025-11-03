@@ -3,33 +3,34 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import CountriesDashCard from "@/components/cards/CountriesDashCard";
-// import { useFavorites } from "@/context/favorites-context";
 import FilterButton from "@/components/user-buttons/FilterButton";
 import { useCountryData } from "@/context/CountryDataContext";
 import { Skeleton } from "@/components/ui/skeleton";
-// countries imports
+// countries image imports
 import nigeria from "../../assets/images/nigeria.png";
 import swizerland from "../../assets/images/swizerland.png";
 import { useTranslation } from "react-i18next";
-import { getCountryName } from "@/data/country-translations";
+import { getCountryName, getCountryCode } from "@/data/country-translations";
 import { useLanguage } from "@/context/LanguageContext";
+import { loadCountryImages } from "@/lib/country-images";
 
 function Countries() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { selectedLanguage } = useLanguage();
-  // const { toggleFavorite } = useFavorites();
   const {
     countries,
     loading,
     page,
     setPage,
     totalPages,
-    setContinent, // Keep API-based continent filter
+    setContinent,
+    fetchCountries,
   } = useCountryData();
 
   const [activeFilter, setActiveFilter] = useState("All");
-  const [searchTerm, setSearchTerm] = useState(""); // Local state for search term
+  const [searchTerm, setSearchTerm] = useState("");
+  const [countryImages, setCountryImages] = useState({});
   const observer = useRef(null);
 
   const filterOptions = [
@@ -102,6 +103,16 @@ function Countries() {
     };
   }, []);
 
+  useEffect(() => {
+    if (countries.length === 0) {
+      fetchCountries(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, []);
+
   return (
     <DashboardLayout>
       <div className="w-full flex-wrap gap-y-5 items-center justify-between flex">
@@ -128,7 +139,7 @@ function Countries() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10 py-10">
         {/* Main Loader - only visible when fetching first page */}
         {loading && page === 1 ? (
           Array.from({ length: 8 }).map((_, index) => (
@@ -169,8 +180,9 @@ function Countries() {
                       })
                     }
                     images={
-                      item.countryImages.length > 0
-                        ? item.countryImages
+                      countryImages[getCountryCode(item.countrySlug)] &&
+                      countryImages[getCountryCode(item.countrySlug)].length > 0
+                        ? countryImages[getCountryCode(item.countrySlug)]
                         : [swizerland, nigeria, swizerland, nigeria]
                     }
                     countryFlag={item.countryFlag}

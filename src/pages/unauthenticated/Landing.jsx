@@ -22,12 +22,15 @@ import { useTranslation } from "react-i18next";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { getCountryCode } from "@/data/country-translations";
+import { loadCountryImages } from "@/lib/country-images";
 
 const api = import.meta.env.VITE_API_URL;
 
 export default function Landing() {
   const { t } = useTranslation();
   const [randomCountries, setRandomCountries] = useState([]);
+  const [countryImages, setCountryImages] = useState({});
   const [selectedPlan, setSelectedPlan] = useState("basicPlan");
   const planOverview = useRef(null);
   const navigate = useNavigate();
@@ -62,6 +65,10 @@ export default function Landing() {
     };
 
     fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    loadCountryImages().then((images) => setCountryImages(images));
   }, []);
 
   const plans = [
@@ -161,7 +168,7 @@ export default function Landing() {
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-6 py-10 sm:py-20 w-full px-8 md:px-0"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-6 gap-x-8 py-10 sm:py-20 w-[95%] sm:w-[90%] px-2 sm:px-0"
         >
           {randomCountries && randomCountries.length > 0
             ? randomCountries.map((country, index) => (
@@ -173,7 +180,12 @@ export default function Landing() {
                 >
                   <CountriesCard
                     slug={country.slug}
-                    image={country.images[0] ?? "/images/images/swizerland.png"}
+                    image={
+                      countryImages[getCountryCode(country.slug)] &&
+                      countryImages[getCountryCode(country.slug)].length > 0
+                        ? countryImages[getCountryCode(country.slug)][0]
+                        : "/images/images/swizerland.png"
+                    }
                     location={country.name}
                     countryFlag={country.flag}
                   />
@@ -183,14 +195,12 @@ export default function Landing() {
                 {
                   image: swizerland,
                   location: "Zürich, Switzerland",
-                  flag:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Switzerland_%28Pantone%29.svg/1200px-Flag_of_Switzerland_%28Pantone%29.svg.png",
+                  flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_Switzerland_%28Pantone%29.svg/1200px-Flag_of_Switzerland_%28Pantone%29.svg.png",
                 },
                 {
                   image: london,
                   location: "London, UK",
-                  flag:
-                    "https://t4.ftcdn.net/jpg/08/32/02/87/360_F_832028757_4YU1BrvVBRUNJX7WvLf5g4Qm5xrjOBo6.jpg",
+                  flag: "https://t4.ftcdn.net/jpg/08/32/02/87/360_F_832028757_4YU1BrvVBRUNJX7WvLf5g4Qm5xrjOBo6.jpg",
                 },
                 {
                   image: china,
@@ -201,14 +211,12 @@ export default function Landing() {
                 {
                   image: italy,
                   location: "Milan, Italy",
-                  flag:
-                    "https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/220px-Flag_of_Italy.svg.png",
+                  flag: "https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/220px-Flag_of_Italy.svg.png",
                 },
                 {
                   image: uae,
                   location: "UAE",
-                  flag:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_United_Arab_Emirates.svg/1200px-Flag_of_the_United_Arab_Emirates.svg.png",
+                  flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_United_Arab_Emirates.svg/1200px-Flag_of_the_United_Arab_Emirates.svg.png",
                 },
                 {
                   image: nigeria,
@@ -219,7 +227,10 @@ export default function Landing() {
               ].map((country, index) => (
                 <motion.div key={index} variants={cardVariants} custom={index}>
                   <CountriesCard
-                    image={country.image}
+                    image={
+                      countryImages[getCountryCode(country.countrySlug)] &&
+                      countryImages[getCountryCode(country.countrySlug)][0]
+                    }
                     slug={country.countrySlug}
                     location={country.location}
                     countryFlag={country.flag}
@@ -314,8 +325,9 @@ export default function Landing() {
               key={index}
               variants={cardVariants}
               custom={index}
-              className={`flex flex-col justify-between w-full p-10 text-center rounded-md hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer ${selectedPlan ===
-                card.slug && "border-2 border-black"}`}
+              className={`flex flex-col justify-between w-full p-10 text-center rounded-md hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer ${
+                selectedPlan === card.slug && "border-2 border-black"
+              }`}
               onClick={() => {
                 setSelectedPlan(card.slug);
                 planOverview.current.scrollIntoView({
