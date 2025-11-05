@@ -907,8 +907,8 @@ function CountryDetails() {
                               <div>
                                 <p>
                                   <h3 className="font-medium text-lg">
-                                    {t("userDashboard.visaIndex.rank")} -{" "}
-                                    {getOrdinalSuffix(passportRanking?.rank)} (
+                                    {t("userDashboard.visaIndex.rank")}{" "}
+                                    {passportRanking?.rank} (
                                     <Link
                                       to={`/visa-requirements/${countryCode.toLowerCase()}`}
                                       className="hover:underline hover:underline-offset-4"

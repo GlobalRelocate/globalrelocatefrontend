@@ -132,6 +132,7 @@ const AccountTab = ({ user }) => {
 AccountTab.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string,
+    isAdmin: PropTypes.string,
   }),
 };
 

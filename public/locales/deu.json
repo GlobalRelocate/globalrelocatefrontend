@@ -242,6 +242,8 @@
       "title": "Datenschutzrichtlinie und rechtlicher Hinweis",
       "paragraph": "Diese Datenschutzrichtlinie beschreibt, wie Global Relocate (als 'uns', 'wir' oder 'unser' bezeichnet), der Eigentümer und Betreiber von globalrelocate.com, Ihre personenbezogenen Daten sammelt, verwendet und schützt, wenn Sie unsere KI-gestützte Plattform für nahtlose Umsiedlung, Rechtsberatung und globales Leben nutzen, die über die URL globalrelocate.com (die 'Plattform') zugänglich ist. Diese Richtlinie gilt auch für alle über die Plattform bereitgestellten Dienste, Inhalte, Funktionen oder Anwendungen.",
       "paragraph2": "Durch den Zugriff auf oder die Nutzung der Plattform stimmen Sie der Erhebung, Verwendung und Offenlegung Ihrer personenbezogenen Daten gemäß dieser Datenschutzrichtlinie zu. Wenn Sie mit einem Aspekt dieser Richtlinie nicht einverstanden sind, sehen Sie bitte von der Nutzung der Plattform ab.",
+      "isABrandOf": "ist eine Marke von",
+      "cyprus": "Zypern",
       "sections": {
         "informationCollection": "1. Datenerhebung",
         "informationCollection_1": "1.1 Personenbezogene Daten: Wir können verschiedene Arten von personenbezogenen Daten von Ihnen erheben, wenn Sie die Plattform nutzen. Dazu können Ihr Name, Ihre E-Mail-Adresse, Kontaktinformationen, Umzugspräferenzen und alle anderen Informationen gehören, die Sie uns freiwillig zur Verfügung stellen.",
@@ -318,7 +320,7 @@
     "contactUs": {
       "title": "Kontaktieren Sie uns",
       "titleDesc": "Sie können uns Fragen stellen",
-      "para": "Kontaktieren Sie uns für all Ihre Fragen und Meinungen, oder erhalten Sie schnelle Antworten, indem Sie eines unserer Kontaktbüros besuchen.",
+      "para": "Schreiben Sie uns Ihre Fragen oder Meinungen per E-Mail an unsere Adresse.",
       "ourOffices": "Unsere Büros",
       "ourOfficesDesc": "Wir haben Büros an verschiedenen Standorten, um Sie bei Ihren Umzugsbedürfnissen zu unterstützen. Besuchen Sie uns in einem unserer Büros für persönliche Unterstützung.",
       "dropUsAMessage": "Schreiben Sie uns eine Nachricht",
@@ -537,7 +539,7 @@
       "emailAddress": "E-Mail-Adresse",
       "verified": "Verifiziert",
       "subscription": "Abonnement",
-      "subscriptionDesc": "Sie befinden sich derzeit im kostenlosen Plan, der 3 Tage gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
+      "subscriptionDesc": "Sie befinden sich derzeit im kostenlosen Plan, der 24 std. gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
       "deleteAccount": "Konto löschen",
       "deleteDesc": "Ihr Konto und Ihre Daten dauerhaft löschen",
       "language": "Sprache",

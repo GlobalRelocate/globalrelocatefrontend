@@ -154,12 +154,14 @@ function DashNav({ navState, setNavState }) {
                 {t("landingPage.navbar.privacyPolicy")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer font-bold"
-                onClick={() => navigate("/upgrade")}
-              >
-                {t("landingPage.navbar.upgradePlan")}
-              </DropdownMenuItem>
+              {!user?.isAdmin && (
+                <DropdownMenuItem
+                  className="cursor-pointer font-bold"
+                  onClick={() => navigate("/upgrade")}
+                >
+                  {t("landingPage.navbar.upgradePlan")}
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 

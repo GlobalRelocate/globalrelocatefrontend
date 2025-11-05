@@ -244,6 +244,8 @@
       "title": "Privacy Policy and Legal Disclaimer",
       "paragraph": "This Privacy Policy describes how Global Relocate (referred to as 'us,' 'we,' or 'our'), the owner and operator of globalrelocate.com, collects, uses, and protects your personal information when you use our AI-powered platform for seamless relocation, legal guidance, and global living, accessed through the URL globalrelocate.com (the 'Platform'). This policy also applies to any services, content, features, or applications provided through the Platform.",
       "paragraph2": "By accessing or using the Platform, you agree to the collection, use, and disclosure of your personal information as outlined in this Privacy Policy. If you do not agree with any aspect of this policy, please refrain from using the Platform.",
+      "isABrandOf": "is a brand of",
+      "cyprus": "Cyprus",
       "sections": {
         "informationCollection": "1. Information Collection",
         "informationCollection_1": "1.1 Personal Information: We may collect various types of personal information from you when you use the Platform. This may include your name, email address, contact information, relocation preferences, and any other information you voluntarily provide to us.",
@@ -320,7 +322,7 @@
     "contactUs": {
       "title": "Contact Us",
       "titleDesc": "You can ask us questions",
-      "para": "Contact us for all your questions and opinions, or you can get answers quickly by visiting one of our contact offices.",
+      "para": "Write to us with any questions or opinions you may have through our e-mail address.",
       "ourOffices": "Our Offices",
       "ourOfficesDesc": "We have offices in various locations to assist you with your relocation needs. Visit us at one of our offices for personalized support.",
       "dropUsAMessage": "Drop us a message",
@@ -552,7 +554,7 @@
       "emailAddress": "Email Address",
       "verified": "Verified",
       "subscription": "Subscription",
-      "subscriptionDesc": "You are currently in free plan valid for 3 days. Upgrade now to keep using Global Relocate.",
+      "subscriptionDesc": "You are currently in free plan valid for 24 hours. Upgrade now to keep using Global Relocate.",
       "deleteAccount": "Delete Account",
       "deleteDesc": "Permanently delete your account and data",
       "language": "Language",
