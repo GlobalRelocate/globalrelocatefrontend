@@ -158,9 +158,9 @@ const PrivacyPolicy = () => {
           <p className="my-5">
             support@globalrelocate.com
             <br />
-            GlobalRelocate {t("landingPage.privacyPolicy.isABrandOf")}
+            GlobalRelocate <br /> {t("landingPage.privacyPolicy.isABrandOf")}
             <br />
-            MDS Innovation Ltd. P.O. Box 43328 7566 Kiti,
+            MDS Innovation Ltd. <br /> P.O. Box 43328 <br /> 7566 Kiti,
             <br />
             {t("landingPage.privacyPolicy.cyprus")}
           </p>

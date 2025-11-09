@@ -25,7 +25,6 @@ import { Link } from "react-router-dom";
 import { CountryAiChatProvider } from "@/context/CountryAIChatContext";
 import CountriesAIAssistant from "@/components/common/countries-ai-assistant";
 import { CarouselIndicators } from "@/lib/helpers";
-import { getOrdinalSuffix } from "@/lib/utils";
 import { loadCountryImages } from "@/lib/country-images";
 import { formatTextToParagraphs } from "@/utils/formatText";
 

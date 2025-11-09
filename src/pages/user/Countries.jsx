@@ -12,7 +12,6 @@ import swizerland from "../../assets/images/swizerland.png";
 import { useTranslation } from "react-i18next";
 import { getCountryName, getCountryCode } from "@/data/country-translations";
 import { useLanguage } from "@/context/LanguageContext";
-import { loadCountryImages } from "@/lib/country-images";
 
 function Countries() {
   const { t } = useTranslation();
@@ -20,6 +19,7 @@ function Countries() {
   const { selectedLanguage } = useLanguage();
   const {
     countries,
+    countryImages,
     loading,
     page,
     setPage,
@@ -30,7 +30,6 @@ function Countries() {
 
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
-  const [countryImages, setCountryImages] = useState({});
   const observer = useRef(null);
 
   const filterOptions = [
@@ -107,10 +106,6 @@ function Countries() {
     if (countries.length === 0) {
       fetchCountries(true);
     }
-  }, []);
-
-  useEffect(() => {
-    loadCountryImages().then((images) => setCountryImages(images));
   }, []);
 
   return (

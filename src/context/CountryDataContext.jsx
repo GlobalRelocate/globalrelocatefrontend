@@ -2,11 +2,13 @@ import axiosInstance from "@/config/axiosInstance";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { loadCountryImages } from "@/lib/country-images";
 
 const CountryDataContext = createContext();
 
 export const CountryDataProvider = ({ children }) => {
   const [countries, setCountries] = useState([]);
+  const [countryImages, setCountryImages] = useState({});
   const [countryList, setCountryList] = useState([]);
   const [compareData, setCompareData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,27 @@ export const CountryDataProvider = ({ children }) => {
   useEffect(() => {
     getFavouriteCountries();
   }, []);
+
+  const loadImages = async () => {
+    if (Object.keys(countryImages).length === 0) {
+      const images = await loadCountryImages();
+      setCountryImages(images);
+    }
+  };
+
+  useEffect(() => {
+    loadImages();
+  }, []);
+
+  const fetchCountryImages = async (countryCode) => {
+    if (Object.keys(countryImages).length === 0) {
+      const images = await loadImages();
+      setCountryImages(images); // keep it in context cache
+      return images[countryCode]; // return directly from loaded images
+    }
+    // if already cached, return from memory
+    return countryImages[countryCode];
+  };
 
   const fetchCountries = async (reset = false, preventLoader = false) => {
     if (!preventLoader) {
@@ -129,6 +152,8 @@ export const CountryDataProvider = ({ children }) => {
       value={{
         countries,
         fetchCountries,
+        countryImages,
+        fetchCountryImages,
         loading,
         page,
         setPage,
