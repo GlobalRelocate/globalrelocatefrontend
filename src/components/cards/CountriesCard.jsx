@@ -61,6 +61,7 @@ export default function CountriesCard({
               : "h-[300px] sm:h-[400px] md:h-[500px]"
           }`}
           alt={location}
+          loading="lazy"
         />
       </Link>
 
