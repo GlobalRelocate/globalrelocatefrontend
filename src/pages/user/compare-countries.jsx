@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useCountryData } from "@/context/CountryDataContext";
 import Spinner from "@/components/loaders/Spinner";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/context/LanguageContext";
+import ComparisonTable from "@/components/common/comparison-table";
 
 function CompareCountries() {
   const [openCountryModal, setOpenCountryModal] = useState(false);
@@ -13,9 +15,15 @@ function CompareCountries() {
   const [countryIdx, setCountryIdx] = useState(1);
   const [selectedCountries, setSelectedCountries] = useState([1, 2]);
 
-  const { compareLoader, compareCountries, compareData } = useCountryData();
+  const {
+    compareLoader,
+    compareCountries,
+    compareData,
+    resetCompareData,
+  } = useCountryData();
   const compareViewRef = useRef();
   const { t } = useTranslation();
+  const { selectedLanguage } = useLanguage();
 
   const handleModalClose = () => {
     setOpenCountryModal(false);
@@ -58,8 +66,7 @@ function CompareCountries() {
       .filter(Boolean);
 
     if (countryIds.length >= 2) {
-      console.log(countryIds);
-      await compareCountries(...countryIds);
+      await compareCountries(countryIds, selectedLanguage?.name || "English");
     }
   };
 
@@ -70,6 +77,11 @@ function CompareCountries() {
       compareViewRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [compareData]);
+
+  // Reset compareData when leaving/unmounting this page
+  useEffect(() => {
+    return () => resetCompareData();
+  }, []);
 
   const renderCards = () => {
     const count = selectedCountries.length;
@@ -194,40 +206,6 @@ function CompareCountries() {
   };
 
   const renderResult = () => {
-    const overview = compareData.overview ?? "No data available.";
-    const internetSpeed =
-      compareData.additionalComparisons.internetSpeed ?? "No data available.";
-    const publicTransportEfficiency =
-      compareData.additionalComparisons.publicTransportEfficiency ??
-      "No data available.";
-    const workLifeBalance =
-      compareData.additionalComparisons.workLifeBalance ?? "No data available.";
-    const population =
-      compareData.additionalComparisons.population ?? "No data available.";
-    const dialingCodes =
-      compareData.additionalComparisons.dialingCodes ?? "No data available.";
-    const languages =
-      compareData.additionalComparisons.languages ?? "No data available.";
-    const avgCosts = compareData.costOfLiving.avgCosts ?? "No data available.";
-    const costSummary =
-      compareData.costOfLiving.summary ?? "No data available.";
-    const corporateTax =
-      compareData.taxAndFinance.corporateTax ?? "No data available.";
-    const federalRate =
-      compareData.taxAndFinance.personalIncomeTax.federalRate ??
-      "No data available.";
-    const communalRate =
-      compareData.taxAndFinance.personalIncomeTax.communalRate ??
-      "No data available.";
-    const longStays =
-      compareData.visaAndImmigration.longStays ?? "No data available.";
-    const shortStays =
-      compareData.visaAndImmigration.shortStays ?? "No data available.";
-    const visaSummary =
-      compareData.visaAndImmigration.summary ?? "No data available.";
-    const passportsAndVisas =
-      compareData.visaAndImmigration.passportsAndVisas ?? "No data available.";
-
     return (
       <section id="comparison-view" ref={compareViewRef}>
         <div className="text-center my-14">
@@ -235,152 +213,10 @@ function CompareCountries() {
         </div>
 
         <div className="w-full mt-12 mb-6">
-          <h2 className="text-3xl font-medium my-4 text-center underline underline-offset-4">
-            Comparison
+          <h2 className="text-3xl font-medium mb-12 text-center underline underline-offset-4">
+            {t("userDashboard.compareCountries.comparison")}
           </h2>
-          {/* Overview */}
-          <h2 className="text-2xl font-medium mb-2">Overview</h2>
-          <p>{overview}</p>
-          <br />
-
-          <div className="space-y-8 max-w-5xl">
-            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
-              {/* Internet Speed */}
-              <div className="grid">
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-2">
-                    <i className="fad fa-globe mr-2"></i> Internet Speed
-                  </h3>
-                  {internetSpeed}
-                </div>
-              </div>
-
-              <div className="grid">
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-2">
-                    <i className="fad fa-bus mr-2"></i> Public Transit
-                    Efficiency
-                  </h3>
-                  {publicTransportEfficiency}
-                </div>
-              </div>
-
-              <div className="grid">
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h3 className="text-lg font-semibold mb-2">
-                    <i className="fad fa-suitcase mr-2"></i> Work & Life Balance
-                  </h3>
-                  {workLifeBalance}
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="border border-gray-300 p-4 rounded-xl">
-                <h3 className="text-md lg:text-lg font-semibold mb-2">
-                  <i className="fad fa-users mr-2"></i> Population
-                </h3>
-                {population}
-              </div>
-              <div className="border border-gray-300 p-4 rounded-xl">
-                <h3 className="text-md lg:text-lg font-semibold mb-2">
-                  <i className="fad fa-phone mr-2"></i> Dialing Codes
-                </h3>
-                {dialingCodes}
-              </div>
-              <div className="border border-gray-300 p-4 rounded-xl">
-                <h3 className="text-md lg:text-lg font-semibold mb-2">
-                  <i className="fad fa-language mr-2"></i> Languages
-                </h3>
-                {languages}
-              </div>
-            </div>
-
-            {/* Cost of Living */}
-            <div className="border border-gray-300 rounded-xl p-6">
-              <h2 className="text-lg font-semibold mb-6">
-                <i className="fad fa-house mr-2"></i> Cost of Living
-              </h2>
-              <p className="my-2">{avgCosts}</p>
-              <p className="my-2">{costSummary}</p>
-            </div>
-
-            {/* Tax Comparison */}
-            <div className="border border-gray-300 rounded-xl p-6">
-              <h2 className="text-lg font-semibold mb-6">
-                <i className="fad fa-dollar-sign mr-2"></i> Taxes & Finance
-              </h2>
-              <table className="w-full text-left border border-gray-200">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="p-2 border">Tax Type</th>
-                    <th className="p-2 border" colSpan={2}>
-                      Comparison
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="p-2 align-top">Corporate Tax</td>
-                    <td className="p-2 break-words" colSpan={2}>
-                      {corporateTax}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 align-top">Income Tax</td>
-                    <td className="p-2">
-                      <p className="break-words">
-                        <span className="font-semibold">Federal Rate:</span>{" "}
-                        {federalRate}
-                      </p>{" "}
-                      <br />
-                      {compareData.taxAndFinance.personalIncomeTax
-                        .communalRate && (
-                        <p className="break-words">
-                          <span className="font-semibold">Communal Rate:</span>{" "}
-                          {communalRate}
-                        </p>
-                      )}
-                    </td>
-                    <td className="p-2"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Visa & Immigration */}
-            <div className="border border-gray-300 rounded-xl p-6">
-              <h2 className="text-lg font-semibold mb-6">
-                <i className="fad fa-plane mr-2"></i> Visa & Immigration
-              </h2>
-              <div className="grid lg:grid-cols-3 gap-4">
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h4 className="font-semibold mb-2">
-                    <i className="fad fa-building mr-2"></i> Long Stays
-                  </h4>
-                  <p>{longStays}</p>
-                </div>
-
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h4 className="font-semibold mb-2">
-                    <i className="fad fa-hotel mr-2"></i> Short Stays
-                  </h4>
-                  <p>{shortStays}</p>
-                </div>
-
-                <div className="border border-gray-300 p-4 rounded-xl">
-                  <h4 className="font-semibold mb-2">
-                    <i className="fa fa-passport mr-2"></i> Passport and Visas
-                  </h4>
-                  <p>{passportsAndVisas}</p>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-6">
-                <i className="fal fa-info-circle mr-2 mt-1"></i>{" "}
-                <span>{visaSummary}</span>
-              </div>
-            </div>
-          </div>
+          <ComparisonTable data={compareData} />
         </div>
       </section>
     );
@@ -417,7 +253,11 @@ function CompareCountries() {
                 : "bg-gray-400 text-white hover:bg-gray-500"
             }`}
           >
-            {compareLoader ? <Spinner size="w-6 h-6" /> : "Compare"}
+            {compareLoader ? (
+              <Spinner size="w-6 h-6" />
+            ) : (
+              t("userDashboard.compareCountries.compare")
+            )}
           </Button>
         </div>
 

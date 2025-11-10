@@ -35,6 +35,43 @@
           "title": "Länder & Daten",
           "para": "Treten Sie Foren und Gruppen mit gleichgesinnten globalen Nomaden bei."
         }
+      },
+      "compareCountries": {
+        "title": "Länder & Daten",
+        "item1": {
+          "title": "Länder vergleichen",
+          "para": "Vergleichen Sie schnell Schlüsselfaktoren zwischen zwei Ländern, um fundierte Entscheidungen über die Umsiedlung zu treffen."
+        },
+        "item2": {
+          "title": "Vergleichen Sie bis zu 5 Länder",
+          "para": "Vergleichen Sie einfach bis zu 5 Länder nebeneinander, um verschiedene Aspekte wie Lebenshaltungskosten, Gesundheitswesen und Bildung zu bewerten."
+        },
+        "item3": {
+          "title": "Erhalten Sie einen genauen Vergleich zwischen Ländern",
+          "para": "Greifen Sie auf zuverlässige Daten und Erkenntnisse zu, um fundierte Entscheidungen über Ihr nächstes Ziel zu treffen."
+        }
+      },
+      "aiAssistant": {
+        "title": "KI-Assistent",
+        "item1": {
+          "title": "Chatten Sie mit einem KI-Reiseassistenten",
+          "para": "Erhalten Sie sofortige Antworten auf Ihre Fragen zur Umsiedlung und personalisierte Empfehlungen von unserem KI-gestützten Assistenten."
+        },
+        "item2": {
+          "title": "Erhalten Sie präzise Antworten",
+          "para": "Bleiben Sie mit den neuesten Daten und Erkenntnissen zu Ihren gewünschten Umsiedlungszielen auf dem Laufenden."
+        }
+      },
+      "visaIndex": {
+        "title": "Visa-Index & Passranking",
+        "item1": {
+          "title": "Erforschen Sie das Passranking",
+          "para": "Entdecken Sie die Stärke Ihres Reisepasses, welche Länder Sie ohne Visum besuchen können und die stärksten Pässe der Welt."
+        },
+        "item2": {
+          "title": "Überprüfen Sie, ob Sie ein Visum benötigen",
+          "para": "Sie können überprüfen, ob Sie ein Visum benötigen, um zu Ihrem gewünschten Ziel zu reisen."
+        }
       }
     },
     "countries": {
@@ -58,6 +95,56 @@
       "card4": {
         "title": "Personalisierte Benachrichtigungen",
         "para": "Bleiben Sie mit maßgeschneiderten Benachrichtigungen und einer Favoritenfunktion immer einen Schritt voraus."
+      }
+    },
+    "pricing": {
+      "plan": "Plan",
+      "title": "Preispläne",
+      "para": "Wählen Sie einen Plan, der Ihren Bedürfnissen entspricht, und beginnen Sie noch heute mit Ihrer Umsiedlung.",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
+      "billedYearly": "Jährlich abgerechnet",
+      "getStarted": "Loslegen",
+      "freePlan": {
+        "title": "Kostenloser Plan",
+        "para": "Perfekt für Einzelpersonen, die mit grundlegenden Funktionen Umzugsoptionen erkunden.",
+        "price": "0",
+        "perMonth": "/Monat",
+        "features": {
+          "feature1": "3-tägiger Testzugang",
+          "feature2": "Grundlegende Länderinformationen",
+          "feature3": "Begrenzter Steuerrechner",
+          "feature4": "Grundlegender Kostenvergleich"
+        },
+        "buttonText": "Loslegen"
+      },
+      "basicPlan": {
+        "title": "Basis Plan",
+        "price": "15.90",
+        "perMonth": "/Monat",
+        "features": {
+          "feature1": "Vollständige Länderinformationen",
+          "feature2": "Vollständiger Steuerrechner",
+          "feature3": "Kostenvergleichstools",
+          "feature4": "Grundlegende Umzugsleitfäden",
+          "feature5": "E-Mail-Support"
+        },
+        "buttonText": "Jetzt upgraden"
+      },
+      "premiumPlan": {
+        "title": "Pro Plan",
+        "price": "24.90",
+        "perMonth": "/Monat",
+        "features": {
+          "feature1": "Alle Basisfunktionen",
+          "feature2": "Unbegrenzter Zugriff auf Länderdaten",
+          "feature3": "KI-Umzugs-Assistent",
+          "feature4": "Einblicke in die Lebenshaltungskosten",
+          "feature5": "Leitfäden zu Visabestimmungen",
+          "feature6": "Vorrangiger E-Mail-Support",
+          "feature7": "Benutzerdefinierte Umzugs-Roadmap"
+        },
+        "buttonText": "Jetzt upgraden"
       }
     },
     "forgotPassword": {
@@ -155,6 +242,8 @@
       "title": "Datenschutzrichtlinie und rechtlicher Hinweis",
       "paragraph": "Diese Datenschutzrichtlinie beschreibt, wie Global Relocate (als 'uns', 'wir' oder 'unser' bezeichnet), der Eigentümer und Betreiber von globalrelocate.com, Ihre personenbezogenen Daten sammelt, verwendet und schützt, wenn Sie unsere KI-gestützte Plattform für nahtlose Umsiedlung, Rechtsberatung und globales Leben nutzen, die über die URL globalrelocate.com (die 'Plattform') zugänglich ist. Diese Richtlinie gilt auch für alle über die Plattform bereitgestellten Dienste, Inhalte, Funktionen oder Anwendungen.",
       "paragraph2": "Durch den Zugriff auf oder die Nutzung der Plattform stimmen Sie der Erhebung, Verwendung und Offenlegung Ihrer personenbezogenen Daten gemäß dieser Datenschutzrichtlinie zu. Wenn Sie mit einem Aspekt dieser Richtlinie nicht einverstanden sind, sehen Sie bitte von der Nutzung der Plattform ab.",
+      "isABrandOf": "ist eine Marke von",
+      "cyprus": "Zypern",
       "sections": {
         "informationCollection": "1. Datenerhebung",
         "informationCollection_1": "1.1 Personenbezogene Daten: Wir können verschiedene Arten von personenbezogenen Daten von Ihnen erheben, wenn Sie die Plattform nutzen. Dazu können Ihr Name, Ihre E-Mail-Adresse, Kontaktinformationen, Umzugspräferenzen und alle anderen Informationen gehören, die Sie uns freiwillig zur Verfügung stellen.",
@@ -231,7 +320,7 @@
     "contactUs": {
       "title": "Kontaktieren Sie uns",
       "titleDesc": "Sie können uns Fragen stellen",
-      "para": "Kontaktieren Sie uns für all Ihre Fragen und Meinungen, oder erhalten Sie schnelle Antworten, indem Sie eines unserer Kontaktbüros besuchen.",
+      "para": "Schreiben Sie uns Ihre Fragen oder Meinungen per E-Mail an unsere Adresse.",
       "ourOffices": "Unsere Büros",
       "ourOfficesDesc": "Wir haben Büros an verschiedenen Standorten, um Sie bei Ihren Umzugsbedürfnissen zu unterstützen. Besuchen Sie uns in einem unserer Büros für persönliche Unterstützung.",
       "dropUsAMessage": "Schreiben Sie uns eine Nachricht",
@@ -244,6 +333,19 @@
       "sending": "Senden...",
       "messageSent": "Nachricht erfolgreich gesendet!",
       "messageFailed": "Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+    },
+    "feedback": {
+      "back": "Zurück",
+      "title1": "Hallo {{ username }}, was hat gut funktioniert?",
+      "desc1": "Sagen Sie uns, was Ihnen an Global Relocate gefällt und was wir verbessern können.",
+      "typeAnswer": "Geben Sie hier Ihre Antwort ein...",
+      "continue": "Weiter",
+      "title2": "Hallo {{ username }}, was hat nicht gut funktioniert?",
+      "desc2": "Sagen Sie uns, was nicht funktioniert hat oder was in Ihrer Erfahrung mit der App fehlt.",
+      "submit": "Absenden",
+      "submitting": "Absenden...",
+      "feedbackSubmitted": "Vielen Dank für Ihr Feedback!",
+      "feedbackFailed": "Fehler beim Absenden des Feedbacks. Bitte versuchen Sie es erneut."
     }
   },
   "loginPage": {
@@ -284,6 +386,17 @@
     "welcomeText": "Ihre KI-gestützte Plattform für nahtlose Umsiedlung, Rechtsberatung und globales Leben."
   },
   "userDashboard": {
+    "trial": {
+      "trialEnded": "Ihre kostenlose 1-Tages-Testversion ist abgelaufen",
+      "upgradeNow": "Führen Sie jetzt ein Upgrade durch, um Global Relocate weiterhin nutzen zu können.",
+      "seePlanOptions": "Planoptionen anzeigen",
+      "trialEndsIn": "Ihre kostenlose Testversion endet in {{ days }} Tagen. Führen Sie jetzt ein Upgrade durch, um Global Relocate weiterhin nutzen zu können.",
+      "days": "tage",
+      "hours": "stunden",
+      "minutes": "minuten",
+      "seconds": "sekunden",
+      "loading": "Wird geladen..."
+    },
     "sidebar": {
       "countries": "Länder",
       "aiAssistant": "KI-Assistent",
@@ -294,9 +407,10 @@
       "community": "Gemeinschaft",
       "cta": {
         "title": "Pro ausprobieren",
-        "para": "Sie befinden sich derzeit im kostenlosen Plan, der 3 Tage gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
+        "para": "Sie befinden sich derzeit im kostenlosen Plan, der 1 Tag gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
         "buttonText": "Mehr erfahren"
-      }
+      },
+      "visaIndex": "Visa-Index"
     },
     "notifications": {
       "noNotifications": "Sie haben noch keine Benachrichtigungen.",
@@ -307,6 +421,12 @@
       "showLess": "Weniger davon anzeigen",
       "showMore": "Mehr Ergebnisse anzeigen"
     },
+    "news": {
+      "noNews": "Es sind derzeit keine Nachrichten verfügbar.",
+      "title": "Nachrichten",
+      "inCountry": "in {{ country }}",
+      "failed": "Beim Abrufen der Nachrichten ist ein Fehler aufgetreten."
+    },
     "countries": {
       "title": "Länder",
       "noDataText": "Keine Daten verfügbar!",
@@ -315,7 +435,10 @@
       "view": "Ansehen",
       "searchResults": "Suchergebnisse",
       "aiSuggestedCountries": "KI-vorgeschlagene Länder",
-      "searchCountries": "Länder suchen"
+      "searchCountries": "Länder suchen",
+      "searchCountry": "Land suchen...",
+      "noCountryFound": "Kein Land gefunden.",
+      "selectCountry": "Land auswählen"
     },
     "country": {
       "countryIn": "Land in",
@@ -346,6 +469,7 @@
       "shortStays": "Kurzaufenthalte",
       "longStays": "Langzeitaufenthalte",
       "embassies": "Botschaften",
+      "view": "Ansehen",
       "link": "Link",
       "taxesAndFinances": "Steuern & Finanzen",
       "personalIncomeTax": "Einkommensteuer",
@@ -353,6 +477,30 @@
       "communalRate": "Gemeindesatz",
       "averageCost": "Durchschnittliche Kosten",
       "costOfLiving": "Lebenshaltungskosten",
+      "mostExpensiveCity": "Teuerste Stadt zum Leben",
+      "cheapestCity": "Günstigste Stadt zum Leben",
+      "mostExpensiveStates": "Teuerste Staaten zum Leben",
+      "rentPerMonth": "Miete pro Monat",
+      "howToFindApartment": "Wie finde ich eine Wohnung?",
+      "food": "Essen",
+      "mobilePhonePlan": "Mobilfunktarif",
+      "childCare": "Kinderbetreuung",
+      "racism": "Rassismus",
+      "compulsorySchooling": "Schulpflicht",
+      "homeSchooling": "Häuslicher Unterricht",
+      "animalTransport": "Tiertransport",
+      "quarantine": "Quarantäne",
+      "vaccinationRequirements": "Impfbestimmungen",
+      "necessaryDocuments": "Notwendige Dokumente",
+      "transportCosts": "Transportkosten",
+      "education": "Bildung",
+      "sport": "Sport",
+      "music": "Musik",
+      "adaptation": "Anpassung",
+      "visaTypes": "Visumtypen",
+      "visaRequirements": "Visabestimmungen",
+      "visaApplication": "Visumantragsprozess",
+      "obtainCitizenship": "Wie erlangt man die Staatsbürgerschaft?",
       "noDataAvailable": "Für dieses Land sind keine Daten verfügbar.",
       "notApplicable": "Für dieses Land nicht zutreffend",
       "back": "Zurück",
@@ -360,12 +508,17 @@
       "noVisaInfo": "Keine Visa- und Einwanderungsinformationen verfügbar."
     },
     "ai": {
+      "title": "KI-Assistent",
+      "description": "Chatten Sie mit unserem KI-gestützten Assistenten, um sofortige Antworten auf Ihre Fragen zur Umsiedlung und personalisierte Empfehlungen für das Land zu erhalten.",
       "rename": "Umbenennen",
       "deleteConversation": "Konversation löschen",
       "share": "Teilen",
       "hello": "Hallo",
+      "hiThere": "Hallo!",
       "newChat": "Neuer Chat",
       "askAI": "KI alles fragen...",
+      "askAICountry": "Fragen Sie die KI zu {{ country }}...",
+      "howCanIHelp": "Wie kann ich Ihnen helfen?",
       "uploadDocument": "Dokument hochladen",
       "uploadDocumentDesc": "Laden Sie ein Dokument hoch, um es mit dem KI-Assistenten zu verarbeiten",
       "cancel": "Abbrechen",
@@ -381,11 +534,12 @@
       "fullName": "Vollständiger Name",
       "username": "Benutzername",
       "bio": "Bio",
+      "writeBio": "Schreiben Sie etwas über sich...",
       "country": "Land",
       "emailAddress": "E-Mail-Adresse",
       "verified": "Verifiziert",
       "subscription": "Abonnement",
-      "subscriptionDesc": "Sie befinden sich derzeit im kostenlosen Plan, der 3 Tage gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
+      "subscriptionDesc": "Sie befinden sich derzeit im kostenlosen Plan, der 24 std. gültig ist. Aktualisieren Sie jetzt, um Global Relocate weiterhin nutzen zu können.",
       "deleteAccount": "Konto löschen",
       "deleteDesc": "Ihr Konto und Ihre Daten dauerhaft löschen",
       "language": "Sprache",
@@ -409,25 +563,175 @@
       "confirmDeleteList2": "Alle Daten werden 30 Tage nach der Kontolöschung dauerhaft gelöscht.",
       "deleting": "Löschen...",
       "youHave": "Sie haben:",
-      "administrator": "Administrator"
+      "administrator": "Administrator",
+      "resetPassword": "Passwort zurücksetzen",
+      "resetPasswordDesc": "Sie können Ihr Passwort hier zurücksetzen",
+      "otpSent": "Ein OTP wurde an Ihre E-Mail gesendet."
     },
     "continents": {
       "all": "Alle",
       "europe": "Europa",
       "asia": "Asien",
+      "europe, asia": "Europa & Asien",
       "africa": "Afrika",
       "south america": "Südamerika",
       "north america": "Nordamerika",
+      "northAmerica": "Nordamerika",
+      "southAmerica": "Südamerika",
       "antarctica": "Antarktis",
       "oceania": "Ozeanien"
     },
     "tax": {
       "taxCalculator": "Steuerrechner",
-      "taxCacluatorDesc": "Berechnen Sie Ihre geschätzte Steuerlast in verschiedenen Ländern",
+      "taxCalculatorDesc": "Berechnen Sie Ihre geschätzte Steuerlast in verschiedenen Ländern",
       "country": "Land",
-      "annualIncome": "Jahreseinkommen",
+      "annualIncome": "Einkommen",
       "userAccount": "Benutzerkonto",
+      "accountingPeriod": "Abrechnungszeitraum",
+      "employeeInputs": "Angaben zum Arbeitnehmer",
+      "grossSalary": "Bruttogehalt",
       "taxClass": "Steuerklasse",
+      "taxPeriod": "Steuerzeitraum",
+      "year": "Jahr",
+      "month": "Monat",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
+      "age": "Alter",
+      "monetaryBenefitsMonthly": "Monatliche geldwerte Vorteile",
+      "annualTaxAllowance": "Jährlicher Steuerfreibetrag",
+      "maritalStatus": "Familienstand",
+      "childrenU25Count": "Anzahl der Kinder unter 25 Jahren",
+      "hasChildren": "Haben Sie Kinder?",
+      "isSoleWageEarner": "Alleinerziehend",
+      "isDualWageEarner": "Doppelverdiener",
+      "widowedSpouseDeathYear": "Todesjahr des verwitweten Ehepartners",
+      "taxYearSelection": "Auswahl des Steuerjahres",
+      "childAllowanceFactor": "Kinderfreibetrag",
+      "familyAndTaxStatus": "Familien- und Steuerstatus",
+      "insuranceAndSurcharges": "Versicherungen und Zuschläge",
+      "state": "Bundesland",
+      "occupationalPensionMonthly": "Monatliche betriebliche Altersvorsorge",
+      "churchTaxLiability": "Kirchensteuerpflicht",
+      "healthInsuranceType": "Art der Krankenversicherung",
+      "healthInsuranceTypes": {
+        "compulsoryStatutory": "Gesetzliche Pflichtversicherung",
+        "privatelyInsured": "Privat versichert",
+        "voluntarilyInsuredByLaw": "Freiwillig gesetzlich versichert"
+      },
+      "additionalContributionName": "Name des zusätzlichen Beitrags",
+      "additionalContributionRate": "Zusätzlicher Beitragssatz",
+      "privateDetails": "Private Details",
+      "monthlyPremium": "Monatliche Prämie",
+      "employerParticipation": "Arbeitgeberbeteiligung",
+      "maritalStatusOptions": {
+        "single": "Ledig",
+        "married": "Verheiratet",
+        "widowed": "Verwitwet",
+        "divorced": "Geschieden"
+      },
+      "spouseTaxClass": "Steuerklasse des Ehepartners",
+      "pensionScheme": {
+        "title": "Rentensystem",
+        "compulsoryStatutoryInsurance": "Gesetzliche Pflichtversicherung",
+        "notCompulsorilyInsured": "Nicht pflichtversichert",
+        "onlyEmployerCompulsoryShare": "Nur Arbeitgeberanteil",
+        "onlyEmployeeCompulsoryShare": "Nur Arbeitnehmeranteil"
+      },
+      "voluntaryContribution": "Freiwilliger Beitrag",
+      "voluntaryContributionRate": "Freiwilliger Beitragssatz",
+      "U1_rate_percent": "U1 Satz (%)",
+      "U2_rate_percent": "U2 Satz (%)",
+      "bgContributionRate": "BG-Beitragssatz",
+      "taxDeductions": "Steuerabzüge",
+      "employeeContributions": "Arbeitnehmerbeiträge",
+      "employerContributions": "Arbeitgeberbeiträge",
+      "benefits": "Leistungen",
+      "total": "Gesamt",
+      "noTaxData": "Für das ausgewählte Land sind keine Steuerdaten verfügbar.",
+      "2024-until-11/24": "2024 (bis 11/24)",
+      "2023-from-7/23": "2023 (ab 7/23)",
+      "2023-until-6/23": "2023 (bis 6/23)",
+      "taxIncomeInCountry": "Steuereinkommen in ${1}: Allgemeine Informationen & Tipps",
+      "taxClassAndBrackets": "Deutsche Steuerklasse und -stufen",
+      "taxClassBracketsDesc": "Das deutsche Einkommensteuersystem verwendet progressive Steuersätze, d. h. der Satz steigt mit steigendem Einkommen. Beginnend bei 14 % für die niedrigeren zu versteuernden Einkommen und bis zu 45 % für die Spitzenverdiener zielt dieses System darauf ab, Fairness bei der Besteuerung zu gewährleisten.",
+      "taxClassBrackets1": "<strong>0 % Steuersatz:</strong> Einkommen bis zu 11.604 €",
+      "taxClassBrackets2": "<strong>14 % bis 42 % Steuersatz:</strong> Einkommen über 11.604 € und bis zu 66.760 €",
+      "taxClassBrackets3": "<strong>42 % Steuersatz:</strong> Einkommen von 66.761 € bis zu 277.825 €",
+      "taxClassBrackets4": "<strong>45 % Steuersatz:</strong> Einkommen über 277.826 €",
+      "taxClassBrackets5": "Bitte wenden Sie sich an einen Finanzberater, um die aktuellsten Informationen zu erhalten.",
+      "taxClassBrackets6": "Die Steuerklassen in Deutschland haben einen erheblichen Einfluss darauf, wie viel Steuer Sie zahlen. Es gibt sechs Klassen, die jeweils unterschiedliche Familien- und Beschäftigungssituationen widerspiegeln. So ist beispielsweise die Steuerklasse I für ledige Personen, während die Steuerklasse II Vorteile für Ehepaare bietet. Die Wahl der richtigen Steuerklasse kann zu erheblichen Steuerersparnissen führen, insbesondere für Familien und Ehepaare.",
+      "taxClassBrackets7": "<strong>Klasse I:</strong> Ledige oder getrennt lebende Personen ohne Kinder.",
+      "taxClassBrackets8": "<strong>Klasse II:</strong> Alleinerziehende, die mit ihrem Kind oder ihren Kindern allein leben und Anspruch auf Alleinerziehendenleistungen haben.",
+      "taxClassBrackets9": "<strong>Klasse III:</strong> Verheiratete Arbeitnehmer, deren Ehepartner nicht arbeitet oder in Klasse V ist; bietet im Allgemeinen die niedrigsten Steuersätze.",
+      "taxClassBrackets10": "<strong>Klasse IV:</strong> Verheiratete Arbeitnehmer, bei denen beide Partner ein Einkommen erzielen; ähnlich wie Alleinstehende in Klasse I, jedoch unter Berücksichtigung der gemeinsamen Veranlagung.",
+      "taxClassBrackets11": "<strong>Klasse V:</strong> Ein Partner in einer Ehe entscheidet sich für Klasse III, und der andere fällt automatisch in Klasse V; führt in der Regel zu einem höheren Steuerabzug.",
+      "taxClassBrackets12": "<strong>Klasse VI:</strong> Für Personen mit mehreren Arbeitsplätzen gilt diese Klasse für den zweiten und jeden weiteren Arbeitsplatz mit dem höchsten Steuersatz.",
+      "taxClassBrackets13": "Hinweis: Der Rechner auf dieser Seite basiert auf Klasse I.",
+      "calculatingIncomeTax": "Berechnung Ihrer Einkommensteuer",
+      "calculatingIncomeTaxDesc": "Die Berechnung Ihres Nettoeinkommens in Deutschland erfordert nicht nur das Verständnis der Steuerstufen und -klassen, sondern auch die Berücksichtigung von Sozialabgaben und anderen Abzügen. Hier ist ein vereinfachter Prozess, der Ihnen hilft, Ihr Nettoeinkommen zu schätzen:",
+      "calculatingIncomeTaxSteps1": "<strong>Bestimmen Sie Ihr Bruttogehalt:</strong> Beginnen Sie mit Ihrem jährlichen Bruttogehalt.",
+      "calculatingIncomeTaxSteps2": "<strong>Identifizieren Sie Ihre Steuerklasse:</strong> Ihre Steuerklasse beeinflusst Ihren Steuersatz. Verwenden Sie diese, um Ihre Einkommensteuer zu schätzen.",
+      "calculatingIncomeTaxSteps3": "<strong>Berechnen Sie die Sozialabgaben:</strong> Ziehen Sie die Sozialversicherungsbeiträge ab, die in der Regel Krankenversicherung, Rentenversicherung, Arbeitslosenversicherung und Pflegeversicherung umfassen.",
+      "calculatingIncomeTaxSteps4": "<strong>Berücksichtigen Sie Zulagen und Abzüge:</strong> Beziehen Sie alle anwendbaren Abzüge wie Kinderbetreuungszuschüsse oder bildungsbezogene Ausgaben ein.",
+      "calculatingIncomeTaxSteps5": "<strong>Berechnen Sie das Nettogehalt:</strong> Subtrahieren Sie diese Steuern und Beiträge von Ihrem Bruttogehalt, um Ihr Nettoeinkommen zu erhalten.",
+      "calculatingIncomeTaxFinalNote": "Diese Methode bietet einen Rahmen für das Verständnis, wie viel von Ihrem Bruttoeinkommen nach Steuern und Sozialabgaben verfügbar sein wird.",
+      "tipsForExpats": "Tipps für Expats und neue Mitarbeiter in Deutschland",
+      "tipsForExpatsDesc": "Expats und neue Mitarbeiter in Deutschland stehen vor besonderen Herausforderungen, wenn sie sich im Steuersystem zurechtfinden müssen. Hier sind praktische Tipps, um einen reibungslosen Übergang zu gewährleisten und Ihre Steuersituation zu optimieren:",
+      "tipsForExpats1": "<strong>Wählen Sie die richtige Steuerklasse:</strong> Überprüfen und wählen Sie die vorteilhafteste Steuerklasse für Ihre Situation. Änderungen sind unter bestimmten Bedingungen möglich, z. B. bei Heirat oder Geburt eines Kindes.",
+      "tipsForExpats2": "<strong>Verstehen Sie den Steuerfreibetrag:</strong> Deutschland bietet einen Steuerfreibetrag, der sicherstellt, dass Einkommen bis zu einer bestimmten Grenze nicht besteuert wird. Machen Sie sich damit vertraut, um Ihre Finanzen besser zu planen.",
+      "tipsForExpats3": "<strong>Nutzen Sie Steuerabzüge:</strong> Führen Sie Aufzeichnungen über potenziell abzugsfähige Ausgaben, einschließlich berufsbedingter Ausgaben, Ausbildungskosten und Gesundheitskosten.",
+      "tipsForExpats4": "<strong>Lassen Sie sich professionell beraten:</strong> Angesichts der Komplexität des Steuersystems kann die Beratung durch einen Steuerberater eine individuelle Beratung bieten und die Einhaltung der Vorschriften gewährleisten.",
+      "tipsForExpats5": "<strong>Bleiben Sie über die Fristen für die Steuererklärung informiert:</strong> Beachten Sie das Steuerjahr und die Fristen für die Steuererklärung, um Strafen zu vermeiden.",
+      "tipsForExpatFinalNote": "Diese Strategien können Ihnen helfen, Ihre Steuerpflichten effektiv zu verwalten und Ihr Einkommen in Deutschland zu maximieren.",
+      "faqs": "Häufig gestellte Fragen",
+      "faqTitle1": "Was sind die aktuellen Einkommensteuerstufen in Deutschland?",
+      "faqAnswer1": "Nach dem neuesten Stand sind die Steuerstufen: 0 % für Einkommen bis zu 11.604 €; 14 %-42 % für Einkommen zwischen 11.604 € und 66.760 €; 42 % für Einkommen zwischen 66.761 € und 277.825 €; und 45 % für Einkommen über 277.826 €.",
+      "faqTitle2": "Woher weiß ich, welcher Steuerklasse ich in Deutschland angehöre?",
+      "faqAnswer2": "Ihre Steuerklasse hängt von Ihrem Familienstand, Ihrer Beschäftigungssituation und Ihren Familienverhältnissen ab. Alleinstehende sind in der Regel in Klasse I, während Ehepaare von Klasse III profitieren können. Überprüfen Sie Ihren Status und wenden Sie sich an einen Steuerberater, um eine optimale Einstufung zu erhalten.",
+      "faqTitle3": "Welche besonderen Überlegungen sollte ich bei der Berechnung des Nettogehalts in Deutschland beachten?",
+      "faqAnswer3": "Denken Sie daran, Kinderbetreuungszuschüsse, die mögliche Kirchensteuer und den Solidaritätszuschlag zu berücksichtigen, da diese Ihr endgültiges Nettoeinkommen beeinflussen können.",
+      "faqTitle4": "Wie können neue Mitarbeiter ihre Steuersituation in Deutschland optimieren?",
+      "faqAnswer4": "Die Wahl der richtigen Steuerklasse, das Verständnis des Steuerfreibetrags, die Nutzung anwendbarer Abzüge, die Einholung professioneller Beratung und die Information über die Fristen für die Steuererklärung sind wichtige Schritte zur Optimierung Ihrer Steuersituation.",
+      "useFulLinks": "Weitere Ressourcen",
+      "useFulLinksDesc": "Nützliche Links und andere Ressourcen",
+      "useFulLinksIntro": "Das deutsche Einkommensteuersystem kann eine Herausforderung sein. Indem Sie jedoch die Grundlagen der Steuerstufen, -klassen und besonderen Überlegungen verstehen und praktische Tipps anwenden, können Sie fundierte Entscheidungen treffen, die Ihre Steuersituation optimieren. Egal, ob Sie das Nettoeinkommen berechnen, eine Steuerklasse wählen oder Zulagen und Abzüge prüfen, Wissen ist Ihr wertvollstes Werkzeug.",
+      "useFulLinksIntro2": "Für detailliertere Informationen besuchen Sie die folgenden Ressourcen:",
+      "useFulLinks1": "Presse- und Informationsamt der Bundesregierung",
+      "useFulLinks2": "Expat Info: Deutsches Steuersystem",
+      "useFulLinksFinalNote": "Proaktiv und informiert zu bleiben, wird Sie in die Lage versetzen, sich mit Zuversicht in der Steuerlandschaft Deutschlands zurechtzufinden.",
+      "grossIncome": "Bruttoeinkommen",
+      "netIncome": "Nettoeinkommen",
+      "taxRate": "Steuersatz",
+      "pension": "Rente",
+      "healthInsurance": "Krankenversicherung",
+      "care": "Pflegeversicherung",
+      "communalTax": "Gemeindesteuer",
+      "federalTax": "Bundessteuer",
+      "socialInsurance": "Sozialversicherung",
+      "unemploymentInsuranceSupplementary": "Arbeitslosenversicherung (Zusatzbeitrag)",
+      "nonOccupationalAccidentInsurance": "Unfallversicherung (Nichtberuflich)",
+      "nursingCareInsurance": "Pflegeversicherung",
+      "generalSocialContribution": "Allgemeiner Sozialbeitrag",
+      "socialDebt": "Sozialschulden",
+      "incomeTax": "Einkommensteuer",
+      "churchTax": "Kirchensteuer",
+      "careInsurance": "Pflegeversicherung",
+      "childBenefit": "Kindergeld",
+      "unemploymentBenefit": "Arbeitslosengeld",
+      "totalBenefits": "Gesamtleistungen",
+      "pensionInsurance": "Rentenversicherung",
+      "unemploymentInsurance": "Arbeitslosenversicherung",
+      "solidaritySurcharge": "Solidaritätszuschlag",
+      "accidentInsurance": "Unfallversicherung",
+      "totalTax": "Gesamtsteuer",
+      "taxDisclaimer": "HINWEIS: Die Lohnsteuer wird auf der Grundlage der in Deutschland geltenden Steuertabellen berechnet. Aus Vereinfachungsgründen wurden einige Variablen (wie Steuerklasse, Steuerfreibeträge, Solidaritätszuschlag, Kirchensteuer und andere) angenommen oder sind möglicherweise nicht vollständig berücksichtigt. Diese Berechnung stellt keine Rechtsauskunft dar und dient nur zu Näherungszwecken. Für genaue Einkommensteuerberechnungen, insbesondere für Personen mit komplexen finanziellen Verhältnissen, wird empfohlen, einen Steuerberater zu konsultieren.",
+      "summaryText1": "Wenn Sie",
+      "summaryText2": "ein",
+      "summaryText3": "leben in",
+      "summaryText4": "werden Sie besteuert",
+      "summaryText5": "Das bedeutet, dass Ihr Nettogehalt",
+      "summaryText6": "pro Jahr oder",
+      "summaryText7": "pro Monat beträgt. Ihr durchschnittlicher Steuersatz beträgt",
       "totalDeductions": "Gesamtabzüge",
       "selectCountry": "Wählen Sie Ihr Land",
       "selectAccount": "Kontotyp auswählen",
@@ -439,7 +743,14 @@
       "taxSummary": "Steuerübersicht",
       "taxAmount": "Steuerbetrag",
       "effectiveRate": "Effektiver Satz",
-      "takeHomeAmount": "Nettobetrag"
+      "takeHomeAmount": "Nettobetrag",
+      "disclaimer": "Die von diesem Steuerrechner bereitgestellten Informationen dienen nur allgemeinen Informationszwecken und sollten nicht für Steuer-, Rechts- oder Buchhaltungszwecke verwendet werden. Der Rechner berücksichtigt auch nicht Ihre spezifischen Umstände (persönliche Freibeträge, Abzüge usw.), die sich auf den Nettobetrag auswirken können.",
+      "noTaxClasses": "Keine Steuerklassen verfügbar",
+      "usageGuide": "Benutzerhandbuch",
+      "usageGuide1": "Geben Sie Ihr Bruttojahresgehalt oder -einkommen ein.",
+      "usageGuide2": "Wählen Sie Ihr Land aus. Standardmäßig ist die Ausgabewährung auf die offizielle Währung des Landes eingestellt.",
+      "usageGuide3": "Wählen Sie gegebenenfalls Ihre Steuerklasse aus dem Dropdown-Menü aus.",
+      "usageGuide4": "Klicken Sie dann auf die Schaltfläche 'Steuer berechnen', um die geschätzte Steuer gemäß dem offiziellen Satz des Landes zu erhalten."
     },
     "upgradePage": {
       "back": "Zurück",
@@ -447,42 +758,166 @@
       "upgradePlanDesc": "Wählen Sie den perfekten Plan, um Ihre globale Umzugsreise zu unterstützen. Erhalten Sie Zugang zu umfassenden Tools und Erkenntnissen, um Ihren Umzug nahtlos zu gestalten.",
       "currentPlan": "Ihr aktueller Plan",
       "getStarted": "Loslegen",
+      "approx": "ca.",
       "free": "Kostenlos",
       "basic": "Basis",
-      "premium": "Premium",
+      "pro": "Pro",
       "perMonth": "pro Monat",
       "forEveryone": "Für jeden",
       "freePlan": {
-        "item1": "3-tägiger Testzugang",
+        "item1": "24 Stunden Testzugang",
         "item2": "Grundlegende Länderinformationen",
-        "item3": "Community-Zugang (nur Lesezugriff)",
-        "item4": "Begrenzter Steuerrechner",
-        "item5": "Grundlegender Kostenvergleich"
+        "item3": "Begrenzter Steuerrechner",
+        "item4": "Grundlegender Kostenvergleich"
       },
       "basicPlan": {
         "item1": "Vollständige Länderinformationen",
-        "item2": "Community-Teilnahme",
-        "item3": "Vollständiger Steuerrechner",
-        "item4": "Kostenvergleichstools",
-        "item5": "Grundlegende Umzugsleitfäden",
-        "item6": "E-Mail-Support"
+        "item2": "Vollständiger Steuerrechner",
+        "item3": "Kostenvergleichstools",
+        "item4": "Grundlegende Umzugsleitfäden",
+        "item5": "E-Mail-Support"
       },
       "premiumPlan": {
         "item1": "Alle Basisfunktionen",
         "item2": "Unbegrenzter Zugriff auf Länderdaten",
-        "item3": "Volle Community-Teilnahme",
-        "item4": "Erweiterter Steuerrechner",
-        "item5": "KI-Umzugsassistent",
-        "item6": "Einblicke in die Lebenshaltungskosten",
-        "item7": "Leitfäden zu Visabestimmungen",
-        "item8": "Priorisierter Support",
-        "item9": "Individueller Umzugsplan"
+        "item3": "Erweiterter Steuerrechner",
+        "item4": "KI-Umzugsassistent",
+        "item5": "Einblicke in die Lebenshaltungskosten",
+        "item6": "Leitfäden zu Visabestimmungen",
+        "item7": "Priorisierter Support",
+        "item8": "Individueller Umzugsplan"
       }
     },
     "favorites": {
       "noFavorites": "Sie haben noch keine Favoriten.",
       "addToFavorites": "Zu Favoriten hinzufügen",
       "removeFromFavorites": "Aus Favoriten entfernen"
+    },
+    "visaIndex": {
+      "title": "Passindex und Visainformationen",
+      "description": "Hier ist ein genaues und aktuelles Tool zur Passbewertung, das die Pässe der Welt nach der Anzahl der visumfreien Reiseziele einordnet.",
+      "backToVisaIndex": "Zurück zum Visa-Index",
+      "searchPlaceholder": "Suche nach einem Land...",
+      "noResults": "Keine Ergebnisse gefunden",
+      "sameCountryError": "Bitte wählen Sie unterschiedliche Länder.",
+      "countries": {
+        "usa": "Vereinigte Staaten",
+        "canada": "Kanada",
+        "uk": "Vereinigtes Königreich",
+        "australia": "Australien",
+        "germany": "Deutschland"
+      },
+      "checkIfYouNeedVisa": "Überprüfen Sie, ob Sie ein Visum benötigen",
+      "passportRankings": "Pass-Ranglisten",
+      "passportRanking": "Pass-Rangliste",
+      "rank": "Rang",
+      "visaFreeDestinations": "Visumfreie Reiseziele",
+      "visaRequiredDestinations": "Visumpflichtige Reiseziele",
+      "visaOnArrivalDestinations": "Reiseziele mit Visum bei Ankunft",
+      "etaDestinations": "Reiseziele mit elektronischer Reisegenehmigung (eTA)",
+      "visaOnlineDestinations": "E-Visa Reiseziele",
+      "explorePassportRanking": "Pass-Rangliste erkunden",
+      "explorePassportRankingDesc": "Entdecken Sie die Stärke Ihres Passes, welche Länder Sie ohne Visum besuchen können und welche die stärksten Pässe der Welt sind.",
+      "mostPowerfulPassports": "Die mächtigsten Pässe",
+      "doINeedAVisa": "Benötige ich ein Visum?",
+      "doINeedAVisaDesc": "Finden Sie heraus, ob Sie ein Visum benötigen, um zu Ihrem gewünschten Ziel zu reisen",
+      "iHaveAVisaFrom": "Ich habe ein Visum von",
+      "iWantToTravelTo": "Ich möchte reisen nach",
+      "viewVisaFreeCountries": "Visumfreie Länder anzeigen",
+      "checking": "Prüfen...",
+      "visaIsRequired": "Visum ist erforderlich",
+      "visaFree": "Visumfrei",
+      "eVisaIsRequired": "e-Visum ist erforderlich",
+      "visaOnArrivalIsRequired": "Visum bei Ankunft ist erforderlich",
+      "etaRequired": "eTA erforderlich",
+      "noAdmission": "Keine Zulassung",
+      "visaNotRequired": "Visum nicht erforderlich",
+      "noDataAvailable": "Keine Daten verfügbar",
+      "forCitizensOf": "für Bürger von",
+      "toTravelTo": "um zu reisen nach",
+      "faqs": {
+        "title": "FAQs",
+        "desc": "Hier finden Sie Antworten auf einige der am häufigsten gestellten Fragen zur Passbewertung und zu Visa.",
+        "question1": "Was sind visumfreie Länder?",
+        "answer1": "Visumfreie Länder sind Reiseziele, die Passinhaber ohne vorherige Visumbeantragung betreten können. Alle Reisenden in visumfreie Länder müssen jedoch einen gültigen Reisepass oder Personalausweis mit sich führen, um ihre Nationalität und Identität während ihrer gesamten Reise nachzuweisen.",
+        "question2": "Was bedeutet Pass-Rangliste?",
+        "answer2": "Der Rang eines Passes (Pass-Rangliste) bezieht sich auf die Position, die der Pass im Gesamtindex der Pass-Rangliste einnimmt. Verglichen mit den Pässen anderer Länder auf der ganzen Welt hängt die Stärke eines Passes von der Gesamtpunktzahl für die Mobilität ab, die der Pass seinen Inhabern bietet. Diese wird gemessen an der Gesamtzahl der Länder, in die sein Passinhaber entweder ohne Visum (visumfreier Zugang), mit einem Visum bei Ankunft oder mit einer elektronischen Reisegenehmigung reisen kann. Je größer die Anzahl dieser Reiseziele, desto höher die Gesamtpunktzahl für die Freizügigkeit und desto stärker der Pass.",
+        "question3": "Welche verschiedenen Arten von Pässen gibt es?",
+        "answer3": "Es gibt viele Arten von Pässen, darunter gewöhnliche Pässe, offizielle Pässe, Diplomatenpässe, Dienstpässe und Notfallpässe.",
+        "question4": "Benötige ich einen Reisepass?",
+        "answer4": "Ja, Sie benötigen einen Reisepass, wenn Sie in ein anderes Land reisen möchten. Es gibt jedoch seltene Fälle, in denen einige Länder Bürgern anderer spezifischer Länder gestatten, ihr Hoheitsgebiet nur mit einem nationalen Personalausweis (ID) anstelle eines Reisepasses zu betreten.",
+        "question5": "Benötige ich ein Visum?",
+        "answer5": "Ein Visum ist erforderlich, wenn das Land, das Sie besuchen möchten, verlangt, dass Sie vor der Einreise ein Visum beantragen.",
+        "question6": "Was ist ein biometrischer Reisepass?",
+        "answer6": "Ein biometrischer Reisepass oder elektronischer Reisepass ähnelt einem gewöhnlichen Reisepass. Der Unterschied besteht darin, dass er einen Smartchip in seinem Umschlag oder auf einer seiner Seiten enthält, der die Daten des Passinhabers enthält. Biometrische Pässe wurden als Reaktion auf die wachsende Bedrohung durch Identitätsdiebstahl und Bedrohungen der nationalen Sicherheit geschaffen."
+      }
+    },
+
+    "visaRequirements": {
+      "title": "Visabestimmungen",
+      "desc": "Informieren Sie sich über die Visabestimmungen für Ihr Zielland.",
+      "visaFree": {
+        "title": "Pass-Visumfreie Länder",
+        "desc1": "Passinhaber können in verschiedene Länder auf der ganzen Welt reisen, jedes mit unterschiedlichen Visabestimmungen. Dieser umfassende Leitfaden bietet detaillierte Informationen zu den Reisezielen, die Bürger dieses Landes ohne vorheriges Visum besuchen können, einschließlich Listen visumfreier Länder, Länder mit Visum bei Ankunft und Länder mit elektronischer Reisegenehmigung (eTA). Darüber hinaus enthält dieser Leitfaden Details zu Reisezielen, die für Passinhaber dieses Landes ein vorheriges Visum erfordern, einschließlich elektronischer Visa (eVisas) und regulärer Visa.",
+        "desc2": "Was sind die visumfreien Länder für",
+        "desc3": "Passinhaber?",
+        "desc4": "Passinhaber können ohne Visum in die folgenden",
+        "desc5": "Länder reisen:",
+        "desc6": "Die obige Liste zeigt alle von der Visumpflicht befreiten Länder für {{ country }}-Bürger. Es ist jedoch wichtig zu erkennen, dass die Aufenthaltsdauer und die zulässigen Reisezwecke für {{ country }}-Bürger in jedem Land den jeweiligen Visabestimmungen des Landes unterliegen. Es ist wichtig, dass {{ country }}-Passinhaber überprüfen, ob ein Visum für längere Aufenthalte als die zulässige Aufenthaltsdauer oder für Zwecke erforderlich ist, die nicht unter die Visumbefreiungsrichtlinie des Ziellandes fallen."
+      },
+      "visaOnArrival": {
+        "title": "Welche Länder bieten ein Visum bei Ankunft für {{ country }}-Passinhaber an?",
+        "desc1": "{{ country }}-Staatsangehörige haben Anspruch auf ein Visum bei Ankunft in den folgenden {{ count }} Ländern. In den meisten Fällen kann ein Visum bei der Ankunft am Flughafen oder Grenzübergang ausgestellt werden. Gebühren, Gültigkeit und zulässige Aufenthaltsdauer können variieren.",
+        "desc2": "Bei der Ankunft am Einwanderungskontrollpunkt im Zielland müssen Reisende möglicherweise die erforderlichen Papiere ausfüllen, alle erforderlichen Dokumente vorlegen und die entsprechende Visumgebühr entrichten. Der Einwanderungsbeamte stellt anschließend das Visum aus, das dem Besucher die Genehmigung erteilt, für die angegebene Dauer und den angegebenen Zweck in das Land einzureisen und sich dort aufzuhalten."
+      },
+      "eTA": {
+        "title": "Länder mit elektronischer Reisegenehmigung (eTA) für {{ country }}-Bürger",
+        "desc1": "{{ country }}-Passinhaber können vor dem Besuch der folgenden {{ count }} Länder eine elektronische Reisegenehmigung (eTA) erhalten. Eine eTA ist ein digitales Reisedokument, das für berechtigte Reisende erforderlich ist, die für ein bestimmtes Land von der Visumpflicht befreit sind, und kann vor der Reise online beantragt werden.",
+        "desc2": "Viele Länder mit eTA-Systemen haben ein optimiertes und effizientes Antragsverfahren, wobei die Genehmigung oft innerhalb von Stunden oder wenigen Tagen erteilt wird. Es ist wichtig zu beachten, dass die Berechtigung für eine eTA je nach Staatsangehörigkeit des Reisenden und Zielland variiert. Reisenden wird empfohlen, vor der Planung ihrer Reise immer die spezifischen Einreisebestimmungen des Ziellandes zu überprüfen."
+      },
+      "eVisa": {
+        "title": "In welchen Ländern müssen {{ country }}-Bürger ein E-Visum beantragen?",
+        "desc1": "Die folgenden {{ count }} Länder verlangen von {{ country }}-Staatsangehörigen, dass sie vor der Reise ein elektronisches Visum (eVisa) beantragen. Ein eVisa ist ein digitales Visum, das online beantragt und in den meisten Fällen an die E-Mail-Adresse des Antragstellers gesendet werden kann. Bearbeitungszeiten, Gebühren und Gültigkeit können von Land zu Land unterschiedlich sein.",
+        "desc2": "Der Erhalt eines eVisa umfasst in der Regel das Ausfüllen eines Online-Formulars, die Angabe von persönlichen Daten und Passinformationen, das Hochladen der erforderlichen Dokumente (z. B. ein Passfoto) und die Zahlung der Visumgebühr. Sobald der Antrag geprüft und genehmigt wurde, wird das E-Visum dem Antragsteller in der Regel per E-Mail in einem PDF- oder einem anderen elektronischen Format zugesandt. Der Reisende muss möglicherweise eine Kopie ausdrucken und auf Reisen mitnehmen. Die Anforderungen für E-Visa können je nach Staatsangehörigkeit des Reisenden und Zielland variieren. Es ist wichtig, die spezifischen Visabestimmungen für Ihr Zielland zu überprüfen, bevor Sie Ihre Reise planen."
+      },
+      "visaRequired": {
+        "title": "Liste der Länder, die für {{ country }}-Bürger ein Visum benötigen",
+        "desc1": "{{ country }}-Passinhaber müssen vor der Reise in die folgenden {{ count }} Länder ein reguläres Visum beantragen:",
+        "desc2": "Die Bearbeitungszeiten, Gebühren und erforderlichen Dokumente für Visa variieren je nach Staatsangehörigkeit des Reisenden und Zielland. Um ein Visum zu erhalten, müssen Reisende in der Regel bei der Botschaft oder dem Konsulat des Ziellandes in ihrem Herkunfts- oder Wohnsitzland einen Antrag stellen und die erforderlichen Dokumente wie Reisepass, Fotos, Reiseplan, Nachweis über finanzielle Mittel und andere relevante Informationen vorlegen. Es ist wichtig, die spezifischen Visabestimmungen für Ihr Zielland zu überprüfen, bevor Sie Ihre Reise planen, um sicherzustellen, dass Sie über die entsprechenden Dokumente und Genehmigungen für Ihren Besuch verfügen.",
+        "desc3": "Die obigen Listen der visumfreien Reiseziele für Passinhaber dieses Landes können sich von Zeit zu Zeit aufgrund von Visabkommen zwischen Ländern, vorübergehenden Reisebeschränkungen und von Ländern auferlegten Einreisebestimmungen ändern. Es wird empfohlen, vor der Reise nach zusätzlichen Anforderungen oder vorübergehenden Beschränkungen zu suchen, die von Ihrem Zielland auferlegt werden können."
+      }
+    },
+    "compareCountries": {
+      "compare": "Vergleichen",
+      "comparison": "Vergleich",
+      "overview": "Überblick",
+      "internetSpeed": "Internetgeschwindigkeit",
+      "publicTransportEfficiency": "Effizienz des öffentlichen Nahverkehrs",
+      "workAndLifeBalance": "Work-Life-Balance",
+      "population": "Bevölkerung",
+      "dialingCodes": "Vorwahl",
+      "languages": "Sprachen",
+      "costOfLiving": "Lebenshaltungskosten",
+      "taxesAndFinances": "Steuern & Finanzen",
+      "taxType": "Steuerart",
+      "corporateTax": "Körperschaftssteuer",
+      "federalTax": "Bundessteuer",
+      "incomeTax": "Einkommensteuer",
+      "federalRate": "Bundessatz",
+      "communalRate": "Gemeindesatz",
+      "visaAndImmigration": "Visa & Einwanderung",
+      "longStays": "Langzeitaufenthalte",
+      "shortStays": "Kurzaufenthalte",
+      "passportAndVisas": "Reisepass & Visa",
+      "summary": "Zusammenfassung",
+      "recommendations": "Empfehlungen",
+      "attribute": "Attribut",
+      "passportVisaInfo": "Reisepass & Visa",
+      "internetSpeedDownload": "Internetgeschwindigkeit (Download)",
+      "internetSpeedUpload": "Internetgeschwindigkeit (Upload)",
+      "internetSpeedRanking": "Internetgeschwindigkeits-Ranking",
+      "workLifeBalance": "Work-Life-Balance",
+      "dialingCode": "Telefonvorwahl"
     }
   },
   "drawers": {
@@ -491,7 +926,7 @@
     }
   },
   "footer": {
-    "topCountries": "Top-Länder",
+    "topCountries": "Top Länder",
     "sitemap": "Sitemap",
     "company": "Unternehmen",
     "terms": "Bedingungen",
@@ -514,8 +949,29 @@
     "taxesRankings": "Steuerranglisten",
     "residencyPermit": "Aufenthaltsgenehmigung"
   },
+  "cookieConsentModal": {
+    "title": "Wir schätzen Ihre Privatsphäre",
+    "description": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern, personalisierte Anzeigen oder Inhalte bereitzustellen und unseren Traffic zu analysieren. Indem Sie auf „Alle akzeptieren“ klicken, stimmen Sie unserer Verwendung von Cookies zu. Lesen Sie unsere {{ privacyPolicy }} für weitere Informationen.",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "accept": "Ich akzeptiere",
+    "decline": "Ablehnen",
+    "necessaryCookies": "Notwendige Cookies",
+    "necessaryCookiesMessage": "Diese Cookies sind unerlässlich, damit die Website ordnungsgemäß funktioniert. Sie gewährleisten grundlegende Funktionen und Sicherheitsmerkmale der Website, anonym.",
+    "analyticsCookies": "Analyse-Cookies",
+    "analyticsCookiesMessage": "Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden.",
+    "marketingCookies": "Marketing-Cookies",
+    "marketingCookiesMessage": "Diese Cookies werden verwendet, um Besucher über Websites hinweg zu verfolgen. Ziel ist es, Anzeigen anzuzeigen, die für den einzelnen Nutzer relevant und ansprechend sind und dadurch für Publisher und Drittanbieter-Werbetreibende wertvoller sind.",
+    "rejectAll": "Alle ablehnen",
+    "acceptAll": "Alle akzeptieren",
+    "savePreferences": "Einstellungen speichern",
+    "manageTitle": "Cookies verwalten",
+    "manageMessage": "Hier können Sie Ihre Cookie-Einstellungen verwalten. Bitte beachten Sie, dass das Blockieren einiger Arten von Cookies Ihre Erfahrung auf unserer Website beeinträchtigen kann.",
+    "managePreferences": "Einstellungen verwalten",
+    "analytics": "Analytik",
+    "advertisment": "Werbung"
+  },
   "toast": {
-    "thanksNewsletter": "Vielen Dank für das Abonnieren unseres Newsletters!",
+    "thanksNewsletter": "Vielen Dank für Ihre Anmeldung zu unserem Newsletter!",
     "linkCopied": "Link in die Zwischenablage kopiert!",
     "linkCopyFailed": "Link konnte nicht kopiert werden",
     "newSessionStarted": "Neue Sitzung gestartet",
@@ -526,7 +982,17 @@
     "sessionDeleteSuccess": "Sitzung erfolgreich gelöscht!",
     "sessionRenameSuccess": "Sitzung erfolgreich umbenannt!",
     "sessionRenameFailed": "Sitzung konnte nicht umbenannt werden. Bitte versuchen Sie es erneut.",
-    "enterSessionName": "Geben Sie einen neuen Namen für diese Sitzung ein:"
+    "enterSessionName": "Geben Sie einen neuen Namen für diese Sitzung ein:",
+    "addedCountryToFavorites": "Land zu Favoriten hinzugefügt",
+    "removedCountryFromFavorites": "Land aus Favoriten entfernt",
+    "profileUpdated": "Profil erfolgreich aktualisiert!",
+    "profileUpdateFailed": "Profil konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "imageSizeShouldBeLess": "Die Bildgröße sollte weniger als {{ size }} betragen",
+    "pleaseSelectImage": "Bitte wählen Sie ein Bild aus",
+    "fullNameRequired": "Der vollständige Name ist erforderlich",
+    "usernameRequired": "Der Benutzername ist erforderlich",
+    "failedToCreateCheckout": "Fehler beim Erstellen der Checkout-Sitzung. Bitte versuchen Sie es erneut.",
+    "redirectingToCheckout": "Weiterleitung zur Checkout-Seite..."
   },
   "formErrors": {
     "invalidEmail": "Ungültiges E-Mail-Format",

@@ -1,22 +1,24 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { useEffect, useState } from "react";
 import { GrFavorite } from "react-icons/gr";
-// import { useFavorites } from "@/context/favorites-context";
 import CountriesDashCard from "@/components/cards/CountriesDashCard";
 import SearchInput from "@/components/inputs/SearchInput";
 import { useCountryData } from "@/context/CountryDataContext";
 import nigeria from "../../assets/images/nigeria.png";
 import swizerland from "../../assets/images/swizerland.png";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { getCountryCode } from "@/data/country-translations";
+import { loadCountryImages } from "@/lib/country-images";
 
 function Favorites() {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [countryImages, setCountryImages] = useState({});
 
   const { favourites } = useCountryData();
   const { t } = useTranslation();
-
-  // const { toggleFavorite } = useFavorites(); // uncomment if needed
+  const navigate = useNavigate();
 
   const filteredFavorites =
     favourites?.filter((country) =>
@@ -24,11 +26,14 @@ function Favorites() {
     ) || [];
 
   useEffect(() => {
-    // Optional: handle errors if needed
     if (!favourites) {
       setError(new Error("Favorites not found"));
     }
   }, [favourites]);
+
+  useEffect(() => {
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, []);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -58,20 +63,27 @@ function Favorites() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 py-10">
+        <div className="grid grid-cols-2 xl:grid-cols-4 gap-10 py-10">
           {filteredFavorites.map((country) => (
             <CountriesDashCard
               key={country.countryId}
               id={country.countryId}
+              slug={country.countrySlug}
               location={country.countryName}
               isLiked={country.isLiked}
-              // onLikeToggle={() => toggleFavorite(item)}
               onClick={() =>
-                navigate(`/user/countries/${country.countryId}`, {
+                navigate(`/user/countries/${country.countrySlug}`, {
                   state: country.countryFlag,
-                })``
+                })
               }
-              images={[swizerland, nigeria, swizerland, nigeria]}
+              images={
+                countryImages[getCountryCode(country.countrySlug)] &&
+                countryImages[getCountryCode(country.countrySlug)].length > 0
+                  ? countryImages[getCountryCode(country.countrySlug)]
+                  : country.countryImages?.length > 0
+                  ? country.countryImages
+                  : [swizerland, nigeria, swizerland, nigeria]
+              }
               countryFlag={country.countryFlag}
             />
           ))}

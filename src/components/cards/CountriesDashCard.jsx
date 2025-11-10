@@ -11,6 +11,7 @@ import { GoHeart } from "react-icons/go";
 import { useCountryData } from "@/context/CountryDataContext";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
+import { getCountryName } from "@/data/country-translations";
 
 // Custom CarouselIndicators component
 const CarouselIndicators = ({ currentIndex, total, onClick }) => {
@@ -31,9 +32,9 @@ const CarouselIndicators = ({ currentIndex, total, onClick }) => {
 
 export default function CountriesDashCard({
   id,
+  slug,
   onClick,
   images,
-  location,
   countryFlag,
   sm = true,
   isLiked,
@@ -172,7 +173,7 @@ export default function CountriesDashCard({
       >
         <img
           src={
-            location === "Afghanistan"
+            slug === "afghanistan"
               ? "https://flagcdn.com/w320/af.png"
               : countryFlag
           }
@@ -180,11 +181,7 @@ export default function CountriesDashCard({
           alt="Country Flag"
         />
         <span className="text-sm sm:text-base">
-          {selectedLanguage.name === "English" ||
-          t(`userDashboard.continents.countries.${location}`) ===
-            `userDashboard.continents.countries.${location}`
-            ? location
-            : t(`userDashboard.continents.countries.${location}`)}
+          {getCountryName(slug, selectedLanguage?.code || "deu")}
         </span>
       </div>
     </div>

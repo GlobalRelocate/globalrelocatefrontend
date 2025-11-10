@@ -1,8 +1,8 @@
+import axios from "axios";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import swizerland from "../../assets/images/swizerland.png";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BiHeart } from "react-icons/bi";
 import { PiShare } from "react-icons/pi";
 import { useCountryData } from "@/context/CountryDataContext";
 import { useState, useEffect } from "react";
@@ -19,31 +19,88 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
+import { getCountryName, getCountryCode } from "@/data/country-translations";
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
+import { CountryAiChatProvider } from "@/context/CountryAIChatContext";
+import CountriesAIAssistant from "@/components/common/countries-ai-assistant";
+import { CarouselIndicators } from "@/lib/helpers";
+import { loadCountryImages } from "@/lib/country-images";
+import { formatTextToParagraphs } from "@/utils/formatText";
+
+const apiURL = import.meta.env.VITE_API_URL;
 
 function CountryDetails() {
   const { id } = useParams();
   const { t } = useTranslation();
-  const { singleCountry, loading, getSingleCountry, favourites } =
-    useCountryData();
+  const {
+    singleCountry,
+    loading,
+    getSingleCountry,
+    favourites,
+    addCountryToFavourite,
+    removeCountryFromFavourite,
+  } = useCountryData();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [api, setApi] = useState();
   const [count, setCount] = useState(0);
   const { selectedLanguage } = useLanguage();
-
   const [countryData, setCountryData] = useState(null);
+  const [countryCode, setCountryCode] = useState(null);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [passportRanking, setPassportRanking] = useState();
+  const [countryImages, setCountryImages] = useState({});
 
   useEffect(() => {
     if (id) {
       getSingleCountry(id, selectedLanguage.name);
     }
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (singleCountry) {
       setCountryData(singleCountry);
+      setCountryCode(getCountryCode(singleCountry?.slug));
     }
   }, [singleCountry]);
+
+  const fetchPassportRanking = async () => {
+    try {
+      const [response, visaFreeAccess] = await Promise.all([
+        axios.get(`https://api.henleypassportindex.com/api/v2/hpp`),
+        axios.get(
+          `https://api.henleypassportindex.com/api/v3/visa-single/${countryCode.toLowerCase()}`
+        ),
+      ]);
+
+      // Find the specific country in the response
+      const country = response.data.find((item) => item.code === countryCode);
+
+      if (country && visaFreeAccess) {
+        setPassportRanking({
+          rank: country.hpp_rank,
+          code: country.code,
+          visaFreeCount: visaFreeAccess.data.visa_free_access?.length || 0,
+          visaOnArrivalCount: visaFreeAccess.data.visa_on_arrival?.length || 0,
+          etaCount:
+            visaFreeAccess.data.electronic_travel_authorisation?.length || 0,
+          visaRequiredCount: visaFreeAccess.data.visa_required?.length || 0,
+          visaOnlineCount: visaFreeAccess.data.visa_online?.length || 0,
+        });
+      } else {
+        setPassportRanking(null);
+      }
+    } catch (error) {
+      console.error("Error fetching passport ranking:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (countryCode) {
+      fetchPassportRanking();
+    }
+  }, [countryCode]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -57,35 +114,34 @@ function CountryDetails() {
         console.error("Sharing failed:", error);
       }
     } else {
-      console.log("Your browser does not support the Share API");
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => {
+          toast(t("toast.linkCopied"));
+        })
+        .catch((error) => {
+          console.error("Failed to copy link:", error);
+        });
     }
   };
 
-  // const checkFavorites = () => {
-  //   if (favourites || favourites.length > 0) {
-  //     console.log(
-  //       favourites.some(
-  //         (country) => country.countryName === singleCountry?.name
-  //       )
-  //     );
-  //   }
-  // };
+  const checkFavorites = (id) => {
+    if (favourites && favourites.length > 0) {
+      return favourites.some((country) => country.countryId === id);
+    } else {
+      return false;
+    }
+  };
 
-  // Custom CarouselIndicators component
-  const CarouselIndicators = ({ currentIndex, total, onClick }) => {
-    return (
-      <div className="flex absolute bottom-4 left-1/2 transform -translate-x-1/2 justify-center mt-2">
-        {Array.from({ length: total }).map((_, index) => (
-          <button
-            key={index}
-            className={`w-6 h-1 shadow rounded-md mx-1 ${
-              currentIndex === index ? "bg-black" : "bg-gray-300"
-            }`}
-            onClick={() => onClick(index)}
-          />
-        ))}
-      </div>
-    );
+  const toggleFavorite = async (id) => {
+    setFavoriteLoading(true);
+    if (checkFavorites(id)) {
+      await removeCountryFromFavourite(id);
+      setFavoriteLoading(false);
+    } else {
+      await addCountryToFavourite(id);
+      setFavoriteLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -100,6 +156,21 @@ function CountryDetails() {
       setCurrentIndex(api.selectedScrollSnap());
     });
   }, [api]);
+
+  useEffect(() => {
+    if (!countryCode) return;
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, [countryCode]);
+
+  const continents = {
+    Africa: t("userDashboard.continents.africa"),
+    Antarctica: t("userDashboard.continents.antarctica"),
+    Asia: t("userDashboard.continents.asia"),
+    Europe: t("userDashboard.continents.europe"),
+    "North America": t("userDashboard.continents.northAmerica"),
+    Oceania: t("userDashboard.continents.oceania"),
+    "South America": t("userDashboard.continents.southAmerica"),
+  };
 
   return (
     <DashboardLayout>
@@ -141,21 +212,37 @@ function CountryDetails() {
                 alt="Country flag"
               />
               <div className="flex flex-col items-start">
-                <h2 className="text-3xl font-medium">{countryData?.name}</h2>
+                <h2 className="text-3xl font-medium">
+                  {getCountryName(
+                    countryData?.slug,
+                    selectedLanguage?.code || "deu"
+                  )}
+                </h2>
                 <span>
                   {t("userDashboard.country.countryIn")}{" "}
-                  {countryData?.continent}
+                  {continents[countryData?.continent] || countryData?.continent}
                 </span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <Button variant="outline" className="rounded-3xl border">
-                {" "}
-                <BiHeart />{" "}
-                {favourites.length > 0
-                  ? t("userDashboard.country.addFavorite")
-                  : t("userDashboard.country.removeFavorite")}
+              <Button
+                variant="outline"
+                className="rounded-3xl border"
+                onClick={() => toggleFavorite(countryData?.id)}
+                disabled={favoriteLoading}
+              >
+                {checkFavorites(countryData?.id) ? (
+                  <>
+                    <i className="fas fa-heart text-destructive mr-2" />
+                    {t("userDashboard.country.removeFavorite")}
+                  </>
+                ) : (
+                  <>
+                    <i className="far fa-heart mr-2" />
+                    {t("userDashboard.country.addFavorite")}
+                  </>
+                )}
               </Button>
               <Button
                 variant="outline"
@@ -178,7 +265,8 @@ function CountryDetails() {
           </>
         ) : (
           <>
-            {countryData?.images.length > 0 ? (
+            {countryImages &&
+            countryImages[getCountryCode(countryData?.slug)] ? (
               <Carousel
                 opts={{
                   loop: true,
@@ -192,17 +280,17 @@ function CountryDetails() {
                 setApi={setApi}
               >
                 <CarouselContent className="rounded-2xl">
-                  {countryData.images.map((item, i) => {
-                    return (
+                  {countryImages[getCountryCode(countryData.slug)]?.map(
+                    (item, i) => (
                       <CarouselItem key={i} className="rounded-2xl pb-6">
                         <img
                           src={item}
-                          alt="Images"
-                          className="w-full h-full mt-5 rounded-2xl"
+                          alt="Country"
+                          className="w-full h-full mt-5 rounded-2xl object-cover"
                         />
                       </CarouselItem>
-                    );
-                  })}
+                    )
+                  )}
                 </CarouselContent>
                 <div className="absolute top-0 bottom-0 left-0 right-0 overflow-hidden">
                   <CarouselPrevious className="absolute left-0 h-full w-[60px] rounded-none bg-transparent border-0 hover:bg-transparent" />
@@ -245,18 +333,25 @@ function CountryDetails() {
                   >
                     {t("userDashboard.country.taxes")}
                   </TabsTrigger>
+                  <TabsTrigger
+                    value="ai-assistant"
+                    className="rounded-3xl data-[state=active]:bg-black data-[state=active]:text-white bg-white text-black border border-black shadow-none flex-shrink-0"
+                  >
+                    {t("userDashboard.ai.title")}
+                  </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview">
                   <h2 className="font-medium text-2xl my-7">
-                    <i className="far fa-note mr-2" /> {countryData.name}{" "}
+                    <i className="far fa-note mr-2" />{" "}
+                    {getCountryName(countryData?.slug, selectedLanguage.code)}{" "}
                     {t("userDashboard.country.overview")}
                   </h2>
-                  <p className="text-[#222222]">
+                  <div className="text-[#222222] prose prose-md max-w-none leading-relaxed">
                     {countryData.overview === "No overview available"
                       ? t("userDashboard.country.noOverview")
-                      : countryData.overview}
-                  </p>
+                      : formatTextToParagraphs(countryData.overview)}
+                  </div>
 
                   <div className="mt-20 mb-6">
                     <hr />
@@ -338,14 +433,15 @@ function CountryDetails() {
                           <i className="far fa-signal mr-2" />{" "}
                           {t("userDashboard.country.internetSpeed")}
                         </h3>
-                        <div className="mt-4">
+                        <div className="mt-8">
                           <p>
-                            {countryData.additionalInfo.internetSpeed ??
-                              t("userDashboard.country.noDataAvailable")}
+                            {formatTextToParagraphs(
+                              countryData.CountryAdditionalInfo.internetSpeed
+                            ) ?? t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
 
-                        <div className="mt-4">
+                        <div className="mt-8">
                           <h3 className="text-md font-semibold mb-3">
                             <i className="far fa-train mr-2" />{" "}
                             {t(
@@ -353,10 +449,214 @@ function CountryDetails() {
                             )}
                           </h3>
                           <p>
-                            {countryData.additionalInfo
+                            {countryData.CountryAdditionalInfo
                               .publicTransportEfficiency
-                              ? countryData.additionalInfo
-                                  .publicTransportEfficiency
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .publicTransportEfficiency
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-school mr-2" />{" "}
+                            {t("userDashboard.country.compulsorySchooling")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo
+                              .compulsorySchooling &&
+                            countryData.CountryAdditionalInfo
+                              .compulsorySchooling !== "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .compulsorySchooling
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-school mr-2" />{" "}
+                            {t("userDashboard.country.homeSchooling")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.homeschooling &&
+                            countryData.CountryAdditionalInfo.homeSchooling !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .homeschooling
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-cat mr-2" />{" "}
+                            {t("userDashboard.country.animalTransport")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo
+                              .animalTransport &&
+                            countryData.CountryAdditionalInfo
+                              .animalTransport !== "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .animalTransport
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-star-of-life mr-2" />{" "}
+                            {t("userDashboard.country.quarantine")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.quarantine &&
+                            countryData.CountryAdditionalInfo.quarantine !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.quarantine
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-syringe mr-2" />{" "}
+                            {t("userDashboard.country.vaccinationRequirements")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo
+                              .vaccinationRequirements &&
+                            countryData.CountryAdditionalInfo
+                              .vaccinationRequirements !== "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .vaccinationRequirements
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-files mr-2" />{" "}
+                            {t("userDashboard.country.necessaryDocuments")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo
+                              .necessaryDocuments &&
+                            countryData.CountryAdditionalInfo
+                              .necessaryDocuments !== "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .necessaryDocuments
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-train mr-2" />{" "}
+                            {t("userDashboard.country.transportCosts")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.transportCosts &&
+                            countryData.CountryAdditionalInfo.transportCosts !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo
+                                    .transportCosts
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-graduation-cap mr-2" />{" "}
+                            {t("userDashboard.country.education")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.education &&
+                            countryData.CountryAdditionalInfo.education !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.education
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-soccer-ball mr-2" />{" "}
+                            {t("userDashboard.country.sport")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.sport &&
+                            countryData.CountryAdditionalInfo.sport !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.sport
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-music mr-2" />{" "}
+                            {t("userDashboard.country.music")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.music &&
+                            countryData.CountryAdditionalInfo.music !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.music
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-spa mr-2" />{" "}
+                            {t("userDashboard.country.adaptation")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.adaptation &&
+                            countryData.CountryAdditionalInfo.adaptation !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.adaptation
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+
+                        <div className="mt-8">
+                          <h3 className="text-md font-semibold mb-3">
+                            <i className="far fa-user mr-2" />{" "}
+                            {t("userDashboard.country.racism")}
+                          </h3>
+                          <p>
+                            {countryData.CountryAdditionalInfo.racism &&
+                            countryData.CountryAdditionalInfo.racism !==
+                              "Unknown"
+                              ? formatTextToParagraphs(
+                                  countryData.CountryAdditionalInfo.racism
+                                )
                               : t("userDashboard.country.noDataAvailable")}
                           </p>
                         </div>
@@ -373,7 +673,11 @@ function CountryDetails() {
                       </h2>
                       <div className="rounded-2xl w-full">
                         <iframe
-                          src={`https://maps.google.com/maps?q=${countryData.name}&hl=en&z=6&maptype=satellite&output=embed`}
+                          src={`https://maps.google.com/maps?q=${
+                            countryData.name
+                          }&hl=en&z=${
+                            countryData.slug === "canada" ? 3 : 5
+                          }&maptype=satellite&output=embed`}
                           className="w-full h-[450px] rounded-3xl outline-none"
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
@@ -395,7 +699,7 @@ function CountryDetails() {
                           {t("userDashboard.country.summary")}
                         </h3>
                         <p>
-                          {countryData.additionalInfo.qualityOfLife ??
+                          {countryData.CountryAdditionalInfo.qualityOfLife ??
                             t("userDashboard.country.noDataAvailable")}
                         </p>
                       </div>
@@ -409,7 +713,7 @@ function CountryDetails() {
                         <i className="far fa-user-tie mr-2" />{" "}
                         {t("userDashboard.country.costOfLiving")}
                       </h2>
-                      <div className="mt-4">
+                      <div className="mt-8">
                         <h3 className="text-md font-semibold mb-3">
                           {t("userDashboard.country.averageCost")}
                         </h3>
@@ -419,12 +723,97 @@ function CountryDetails() {
                         </p>
                       </div>
 
-                      <div className="mt-4">
+                      <div className="mt-8">
                         <h3 className="text-md font-semibold mb-3">
-                          {t("userDashboard.country.summary")}
+                          {t("userDashboard.country.mostExpensiveCity")}
                         </h3>
                         <p>
-                          {countryData.costOfLiving.summary ??
+                          {countryData.costOfLiving.mostExpensiveCity ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.cheapestCity")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.cheapestCity ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.mostExpensiveStates")}
+                        </h3>
+                        <p>
+                          {countryData.mostExpensiveStates
+                            ? countryData.mostExpensiveStates.map(
+                                (state, index) => (
+                                  <div key={index} className="my-2">
+                                    <h3 className="font-semibold">
+                                      {index + 1}.{" "}
+                                      <span className="ml-1">{state.name}</span>
+                                    </h3>
+                                    {state.details && (
+                                      <p className="ml-[22px]">
+                                        - {state.details}
+                                      </p>
+                                    )}
+                                  </div>
+                                )
+                              )
+                            : t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.rentPerMonth")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.rentPerMonth ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.howToFindApartment")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.howToFindApartment ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.food")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.food ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.mobilePhonePlan")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.mobilePhonePlan ??
+                            t("userDashboard.country.noDataAvailable")}
+                        </p>
+                      </div>
+
+                      <div className="mt-8">
+                        <h3 className="text-md font-semibold mb-3">
+                          {t("userDashboard.country.childCare")}
+                        </h3>
+                        <p>
+                          {countryData.costOfLiving.childCare ??
                             t("userDashboard.country.noDataAvailable")}
                         </p>
                       </div>
@@ -443,7 +832,7 @@ function CountryDetails() {
                           {t("userDashboard.country.summary")}
                         </h3>
                         <p>
-                          {countryData.additionalInfo.workLifeBalance ??
+                          {countryData.CountryAdditionalInfo.workLifeBalance ??
                             t("userDashboard.country.noDataAvailable")}
                         </p>
                       </div>
@@ -462,7 +851,8 @@ function CountryDetails() {
                           {t("userDashboard.country.summary")}
                         </h3>
                         <p>
-                          {countryData.additionalInfo.worldHappinessIndex ??
+                          {countryData.CountryAdditionalInfo
+                            .worldHappinessIndex ??
                             t("userDashboard.country.noDataAvailable")}
                         </p>
                       </div>
@@ -472,8 +862,9 @@ function CountryDetails() {
                           {t("userDashboard.country.whiScore")}
                         </h3>
                         <p>
-                          {countryData.additionalInfo.worldHappinessIndexScore
-                            ? `${countryData.additionalInfo.worldHappinessIndexScore}/10`
+                          {countryData.CountryAdditionalInfo
+                            .worldHappinessIndexScore
+                            ? `${countryData.CountryAdditionalInfo.worldHappinessIndexScore}/10`
                             : t("userDashboard.country.noDataAvailable")}
                         </p>
                       </div>
@@ -498,8 +889,230 @@ function CountryDetails() {
                           <p>
                             {countryData.visaAndImmigration.passportsAndVisas}
                           </p>
+
+                          <div className="mt-10">
+                            <h3 className="font-semibold text-lg">
+                              {t("userDashboard.visaIndex.passportRanking")}
+                            </h3>
+                            <div className="flex items-center justify-start gap-x-6 flex-wrap gap-y-2">
+                              <div className="rounded-lg h-[250px] w-[180px] my-5">
+                                <img
+                                  src={`${apiURL}/image/fetch/${countryCode.toLowerCase()}`}
+                                  alt={countryData?.slug}
+                                  className="w-full h-full"
+                                />
+                              </div>
+
+                              <div>
+                                <p>
+                                  <h3 className="font-medium text-lg">
+                                    {t("userDashboard.visaIndex.rank")}{" "}
+                                    {passportRanking?.rank} (
+                                    <Link
+                                      to={`/visa-requirements/${countryCode.toLowerCase()}`}
+                                      className="hover:underline hover:underline-offset-4"
+                                    >
+                                      {t("userDashboard.countries.view")}
+                                    </Link>
+                                    )
+                                  </h3>
+                                </p>
+                                <p>
+                                  {t(
+                                    "userDashboard.visaIndex.visaFreeDestinations"
+                                  )}{" "}
+                                  -{" "}
+                                  <span className="font-semibold">
+                                    {passportRanking?.visaFreeCount}{" "}
+                                    {t("userDashboard.countries.title")}
+                                  </span>{" "}
+                                  (
+                                  <Link
+                                    to={`/visa-requirements/${countryCode.toLowerCase()}#visa-free`}
+                                    className="hover:underline hover:underline-offset-4"
+                                  >
+                                    {t("userDashboard.countries.view")}
+                                  </Link>
+                                  )
+                                </p>
+                                <p>
+                                  {t(
+                                    "userDashboard.visaIndex.visaRequiredDestinations"
+                                  )}{" "}
+                                  -{" "}
+                                  <span className="font-semibold">
+                                    {passportRanking?.visaRequiredCount}{" "}
+                                    {t("userDashboard.countries.title")}
+                                  </span>{" "}
+                                  (
+                                  <Link
+                                    to={`/visa-requirements/${countryCode.toLowerCase()}#visa-required`}
+                                    className="hover:underline hover:underline-offset-4"
+                                  >
+                                    {t("userDashboard.countries.view")}
+                                  </Link>
+                                  )
+                                </p>
+                                <p>
+                                  {t(
+                                    "userDashboard.visaIndex.visaOnArrivalDestinations"
+                                  )}{" "}
+                                  -{" "}
+                                  <span className="font-semibold">
+                                    {passportRanking?.visaOnArrivalCount}{" "}
+                                    {t("userDashboard.countries.title")}
+                                  </span>{" "}
+                                  (
+                                  <Link
+                                    to={`/visa-requirements/${countryCode.toLowerCase()}#visa-on-arrival`}
+                                    className="hover:underline hover:underline-offset-4"
+                                  >
+                                    {t("userDashboard.countries.view")}
+                                  </Link>
+                                  )
+                                </p>
+                                <p>
+                                  {t("userDashboard.visaIndex.etaDestinations")}{" "}
+                                  -{" "}
+                                  <span className="font-semibold">
+                                    {passportRanking?.etaCount}{" "}
+                                    {t("userDashboard.countries.title")}
+                                  </span>{" "}
+                                  (
+                                  <Link
+                                    to={`/visa-requirements/${countryCode.toLowerCase()}#eta`}
+                                    className="hover:underline hover:underline-offset-4"
+                                  >
+                                    {t("userDashboard.countries.view")}
+                                  </Link>
+                                  )
+                                </p>
+                                <p>
+                                  {t(
+                                    "userDashboard.visaIndex.visaOnlineDestinations"
+                                  )}{" "}
+                                  -{" "}
+                                  <span className="font-semibold">
+                                    {passportRanking?.visaOnlineCount}{" "}
+                                    {t("userDashboard.countries.title")}
+                                  </span>{" "}
+                                  (
+                                  <Link
+                                    to={`/visa-requirements/${countryCode.toLowerCase()}#e-visa`}
+                                    className="hover:underline hover:underline-offset-4"
+                                  >
+                                    {t("userDashboard.countries.view")}
+                                  </Link>
+                                  )
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       )}
+
+                      {countryData.visaAndImmigration?.visaTypes && (
+                        <div className="mt-12">
+                          <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
+                            <i className="far fa-passport"></i>{" "}
+                            {t("userDashboard.country.visaTypes")}
+                          </h3>
+
+                          {countryData.visaAndImmigration.visaTypes.length ===
+                          0 ? (
+                            <p>{t("userDashboard.country.noDataAvailable")}</p>
+                          ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                              {countryData.visaAndImmigration.visaTypes.map(
+                                (visa, index) => (
+                                  <div
+                                    key={index}
+                                    className="my-2 rounded-md border border-black p-3"
+                                  >
+                                    <h3 className="font-semibold">
+                                      {index + 1}.{" "}
+                                      <span className="ml-1">{visa.name}</span>
+                                    </h3>
+                                    <p>{visa.description}</p>
+
+                                    <div className="flex flex-wrap items-center gap-x-5 mt-2">
+                                      <span>
+                                        <i className="far fa-calendar mr-1"></i>{" "}
+                                        {visa.duration}
+                                      </span>
+                                      <span>
+                                        <i className="far fa-money-bill-wave mr-2"></i>
+                                        {visa.priceRange}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {countryData.visaAndImmigration?.visaRequirements && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
+                            <i className="far fa-passport"></i>{" "}
+                            {t("userDashboard.country.visaRequirements")}
+                          </h3>
+
+                          <p>
+                            {countryData.visaAndImmigration.visaRequirements
+                              .length > 0
+                              ? countryData.visaAndImmigration.visaRequirements.map(
+                                  (item, index) => (
+                                    <div key={index} className="my-2">
+                                      <h3 className="font-semibold">
+                                        {index + 1}.{" "}
+                                        <span className="ml-1">
+                                          {item.title}
+                                        </span>
+                                      </h3>
+                                      <p className="ml-[22px]">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                  )
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+                      )}
+
+                      {countryData.visaAndImmigration?.applicationProcesses && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
+                            <i className="far fa-passport"></i>{" "}
+                            {t("userDashboard.country.visaApplication")}
+                          </h3>
+
+                          <p>
+                            {countryData.visaAndImmigration.applicationProcesses
+                              .length > 0
+                              ? countryData.visaAndImmigration.applicationProcesses.map(
+                                  (item, index) => (
+                                    <div key={index} className="my-2">
+                                      <h3 className="font-semibold">
+                                        {index + 1}.{" "}
+                                        <span className="ml-1">
+                                          {item.title}
+                                        </span>
+                                      </h3>
+                                      <p className="ml-[22px]">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                  )
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+                      )}
+
                       {countryData.visaAndImmigration?.shortStays && (
                         <div>
                           <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
@@ -509,6 +1122,7 @@ function CountryDetails() {
                           <p>{countryData.visaAndImmigration.shortStays}</p>
                         </div>
                       )}
+
                       {countryData.visaAndImmigration?.longStays && (
                         <div>
                           <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
@@ -518,34 +1132,70 @@ function CountryDetails() {
                           <p>{countryData.visaAndImmigration.longStays}</p>
                         </div>
                       )}
+
+                      {countryData.visaAndImmigration?.obtainCitizenship && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
+                            <i className="far fa-passport"></i>{" "}
+                            {t("userDashboard.country.obtainCitizenship")}
+                          </h3>
+                          <p>
+                            {countryData.visaAndImmigration.obtainCitizenship
+                              .length > 0
+                              ? countryData.visaAndImmigration.obtainCitizenship.map(
+                                  (item, index) => (
+                                    <div key={index} className="my-2">
+                                      <h3 className="font-semibold">
+                                        {index + 1}.{" "}
+                                        <span className="ml-1">
+                                          {item.title}
+                                        </span>
+                                      </h3>
+                                      <p className="ml-[22px]">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                  )
+                                )
+                              : t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        </div>
+                      )}
                       {countryData.visaAndImmigration?.embassies && (
                         <div>
                           <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
                             <i className="far fa-plane-departure"></i>{" "}
                             {t("userDashboard.country.embassies")}
                           </h3>
-                          <ul className="list-disc [&>li]:mt-2 pl-5">
-                            {countryData.visaAndImmigration.embassies.map(
-                              (embassy, index) => (
-                                <li key={index}>
-                                  <span>{embassy.description}</span>
-                                  <div>
-                                    <span className="font-semibold">
-                                      {t("userDashboard.country.link")}:
-                                    </span>{" "}
-                                    <a
-                                      href={embassy.link}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="underline underline-offset-4"
-                                    >
-                                      {embassy.link}
-                                    </a>
-                                  </div>
-                                </li>
-                              )
-                            )}
-                          </ul>
+                          {countryData.visaAndImmigration.embassies.length ===
+                          0 ? (
+                            <p>{t("userDashboard.country.noDataAvailable")}</p>
+                          ) : (
+                            <>
+                              <ul className="list-disc [&>li]:mt-2 pl-5">
+                                {countryData.visaAndImmigration.embassies.map(
+                                  (embassy, index) => (
+                                    <li key={index}>
+                                      <span>{embassy.description}</span>
+                                      <div>
+                                        <span className="font-semibold">
+                                          {t("userDashboard.country.link")}:
+                                        </span>{" "}
+                                        <a
+                                          href={embassy.link}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="underline underline-offset-4"
+                                        >
+                                          {embassy.link}
+                                        </a>
+                                      </div>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </>
+                          )}
                         </div>
                       )}
                       {!countryData.visaAndImmigration?.passportsAndVisas &&
@@ -584,8 +1234,7 @@ function CountryDetails() {
                             {t("userDashboard.country.federalTax")}
                           </span>
                           <p className="mt-3">
-                            {countryData.taxAndFinance?.personalIncomeTax
-                              ?.federalRate ||
+                            {countryData.taxAndFinance?.federalRate ||
                               t("userDashboard.country.notApplicable")}
                           </p>
                         </p>
@@ -594,8 +1243,7 @@ function CountryDetails() {
                             {t("userDashboard.country.communalRate")}
                           </span>
                           <p className="mt-3">
-                            {countryData.taxAndFinance?.personalIncomeTax
-                              ?.communalRate ||
+                            {countryData.taxAndFinance?.communalRate ||
                               t("userDashboard.country.notApplicable")}
                           </p>
                         </p>
@@ -612,6 +1260,22 @@ function CountryDetails() {
                       </div>
                     </div>
                   </div>
+                </TabsContent>
+
+                <TabsContent value="ai-assistant">
+                  <div className="flex flex-col">
+                    <h2 className="font-medium text-2xl my-2">
+                      {t("userDashboard.ai.title")}
+                    </h2>
+                    <p>{t("userDashboard.ai.description")}</p>
+                  </div>
+
+                  <CountryAiChatProvider countrySlug={countryData?.slug}>
+                    <CountriesAIAssistant
+                      countryName={countryData?.name}
+                      countrySlug={countryData?.slug}
+                    />
+                  </CountryAiChatProvider>
                 </TabsContent>
               </Tabs>
             )}

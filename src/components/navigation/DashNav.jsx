@@ -68,7 +68,7 @@ function DashNav({ navState, setNavState }) {
   ];
 
   return (
-    <div className="flex justify-between items-center h-20 px-5 bg-white text-black w-full fixed z-50 top-0">
+    <div className="flex justify-between items-center h-20 pl-[34px] pr-4 bg-white text-black w-full fixed z-50 top-0">
       <div className="flex items-center justify-center gap-8 w-full">
         <div className="flex items-center">
           <div className="mr-2 block sm:hidden">
@@ -88,7 +88,7 @@ function DashNav({ navState, setNavState }) {
             <img
               src={logo}
               alt="Global relocate logo"
-              className="h-12 hidden sm:block ml-5"
+              className="h-12 hidden sm:block"
             />
           </Link>
         </div>
@@ -99,7 +99,7 @@ function DashNav({ navState, setNavState }) {
             <Link
               key={link.href}
               to={link.href}
-              className={`text-sm transition-colors duration-200 px-4 ${
+              className={`transition-colors duration-200 px-4 ${
                 location.pathname === link.href
                   ? "text-black"
                   : "text-[#404040] hover:text-black"
@@ -114,7 +114,7 @@ function DashNav({ navState, setNavState }) {
         <div className="flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center justify-start space-x-1 p-2 rounded-3xl cursor-pointer hover:bg-gray-100 outline-none">
-              <div className="flex text-white items-center justify-center h-7 w-7 rounded-full bg-[#8F8F8F] overflow-hidden">
+              <div className="flex text-white items-center justify-center h-7 w-7 rounded-full bg-[#8F8F8F] overflow-hidden mr-1">
                 {profilePic ? (
                   <img
                     src={profilePic}
@@ -154,12 +154,14 @@ function DashNav({ navState, setNavState }) {
                 {t("landingPage.navbar.privacyPolicy")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer font-bold"
-                onClick={() => navigate("/upgrade")}
-              >
-                {t("landingPage.navbar.upgradePlan")}
-              </DropdownMenuItem>
+              {!user?.isAdmin && (
+                <DropdownMenuItem
+                  className="cursor-pointer font-bold"
+                  onClick={() => navigate("/upgrade")}
+                >
+                  {t("landingPage.navbar.upgradePlan")}
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -180,7 +182,7 @@ function DashNav({ navState, setNavState }) {
             className="hidden sm:flex items-center space-x-2 text-[#404040] hover:text-black transition-colors duration-200"
           >
             <LogOut className="h-5 w-5" />
-            <span>{t("Logout")}</span>
+            <span>{t("landingPage.navbar.logout")}</span>
           </button>
 
           {/* Logout Button - Mobile */}
@@ -195,7 +197,7 @@ function DashNav({ navState, setNavState }) {
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <span>{t("Logout")}</span>
+                <span>{t("landingPage.navbar.logout")}</span>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

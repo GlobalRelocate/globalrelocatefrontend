@@ -1,11 +1,14 @@
 import axiosInstance from "@/config/axiosInstance";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import { loadCountryImages } from "@/lib/country-images";
 
 const CountryDataContext = createContext();
 
 export const CountryDataProvider = ({ children }) => {
   const [countries, setCountries] = useState([]);
+  const [countryImages, setCountryImages] = useState({});
   const [countryList, setCountryList] = useState([]);
   const [compareData, setCompareData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,6 +20,8 @@ export const CountryDataProvider = ({ children }) => {
   const [continent, setContinent] = useState("");
   const [favourites, setFavourites] = useState([]);
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     fetchCountries(true);
   }, [page, search, continent]);
@@ -24,6 +29,27 @@ export const CountryDataProvider = ({ children }) => {
   useEffect(() => {
     getFavouriteCountries();
   }, []);
+
+  const loadImages = async () => {
+    if (Object.keys(countryImages).length === 0) {
+      const images = await loadCountryImages();
+      setCountryImages(images);
+    }
+  };
+
+  useEffect(() => {
+    loadImages();
+  }, []);
+
+  const fetchCountryImages = async (countryCode) => {
+    if (Object.keys(countryImages).length === 0) {
+      const images = await loadImages();
+      setCountryImages(images); // keep it in context cache
+      return images[countryCode]; // return directly from loaded images
+    }
+    // if already cached, return from memory
+    return countryImages[countryCode];
+  };
 
   const fetchCountries = async (reset = false, preventLoader = false) => {
     if (!preventLoader) {
@@ -49,7 +75,7 @@ export const CountryDataProvider = ({ children }) => {
       await axiosInstance.post(`/countries/favourite/add/${id}`);
       fetchCountries(true, true);
       getFavouriteCountries();
-      toast.success("Added to favourite!");
+      toast.success(t("toast.addedCountryToFavorites"));
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
@@ -60,7 +86,7 @@ export const CountryDataProvider = ({ children }) => {
       await axiosInstance.post(`/countries/favourite/remove/${id}`);
       fetchCountries(true, true);
       getFavouriteCountries();
-      toast.success("Remove from favourite!");
+      toast.success(t("toast.removedCountryFromFavorites"));
     } catch (error) {
       toast.error(error?.response?.data?.message || error?.message);
     }
@@ -91,11 +117,12 @@ export const CountryDataProvider = ({ children }) => {
     }
   };
 
-  const compareCountries = async (...countryIds) => {
+  const compareCountries = async ([...countryIds], language) => {
     setCompareLoader(true);
     try {
       const response = await axiosInstance.post(`/countries/compare`, {
         countries: countryIds,
+        language,
       });
       setCompareData(response.data.data);
     } catch (error) {
@@ -118,10 +145,15 @@ export const CountryDataProvider = ({ children }) => {
     }
   };
 
+  const resetCompareData = () => setCompareData(null);
+
   return (
     <CountryDataContext.Provider
       value={{
         countries,
+        fetchCountries,
+        countryImages,
+        fetchCountryImages,
         loading,
         page,
         setPage,
@@ -138,6 +170,7 @@ export const CountryDataProvider = ({ children }) => {
         countryList,
         compareCountries,
         compareData,
+        resetCompareData,
         compareLoader,
         favourites,
         getFavouriteCountries,

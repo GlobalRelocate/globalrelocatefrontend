@@ -3,12 +3,18 @@ import { MdClose } from "react-icons/md";
 import { useCountryData } from "@/context/CountryDataContext";
 import SearchInput from "../inputs/SearchInput";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/context/LanguageContext";
+import {
+  getCountryName,
+  getCountryCodeByName,
+} from "@/data/country-translations";
 
 const SelectCountryModal = ({ isOpen, onClose, onChange }) => {
   const { countryList, getCountryList } = useCountryData();
   const [displayedCountries, setDisplayedCountries] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const { t } = useTranslation();
+  const { selectedLanguage } = useLanguage();
 
   useEffect(() => {
     async function fetchCountryList() {
@@ -20,16 +26,30 @@ const SelectCountryModal = ({ isOpen, onClose, onChange }) => {
   useEffect(() => {
     if (searchQuery) {
       // Filter countries based on search input
-      const filtered = countryList.filter((country) =>
-        country.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      const filtered = countryList.filter((country) => {
+        const countryCode = getCountryCodeByName(country.name);
+        return (
+          country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (countryCode &&
+            getCountryName(countryCode, selectedLanguage?.code)
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()))
+        );
+      });
       setDisplayedCountries(filtered);
     } else {
-      // Show 20 random countries when no search query
-      const shuffled = [...countryList].sort(() => 0.5 - Math.random());
-      setDisplayedCountries(shuffled.slice(0, 16));
+      // // Show 20 random countries when no search query
+      // const shuffled = [...countryList].sort(() => 0.5 - Math.random());
+      // setDisplayedCountries(shuffled.slice(0, 16));
+      setDisplayedCountries(countryList);
     }
   }, [searchQuery, countryList]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchQuery(""); // reset input when modal closes
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -55,10 +75,10 @@ const SelectCountryModal = ({ isOpen, onClose, onChange }) => {
         <h1 className="mt-6 mb-3 text-xl font-medium">
           {searchQuery
             ? t("userDashboard.countries.searchResults")
-            : t("userDashboard.countries.aiSuggestedCountries")}
+            : t("userDashboard.countries.title")}
         </h1>
 
-        <div className="flex w-full flex-wrap gap-x-4 gap-y-7 justify-between h-[350px] mt-5 overflow-y-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 h-[350px] mt-5 overflow-y-auto overflow-x-hidden">
           {displayedCountries.map((country) => (
             <div
               key={country.id}
@@ -66,7 +86,7 @@ const SelectCountryModal = ({ isOpen, onClose, onChange }) => {
               className="flex gap-1 cursor-pointer max-h-[50px] items-center justify-start w-[140px]"
             >
               <img
-                className="w-10 h-10 rounded-full object-cover border"
+                className="w-10 h-10 rounded-full object-cover border mr-3"
                 src={
                   country.name === "Afghanistan"
                     ? "https://flagcdn.com/w320/af.png"
@@ -74,7 +94,12 @@ const SelectCountryModal = ({ isOpen, onClose, onChange }) => {
                 }
                 alt={country.name}
               />
-              <span className="text-sm">{country.name}</span>
+              <span className="text-sm">
+                {getCountryName(
+                  getCountryCodeByName(country.name),
+                  selectedLanguage?.code
+                )}
+              </span>
             </div>
           ))}
         </div>

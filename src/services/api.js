@@ -244,15 +244,13 @@ export const handleOAuthCallback = async (code, type) => {
 };
 
 // Update the OAuth initialization functions
-export const initiateGoogleAuth = async () => {
-  try {
-    const redirectUri = `${window.location.origin}/oauth/callback`;
-    sessionStorage.setItem("oauth_redirect_uri", redirectUri);
-    sessionStorage.setItem("oauth_provider", "google");
+export const initiateGoogleAuth = async (accountType) => {
+  const param = accountType || "INDIVIDUAL";
 
+  try {
     // Redirect to the Google auth endpoint
-    window.location.href = `${VITE_API_URL}/auth/google?redirect_uri=${encodeURIComponent(
-      redirectUri
+    window.location.href = `${VITE_API_URL}/auth/google?&state=${encodeURIComponent(
+      param
     )}`;
     return true;
   } catch (error) {
@@ -918,7 +916,11 @@ export const getSubscriptionDetails = async () => {
   }
 
   try {
-    const response = await api.get(endpoint);
+    const response = await api.get(endpoint, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     // console.log("Subscription details fetched successfully:", response);
     return response;
   } catch (error) {
@@ -1370,6 +1372,43 @@ export const getCommentLikes = async (postId, commentId) => {
     return response;
   } catch (error) {
     handleApiError(error, "Failed to fetch comment likes");
+  }
+};
+
+export const calculateTaxAPI = async (country, data) => {
+  const endpoint = `/tax/calculate/${country}`;
+
+  try {
+    if (!data) {
+      throw new CustomAPIError("Amount and country are required", 400);
+    }
+
+    const response = await api.post(endpoint, data);
+    return response;
+  } catch (error) {
+    if (error instanceof CustomAPIError) {
+      throw error;
+    }
+
+    if (axios.isAxiosError(error)) {
+      if (!error.response) {
+        throw new CustomAPIError(
+          "Network error. Please check your connection.",
+          0
+        );
+      }
+
+      const status = error.response?.status || 0;
+      const message =
+        error.response?.data?.message ||
+        getErrorMessage(status, error.response?.data?.error);
+
+      throw new CustomAPIError(message, status, error.response?.data);
+    }
+
+    throw new CustomAPIError("Failed to calculate tax. Please try again.", 0, {
+      originalError: error.message,
+    });
   }
 };
 

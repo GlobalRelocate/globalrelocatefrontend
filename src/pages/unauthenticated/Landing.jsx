@@ -1,9 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import MainLayout from "../../components/layouts/MainLayout";
-import FeaturesCard from "../../components/cards/FeaturesCard";
-import CountriesCard from "../../components/cards/LandingCountriesCard";
-import { useCountryData } from "@/context/CountryDataContext";
+import AIAssistantCard from "@/components/cards/features/ai-assistant";
+import VisaIndexCard from "@/components/cards/features/visa-index";
+import CompareCountriesCard from "@/components/cards/features/compare-countries";
+import CountriesCard from "@/components/cards/LandingCountriesCard";
+import { Button } from "@/components/ui/button";
 
 // countries imports
 import nigeria from "../../assets/images/nigeria.png";
@@ -12,51 +15,25 @@ import london from "../../assets/images/london.png";
 import italy from "../../assets/images/italy.png";
 import china from "../../assets/images/china.png";
 import uae from "../../assets/images/uae.png";
-import canada from "../../assets/images/canada.png";
-import australia from "../../assets/images/australia.png";
 import chinaFlag from "../../assets/images/china-flag.png";
 import nigeriaFlag from "../../assets/images/nigeria-flag.png";
 
-// Import the background image directly
-import bgIllustration from "../../assets/images/bg_illustration.png";
-
-// features
-import people from "../../assets/images/people_image.png";
-import cardimg1 from "../../assets/images/cardimg_1.png";
-import cardimg2 from "../../assets/images/cardimg_2.png";
 import { useTranslation } from "react-i18next";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getCountryCode } from "@/data/country-translations";
+import { loadCountryImages } from "@/lib/country-images";
+
+const api = import.meta.env.VITE_API_URL;
 
 export default function Landing() {
   const { t } = useTranslation();
+  const [randomCountries, setRandomCountries] = useState([]);
+  const [countryImages, setCountryImages] = useState({});
+  const [selectedPlan, setSelectedPlan] = useState("basicPlan");
+  const planOverview = useRef(null);
   const navigate = useNavigate();
-
-  const handleStartNow = () => {
-    navigate("/login");
-  };
-
-  // Animation variants
-  const heroTextVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        delayChildren: 0.3,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const heroChildVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
 
   const cardVariants = {
     offscreen: {
@@ -74,63 +51,70 @@ export default function Landing() {
     },
   };
 
-  const floatingCountryVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 125,
-        delay: 0.5,
-      },
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(`${api}/countries/list`);
+        const countries = response.data.data || [];
+        // Sort the countries randomly
+        countries.sort(() => Math.random() - 0.5);
+        setRandomCountries(countries.slice(0, 6));
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    loadCountryImages().then((images) => setCountryImages(images));
+  }, []);
+
+  const plans = [
+    {
+      slug: "freePlan",
+      title: "Free",
+      price: "0",
+      features: [
+        t("userDashboard.upgradePage.freePlan.item1"),
+        t("userDashboard.upgradePage.freePlan.item2"),
+        t("userDashboard.upgradePage.freePlan.item3"),
+        t("userDashboard.upgradePage.freePlan.item4"),
+      ],
     },
-  };
-
-  const { countries } = useCountryData();
-
-  const shuffleArray = (array, numItems) => {
-    const shuffledArray = [...array]; // Using spread syntax for a shallow copy
-
-    let currentIndex = shuffledArray.length;
-    let randomIndex;
-
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      [shuffledArray[currentIndex], shuffledArray[randomIndex]] = [
-        shuffledArray[randomIndex],
-        shuffledArray[currentIndex],
-      ];
-    }
-
-    return shuffledArray.slice(0, Math.min(numItems, array.length));
-  };
-
-  const shuffledCountries = shuffleArray(countries, 6);
+    {
+      slug: "basicPlan",
+      title: "Basic",
+      price: "15.90",
+      features: [
+        t("userDashboard.upgradePage.basicPlan.item1"),
+        t("userDashboard.upgradePage.basicPlan.item2"),
+        t("userDashboard.upgradePage.basicPlan.item3"),
+        t("userDashboard.upgradePage.basicPlan.item4"),
+        t("userDashboard.upgradePage.basicPlan.item5"),
+      ],
+    },
+    {
+      slug: "premiumPlan",
+      title: "Pro",
+      price: "24.90",
+      features: [
+        t("userDashboard.upgradePage.premiumPlan.item1"),
+        t("userDashboard.upgradePage.premiumPlan.item2"),
+        t("userDashboard.upgradePage.premiumPlan.item3"),
+        t("userDashboard.upgradePage.premiumPlan.item4"),
+        t("userDashboard.upgradePage.premiumPlan.item5"),
+        t("userDashboard.upgradePage.premiumPlan.item6"),
+        t("userDashboard.upgradePage.premiumPlan.item7"),
+        t("userDashboard.upgradePage.premiumPlan.item8"),
+      ],
+    },
+  ];
 
   return (
     <MainLayout>
       <div className="flex flex-col items-center justify-center bg-[#F5F5F7] min-w-[320px]">
-        {/* Apply inline background style as a fallback along with the class */}
-        {/*<div
-          className="hero-bg min-h-[70vh] w-full flex items-center justify-center"
-          style={{
-            backgroundImage: `url(${bgIllustration})`,
-            backgroundSize: "75%",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >*/}
-        {/* <div className="md:w-[70%] md:mt-10">
-            <DotLottieReact
-              src="lottie.json"
-              loop={false}
-              autoplay
-              className=""
-            />
-          </div> */}
         <div className="hero-bg min-h-[40vh] md:min-h-[100vh] w-full flex items-center justify-center">
           <div className="md:w-[100%]">
             <DotLottieReact
@@ -140,88 +124,6 @@ export default function Landing() {
               quality="low"
             />
           </div>
-          {/* <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={heroTextVariants}
-            className="flex flex-col items-center justify-center max-w-[95%] sm:max-w-[600px] md:min-w-[900px] text-black relative px-4 sm:px-0"
-          >
-            <motion.h1
-              variants={heroChildVariants}
-              className="text-3xl sm:text-4xl text-center md:text-5xl max-w-[95%] sm:max-w-[90%] md:max-w-[600px] lg:text-7xl font-semibold"
-            >
-              {t("landingPage.showcase.title")}
-            </motion.h1>
-            <motion.p
-              variants={heroChildVariants}
-              className="text-center my-6 sm:my-8 text-sm sm:text-md max-w-full sm:max-w-[600px] px-3 sm:px-10 line-clamp-2"
-            >
-              {t("landingPage.showcase.para")}
-            </motion.p>
-            <motion.button
-              variants={heroChildVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#fca311] text-black py-2 px-6 sm:px-8 rounded-xl text-base sm:text-lg font-medium"
-              onClick={handleStartNow}
-            >
-              {t("landingPage.showcase.buttonText")}
-            </motion.button>
-
-            {/* Floating Country Flags */}
-          {/* <motion.div
-              variants={floatingCountryVariants}
-              initial="initial"
-              animate="animate"
-              className="absolute bg-white rounded-3xl hidden md:flex items-center justify-start p-2 pr-3 shadow-md space-x-2 top-10 left-0"
-            >
-              <img
-                src={canada}
-                className="w-7 h-7 rounded-full object-cover"
-                alt="Canada flag"
-              />
-              <span>Canada</span>
-            </motion.div>
-            <motion.div
-              variants={floatingCountryVariants}
-              initial="initial"
-              animate="animate"
-              className="absolute bg-white rounded-3xl hidden md:flex items-center justify-start p-2 pr-3 shadow-md  space-x-2 top-[-15px] right-0"
-            >
-              <img
-                src="https://cdn.britannica.com/97/897-050-0BFECDA5/Flag-Germany.jpg"
-                className="w-7 h-7 rounded-full"
-                alt="logo"
-              />
-              <span>Germany</span>
-            </motion.div>
-            <motion.div
-              variants={floatingCountryVariants}
-              initial="initial"
-              animate="animate"
-              className="absolute bg-white rounded-3xl hidden md:flex items-center justify-start p-2 pr-3 shadow-md  space-x-2 bottom-0 left-14"
-            >
-              <img
-                src="https://cdn.britannica.com/82/682-004-F0B47FCB/Flag-France.jpg"
-                className="w-7 h-7 rounded-full"
-                alt="logo"
-              />
-              <span>France</span>
-            </motion.div>
-            <motion.div
-              variants={floatingCountryVariants}
-              initial="initial"
-              animate="animate"
-              className="absolute bg-white rounded-3xl hidden md:flex items-center justify-start p-2 pr-3 shadow-md space-x-2 bottom-0 right-14"
-            >
-              <img
-                src={australia}
-                className="w-8 h-8 rounded-full object-cover"
-                alt="Australia flag"
-              />
-              <span>Australia</span>
-            </motion.div> */}
-          {/* </motion.div> */}
         </div>
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
@@ -238,31 +140,17 @@ export default function Landing() {
           viewport={{ once: true, amount: 0.3 }}
           className="flex items-center gap-6 sm:gap-10 md:gap-14 justify-evenly flex-wrap py-10 sm:py-20 w-[95%] sm:w-[90%] px-2 sm:px-0"
         >
-          {[
-            {
-              title: t("landingPage.features.cards.card1.title"),
-              para: t("landingPage.features.cards.card1.para"),
-              image: people,
-            },
-            {
-              title: t("landingPage.features.cards.card2.title"),
-              para: t("landingPage.features.cards.card2.para"),
-              image: cardimg1,
-            },
-            {
-              title: t("landingPage.features.cards.card3.title"),
-              para: t("landingPage.features.cards.card3.para"),
-              image: cardimg2,
-            },
-          ].map((card, index) => (
-            <motion.div key={index} variants={cardVariants} custom={index}>
-              <FeaturesCard
-                title={card.title}
-                para={card.para}
-                image={card.image}
-              />
-            </motion.div>
-          ))}
+          <motion.div
+            variants={cardVariants}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <CompareCountriesCard />
+            <AIAssistantCard />
+            <VisaIndexCard />
+          </motion.div>
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
@@ -280,18 +168,26 @@ export default function Landing() {
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ once: true, amount: 0.1 }}
-          className="flex items-center justify-evenly flex-wrap gap-y-8 sm:gap-y-10 py-10 sm:py-20 w-[95%] sm:w-[90%] px-2 sm:px-0"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-6 gap-x-8 py-10 sm:py-20 w-[95%] sm:w-[90%] px-2 sm:px-0"
         >
-          {shuffledCountries && shuffledCountries.length > 0
-            ? shuffledCountries.map((country, index) => (
-                <motion.div key={index} variants={cardVariants} custom={index}>
+          {randomCountries && randomCountries.length > 0
+            ? randomCountries.map((country, index) => (
+                <motion.div
+                  className="w-full flex justify-center"
+                  key={index}
+                  variants={cardVariants}
+                  custom={index}
+                >
                   <CountriesCard
+                    slug={country.slug}
                     image={
-                      country.countryImages[0] ??
-                      "/images/images/swizerland.png"
+                      countryImages[getCountryCode(country.slug)] &&
+                      countryImages[getCountryCode(country.slug)].length > 0
+                        ? countryImages[getCountryCode(country.slug)][0]
+                        : "/images/images/swizerland.png"
                     }
-                    location={country.countryName}
-                    countryFlag={country.countryFlag}
+                    location={country.name}
+                    countryFlag={country.flag}
                   />
                 </motion.div>
               ))
@@ -331,7 +227,11 @@ export default function Landing() {
               ].map((country, index) => (
                 <motion.div key={index} variants={cardVariants} custom={index}>
                   <CountriesCard
-                    image={country.image}
+                    image={
+                      countryImages[getCountryCode(country.countrySlug)] &&
+                      countryImages[getCountryCode(country.countrySlug)][0]
+                    }
+                    slug={country.countrySlug}
                     location={country.location}
                     countryFlag={country.flag}
                   />
@@ -347,6 +247,7 @@ export default function Landing() {
         >
           {t("landingPage.whyChooseUs.title")}
         </motion.h2>
+
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
@@ -383,6 +284,130 @@ export default function Landing() {
               <p className="text-sm sm:text-base">{card.para}</p>
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-2xl sm:text-3xl md:text-4xl my-3 sm:my-4 font-medium text-center px-4"
+        >
+          {t("landingPage.pricing.title")}
+        </motion.h2>
+        <p className="mt-3 sm:mt-4 text-center px-5 text-sm sm:text-base">
+          {t("landingPage.pricing.para")}
+        </p>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true, amount: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-x-12 py-10 sm:py-20 w-[95%] sm:w-[90%] px-2 sm:px-0"
+        >
+          {[
+            {
+              title: t("landingPage.pricing.freePlan.title"),
+              para: t("landingPage.pricing.freePlan.para"),
+              slug: "freePlan",
+            },
+            {
+              title: t("landingPage.pricing.basicPlan.title"),
+              para: t("landingPage.pricing.basicPlan.para"),
+              slug: "basicPlan",
+            },
+            {
+              title: t("landingPage.pricing.premiumPlan.title"),
+              para: t("landingPage.pricing.premiumPlan.para"),
+              slug: "premiumPlan",
+            },
+          ].map((card, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              custom={index}
+              className={`flex flex-col justify-between w-full p-10 text-center rounded-md hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer ${
+                selectedPlan === card.slug && "border-2 border-black"
+              }`}
+              onClick={() => {
+                setSelectedPlan(card.slug);
+                planOverview.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <h2 className="text-xl font-semibold mb-2 text-center w-full">
+                {card.title}
+              </h2>
+              <p className="text-lg">{card.para}</p>
+
+              <div className="w-full mt-8">
+                <Button
+                  className="bg-black text-white px-5 py-2 rounded-md w-full h-12"
+                  onClick={() => {
+                    setSelectedPlan(card.slug);
+                    planOverview.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  {t("landingPage.pricing.getStarted")}
+                </Button>
+
+                <Button
+                  className="bg-transparent text-primary rounded-md mt-5 w-full shadow-none hover:bg-transparent hover:shadow-none cursor-pointer"
+                  onClick={() => {
+                    setSelectedPlan(card.slug);
+                    planOverview.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <i className="fas fa-chevron-down text-2xl"></i>
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true, amount: 0.3 }}
+          className="py-10 sm:py-20 mx-10 md:w-[85%] px-2 sm:px-0 border-2 border-black rounded-md mb-10"
+          ref={planOverview}
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between mb-5 gap-8 px-10">
+            <div className="flex flex-col gap-2">
+              <div className="font-medium">{t("landingPage.pricing.plan")}</div>
+              <div className="text-2xl font-semibold">
+                {t(`landingPage.pricing.${selectedPlan}.title`)}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {plans
+                  .find((plan) => plan.slug === selectedPlan)
+                  ?.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-x-4">
+                      <FaCheckCircle className="text-[#7981DD] flex-shrink-0 text-xl" />
+                      <span className="text-gray-600 text-xl">{feature}</span>
+                    </div>
+                  ))}
+              </div>
+
+              <Button
+                className="bg-black text-white px-5 py-2 rounded-md w-full h-12 mt-8"
+                onClick={() => navigate("/signup")}
+              >
+                {t("landingPage.pricing.getStarted")}
+              </Button>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <h3 className="text-7xl font-bold">
+                €{plans.find((plan) => plan.slug === selectedPlan)?.price}
+              </h3>{" "}
+              / {t("userDashboard.upgradePage.perMonth")}
+            </div>
+          </div>
         </motion.div>
       </div>
     </MainLayout>

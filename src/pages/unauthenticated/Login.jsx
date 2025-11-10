@@ -73,11 +73,7 @@ export default function Login() {
       login(response.accessToken, response.data.user);
 
       // Navigate to welcome page
-      navigate("/welcome", {
-        state: {
-          username: response.data.user.fullName,
-        },
-      });
+      navigate("/user/countries");
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage(error.message || "Failed to log in. Please try again.");
@@ -146,7 +142,7 @@ export default function Login() {
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden md:flex items-center justify-between px-6 lg:px-10 py-4">
+        <div className="hidden md:flex items-center justify-between pl-[34px] pr-4 py-4">
           <Link to="/">
             <img src={logo} alt="Global Relocate Logo" className="h-12" />
           </Link>

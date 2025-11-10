@@ -35,6 +35,43 @@
           "title": "Countries & Data",
           "para": "Join forums and groups with like-minded global nomads."
         }
+      },
+      "compareCountries": {
+        "title": "Countries & Data",
+        "item1": {
+          "title": "Compare Countries",
+          "para": "uickly compare key factors between two countries to make informed decisions about relocation."
+        },
+        "item2": {
+          "title": "Compare up to 5 Countries",
+          "para": "Easily compare up to 5 countries side by side to evaluate various aspects such as cost of living, healthcare, and education."
+        },
+        "item3": {
+          "title": "Get accurate comparison between countries",
+          "para": "Access reliable data and insights to make well-informed decisions about your next destination."
+        }
+      },
+      "aiAssistant": {
+        "title": "AI Assistant",
+        "item1": {
+          "title": "Chat with a AI travel assistant",
+          "para": "Get instant answers to your relocation questions and personalized recommendations from our AI-powered assistant."
+        },
+        "item2": {
+          "title": "Get precise answers",
+          "para": "Stay informed with the latest data and insights on your desired relocation destinations."
+        }
+      },
+      "visaIndex": {
+        "title": "Visa Index & Passport Ranking",
+        "item1": {
+          "title": "Explore passport ranking",
+          "para": "Discover the strength of your passport, which countries you can visit without the need for a visa, and the strongest passports in the world."
+        },
+        "item2": {
+          "title": "Check if you need a visa",
+          "para": "You can check if you need a visa to travel to your desired destination."
+        }
       }
     },
     "countries": {
@@ -58,6 +95,58 @@
       "card4": {
         "title": "Personalized Alerts",
         "para": "Stay ahead with tailored notifications and a favorites feature."
+      }
+    },
+    "pricing": {
+      "plan": "Plan",
+      "title": "Pricing Plans",
+      "para": "Choose a plan that fits your needs and start your relocation journey today.",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "billedYearly": "Billed yearly",
+      "getStarted": "Get Started",
+      "freePlan": {
+        "title": "Free Plan",
+        "para": "Perfect for individuals exploring relocation options with basic features.",
+        "price": "0",
+        "perMonth": "/month",
+        "features": {
+          "feature1": "3-day trial access",
+          "feature2": "Basic country information",
+          "feature3": "Limited tax calculator",
+          "feature4": "Basic cost comparison"
+        },
+        "buttonText": "Get Started"
+      },
+      "basicPlan": {
+        "title": "Basic Plan",
+        "para": "Ideal for individuals seeking comprehensive relocation tools and resources.",
+        "price": "15.90",
+        "perMonth": "/month",
+        "features": {
+          "feature1": "Full country information",
+          "feature2": "Complete tax calculator",
+          "feature3": "Cost comparison tools",
+          "feature4": "Basic relocation guides",
+          "feature5": "Email support"
+        },
+        "buttonText": "Upgrade Now"
+      },
+      "premiumPlan": {
+        "title": "Pro Plan",
+        "para": "Best for frequent relocators and those needing advanced features and personalized support.",
+        "price": "24.90",
+        "perMonth": "/month",
+        "features": {
+          "feature1": "All Basic features",
+          "feature2": "Unlimited country data access",
+          "feature3": "AI relocation assistant",
+          "feature4": "Cost of living insights",
+          "feature5": "Visa requirement guides",
+          "feature6": "Priority email support",
+          "feature7": "Custom relocation roadmap"
+        },
+        "buttonText": "Upgrade Now"
       }
     },
     "forgotPassword": {
@@ -155,6 +244,8 @@
       "title": "Privacy Policy and Legal Disclaimer",
       "paragraph": "This Privacy Policy describes how Global Relocate (referred to as 'us,' 'we,' or 'our'), the owner and operator of globalrelocate.com, collects, uses, and protects your personal information when you use our AI-powered platform for seamless relocation, legal guidance, and global living, accessed through the URL globalrelocate.com (the 'Platform'). This policy also applies to any services, content, features, or applications provided through the Platform.",
       "paragraph2": "By accessing or using the Platform, you agree to the collection, use, and disclosure of your personal information as outlined in this Privacy Policy. If you do not agree with any aspect of this policy, please refrain from using the Platform.",
+      "isABrandOf": "is a brand of",
+      "cyprus": "Cyprus",
       "sections": {
         "informationCollection": "1. Information Collection",
         "informationCollection_1": "1.1 Personal Information: We may collect various types of personal information from you when you use the Platform. This may include your name, email address, contact information, relocation preferences, and any other information you voluntarily provide to us.",
@@ -231,7 +322,7 @@
     "contactUs": {
       "title": "Contact Us",
       "titleDesc": "You can ask us questions",
-      "para": "Contact us for all your questions and opinions, or you can get answers quickly by visiting one of our contact offices.",
+      "para": "Write to us with any questions or opinions you may have through our e-mail address.",
       "ourOffices": "Our Offices",
       "ourOfficesDesc": "We have offices in various locations to assist you with your relocation needs. Visit us at one of our offices for personalized support.",
       "dropUsAMessage": "Drop us a message",
@@ -244,6 +335,19 @@
       "sending": "Sending...",
       "messageSent": "Message sent successfully!",
       "messageFailed": "Failed to send message. Please try again."
+    },
+    "feedback": {
+      "back": "Back",
+      "title1": "Hey {{ username }}, what has worked well?",
+      "desc1": "Tell us what you like about Global Relocate and what we can improve.",
+      "typeAnswer": "Type your answer here...",
+      "continue": "Continue",
+      "title2": "Hey {{ username }}, what didn't work well?",
+      "desc2": "Tell us what didn't work or what's missing in your experience using the app.",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "feedbackSubmitted": "Thank you for your feedback!",
+      "feedbackFailed": "Failed to submit feedback. Please try again."
     }
   },
   "loginPage": {
@@ -284,6 +388,17 @@
     "welcomeText": "Your AI-powered platform for seamless relocation, legal guidance, and global living."
   },
   "userDashboard": {
+    "trial": {
+      "trialEnded": "Your 1 day free trial has ended",
+      "upgradeNow": "Upgrade now to keep using Global Relocate.",
+      "seePlanOptions": "See plan options",
+      "trialEndsIn": "Your free trial ends in {{ days }} days. Upgrade now to keep using Global Relocate.",
+      "days": "days",
+      "hours": "hours",
+      "minutes": "min",
+      "seconds": "sec",
+      "loading": "Loading..."
+    },
     "sidebar": {
       "countries": "Countries",
       "aiAssistant": "Ai Assistant",
@@ -294,9 +409,10 @@
       "community": "Community",
       "cta": {
         "title": "Try Pro",
-        "para": "You are currently in free plan valid for 3 days. Upgrade now to keep using Global Relocate.",
+        "para": "You are currently in free plan valid for 1 day. Upgrade now to keep using Global Relocate.",
         "buttonText": "Learn More"
-      }
+      },
+      "visaIndex": "Visa Index"
     },
     "notifications": {
       "noNotifications": "You have no notifications yet.",
@@ -307,6 +423,25 @@
       "showLess": "Show less of this",
       "showMore": "Show more results"
     },
+    "news": {
+      "noNews": "There are no news items available at the moment.",
+      "title": "News",
+      "inCountry": "in {{ country }}",
+      "failed": "An error occurred while fetching news."
+    },
+    "continents": {
+      "all": "All",
+      "europe": "Europe",
+      "asia": "Asia",
+      "africa": "Africa",
+      "europe, asia": "Europe & Asia",
+      "south america": "South America",
+      "north america": "North America",
+      "northAmerica": "North America",
+      "southAmerica": "South America",
+      "antarctica": "Antarctica",
+      "oceania": "Oceania"
+    },
     "countries": {
       "title": "Countries",
       "noDataText": "No data available!",
@@ -315,7 +450,10 @@
       "view": "View",
       "searchResults": "Search results",
       "aiSuggestedCountries": "AI Suggested Countries",
-      "searchCountries": "Search countries"
+      "searchCountries": "Search countries",
+      "searchCountry": "Search country...",
+      "noCountryFound": "No country found.",
+      "selectCountry": "Select country"
     },
     "country": {
       "countryIn": "Country in",
@@ -346,6 +484,7 @@
       "shortStays": "Short Stays",
       "longStays": "Long Stays",
       "embassies": "Embassies",
+      "view": "View",
       "link": "Link",
       "taxesAndFinances": "Taxes & Finances",
       "personalIncomeTax": "Personal Income Tax",
@@ -353,6 +492,30 @@
       "communalRate": "Communal Rate",
       "averageCost": "Average Cost",
       "costOfLiving": "Cost of Living",
+      "mostExpensiveCity": "Most expensive city to live in",
+      "cheapestCity": "Cheapest city to live in",
+      "mostExpensiveStates": "Most expensive states to live in",
+      "rentPerMonth": "Rent per month",
+      "howToFindApartment": "How to find an apartment",
+      "food": "Food",
+      "mobilePhonePlan": "Mobile phone plan",
+      "visaTypes": "Visa Types",
+      "visaRequirements": "Visa Requirements",
+      "visaApplication": "Visa Application Process",
+      "obtainCitizenship": "How to obtain citizenship ?",
+      "childCare": "Child Care",
+      "racism": "Racism",
+      "compulsorySchooling": "Compulsory Schooling",
+      "homeSchooling": "Home Schooling",
+      "animalTransport": "Animal Transport",
+      "quarantine": "Quarantine",
+      "vaccinationRequirements": "Vaccination Requirements",
+      "necessaryDocuments": "Necessary Documents",
+      "transportCosts": "Transport Costs",
+      "education": "Education",
+      "sport": "Sport",
+      "music": "Music",
+      "adaptation": "Adaptation",
       "noDataAvailable": "No data available for this country.",
       "notApplicable": "Not applicable for this country",
       "back": "Back",
@@ -360,12 +523,17 @@
       "noVisaInfo": "No visa and immigration information available."
     },
     "ai": {
+      "title": "AI Assistant",
+      "description": "Chat with our AI-powered assistant to get instant answers to your relocation questions and personalized recommendations about the country.",
       "rename": "Rename",
       "deleteConversation": "Delete conversation",
       "share": "Share",
       "hello": "Hello",
+      "hiThere": "Hi there!",
       "newChat": "New Chat",
       "askAI": "Ask AI Anything...",
+      "askAICountry": "Ask AI about {{ country }}...",
+      "howCanIHelp": "How can I help you?",
       "uploadDocument": "Upload Document",
       "uploadDocumentDesc": "Upload a document to process with AI assistant",
       "cancel": "Cancel",
@@ -381,11 +549,12 @@
       "fullName": "Full Name",
       "username": "Username",
       "bio": "Bio",
+      "writeBio": "Write something about yourself...",
       "country": "Country",
       "emailAddress": "Email Address",
       "verified": "Verified",
       "subscription": "Subscription",
-      "subscriptionDesc": "You are currently in free plan valid for 3 days. Upgrade now to keep using Global Relocate.",
+      "subscriptionDesc": "You are currently in free plan valid for 24 hours. Upgrade now to keep using Global Relocate.",
       "deleteAccount": "Delete Account",
       "deleteDesc": "Permanently delete your account and data",
       "language": "Language",
@@ -409,25 +578,162 @@
       "confirmDeleteList2": "All data will be permanently deleted 30 days after account deletion.",
       "deleting": "Deleting...",
       "youHave": "You have:",
-      "administrator": "Administrator"
-    },
-    "continents": {
-      "all": "All",
-      "europe": "Europe",
-      "asia": "Asia",
-      "africa": "Africa",
-      "south america": "South America",
-      "north america": "North America",
-      "antarctica": "Antarctica",
-      "oceania": "Oceania"
+      "administrator": "Administrator",
+      "resetPassword": "Reset Password",
+      "resetPasswordDesc": "You can reset your password here",
+      "otpSent": "An OTP has been sent to your email."
     },
     "tax": {
       "taxCalculator": "Tax Calculator",
-      "taxCacluatorDesc": "Calculate your estimated tax burden across different countries",
+      "taxCalculatorDesc": "Calculate your estimated tax burden across different countries",
       "country": "Country",
-      "annualIncome": "Annual income",
+      "annualIncome": "Income",
       "userAccount": "User Account",
+      "accountingPeriod": "Accounting Period",
+      "employeeInputs": "Employee Inputs",
+      "grossSalary": "Gross Salary",
       "taxClass": "Tax Class",
+      "taxPeriod": "Tax Period",
+      "year": "Year",
+      "month": "Month",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "age": "Age",
+      "monetaryBenefitsMonthly": "Monetary Benefits Monthly",
+      "annualTaxAllowance": "Annual Tax Allowance",
+      "maritalStatus": "Marital Status",
+      "childrenU25Count": "Children under 25",
+      "hasChildren": "Do you have children?",
+      "isSoleWageEarner": "Sole Wage Earner",
+      "isDualWageEarner": "Dual Wage Earner",
+      "widowedSpouseDeathYear": "Widowed Spouse Death Year",
+      "taxYearSelection": "Tax Year Selection",
+      "childAllowanceFactor": "Child Allowance Factor",
+      "familyAndTaxStatus": "Family & Tax Status",
+      "insuranceAndSurcharges": "Insurance & Surcharges",
+      "state": "State",
+      "occupationalPensionMonthly": "Occupational Pension Monthly",
+      "churchTaxLiability": "Church Tax Liability",
+      "healthInsuranceType": "Health Insurance Type",
+      "healthInsuranceTypes": {
+        "compulsoryStatutory": "Compulsory Statutory",
+        "privatelyInsured": "Privately Insured",
+        "voluntarilyInsuredByLaw": "Voluntarily Insured by Law"
+      },
+      "additionalContributionName": "Additional Contribution Name",
+      "additionalContributionRate": "Additional Contribution Rate",
+      "privateDetails": "Private Details",
+      "monthlyPremium": "Monthly Premium",
+      "employerParticipation": "Employer Participation",
+      "maritalStatusOptions": {
+        "single": "Single",
+        "married": "Married",
+        "widowed": "Widowed",
+        "divorced": "Divorced"
+      },
+      "spouseTaxClass": "Spouse Tax Class",
+      "pensionScheme": {
+        "title": "Pension Scheme",
+        "compulsoryStatutoryInsurance": "Compulsory Statutory Insurance",
+        "notCompulsorilyInsured": "Not Compulsorily Insured",
+        "onlyEmployerCompulsoryShare": "Only Employer Compulsory Share",
+        "onlyEmployeeCompulsoryShare": "Only Employee Compulsory Share"
+      },
+      "voluntaryContribution": "Voluntary Contribution",
+      "voluntaryContributionRate": "Voluntary Contribution Rate",
+      "U1_rate_percent": "U1 rate (%)",
+      "U2_rate_percent": "U2 rate (%)",
+      "bgContributionRate": "BG Contribution Rate",
+      "taxDeductions": "Tax Deductions",
+      "employeeContributions": "Employee Contributions",
+      "employerContributions": "Employer Contributions",
+      "benefits": "Benefits",
+      "total": "Total",
+      "noTaxData": "No tax data available for the selected country.",
+      "2024-until-11/24": "2024 (until 11/24)",
+      "2023-from-7/23": "2023 (from 7/23)",
+      "2023-until-6/23": "2023 (until 6/23)",
+      "taxIncomeInCountry": "Tax income in ${1}: General Information & Tips",
+      "taxClassAndBrackets": "German Tax Class and Brackets",
+      "taxClassBracketsDesc": "The German income tax system employs progressive tax rates, meaning the rate increases as income rises. Starting at 14% for the lower taxable income levels and reaching up to 45% for the highest earners, this system aims to ensure fairness in taxation.",
+      "taxClassBrackets1": "<strong>0% Tax Rate:</strong> Income up to €11,604",
+      "taxClassBrackets2": "<strong>14% to 42% Tax Rate:</strong> Income above €11,604 and up to €66,760",
+      "taxClassBrackets3": "<strong>42% Tax Rate:</strong> Income from €66,761 and up to €277,825",
+      "taxClassBrackets4": "<strong>45% Tax Rate:</strong> Income exceeding €277,826",
+      "taxClassBrackets5": "Please consult a financial advisor for the most up to date information.",
+      "taxClassBrackets6": "Tax classes in Germany significantly affect how much tax you pay. There are six classes, each designed to reflect different family and employment situations. For instance, tax class I is for single individuals, while tax class II offers benefits for married couples. Choosing the correct tax class can lead to substantial tax savings, especially for families and married couples.",
+      "taxClassBrackets7": "<strong>Class I:</strong> Single or separated individuals without children.",
+      "taxClassBrackets8": "<strong>Class II:</strong> Single parents living alone with their child or children, eligible for single-parent benefits.",
+      "taxClassBrackets9": "<strong>Class III:</strong> Married employees whose spouse is not working or is in Class V; generally offers the lowest tax rates.",
+      "taxClassBrackets10": "<strong>Class IV:</strong> Married employees where both partners earn an income; similar to single individuals in Class I but with considerations for joint assessment.",
+      "taxClassBrackets11": "<strong>Class V:</strong> One partner in a marriage opts for Class III, and the other automatically falls into Class V; typically results in higher tax withholding.",
+      "taxClassBrackets12": "<strong>Class VI:</strong> For individuals with multiple jobs, this class applies to the second and any additional jobs, featuring the highest tax rate.",
+      "taxClassBrackets13": "Note: the calculator on this page is based on Class I.",
+      "calculatingIncomeTax": "Calculating Your Income Tax",
+      "calculatingIncomeTaxDesc": "Calculating your net income in Germany involves understanding not only the tax brackets and classes but also accounting for social contributions and other deductions. Here’s a simplified process to help you estimate your take-home pay:",
+      "calculatingIncomeTaxSteps1": "<strong>Determine Your Gross Salary:</strong> Start with your annual gross salary.",
+      "calculatingIncomeTaxSteps2": "<strong>Identify Your Tax Class:</strong> Your tax class affects your tax rate. Use this to estimate your income tax.",
+      "calculatingIncomeTaxSteps3": "<strong>Calculate Social Contributions:</strong> Deduct social security contributions, which typically include health insurance, pension insurance, unemployment insurance, and long-term care insurance.",
+      "calculatingIncomeTaxSteps4": "<strong>Factor in Allowances and Deductions:</strong> Include any applicable deductions such as childcare allowances or education-related expenses.",
+      "calculatingIncomeTaxSteps5": "<strong>Compute Net Salary:</strong> Subtract these taxes and contributions from your gross salary to get your net income.",
+      "calculatingIncomeTaxFinalNote": "This method offers a framework for understanding how much of your gross income will be available after taxes and social contributions.",
+      "tipsForExpats": "Tips for Expats and New Employees in Germany",
+      "tipsForExpatsDesc": "Expatriates and new employees in Germany face unique challenges when navigating the tax system. Here are practical tips to ensure a smooth transition and optimize your tax situation:",
+      "tipsForExpats1": "<strong>Choose the Right Tax Class:</strong> Review and select the most beneficial tax class for your situation. Changes are possible under certain conditions, such as marriage or the birth of a child.",
+      "tipsForExpats2": "<strong>Understand the Tax-Free Allowance:</strong> Germany offers a tax-free allowance, ensuring that income up to a certain threshold is not taxed. Familiarize yourself with this to better plan your finances.",
+      "tipsForExpats3": "<strong>Utilize Tax Deductions:</strong> Keep records of potentially deductible expenses, including work-related expenses, educational costs, and healthcare expenses.",
+      "tipsForExpats4": "<strong>Seek Professional Advice:</strong> Given the complexity of the tax system, consulting with a tax professional can provide personalized advice and ensure compliance.",
+      "tipsForExpats5": "<strong>Stay Informed on Tax Filing Deadlines:</strong> Be aware of the tax year and filing deadlines to avoid penalties.",
+      "tipsForExpatFinalNote": "These strategies can help manage your tax obligations effectively and maximize your income in Germany.",
+      "faqs": "Frequently Asked Questions",
+      "faqTitle1": "What are the current income tax brackets in Germany?",
+      "faqAnswer1": "As of the latest update, tax brackets are: 0% for income up to €11,604; 14%-42% for income between €11,604 and €66,760; 42% for income between €66,761 and €277,825; and 45% for income above €277,826.",
+      "faqTitle2": "How do I know which tax class I belong to in Germany?",
+      "faqAnswer2": "Your tax class depends on your marital status, employment situation, and family conditions. Single individuals are usually in class I, while married couples can benefit from class III. Review your status and consult a tax advisor for optimal classification.",
+      "faqTitle3": "What special considerations should I be aware of when calculating net salary in Germany?",
+      "faqAnswer3": "Remember to account for childcare allowances, potential church tax, and the solidarity surcharge, as these can impact your final net income.",
+      "faqTitle4": "How can new employees optimize their tax situation in Germany?",
+      "faqAnswer4": "Choosing the correct tax class, understanding the tax-free allowance, utilizing applicable deductions, seeking professional advice, and keeping informed about tax filing deadlines are key steps to optimizing your tax situation.",
+      "useFulLinks": "Further Resources",
+      "useFulLinksDesc": "Useful Links and other resources",
+      "useFulLinksIntro": "The German income tax system can be challenging. However, by understanding the basics of tax brackets, classes, and special considerations, and by applying practical tips, you can make informed decisions that optimize your tax situation. Whether you are calculating net income, choosing a tax class, or exploring allowances and deductions, knowledge is your most valuable tool.",
+      "useFulLinksIntro2": "For more detailed information, consider visiting the following resources:",
+      "useFulLinks1": "Press and Information Office of the Federal Government",
+      "useFulLinks2": "Expat Info: German Tax System",
+      "useFulLinksFinalNote": "Staying proactive and informed will empower you to navigate the tax landscape in Germany with confidence.",
+      "grossIncome": "Gross Income",
+      "netIncome": "Net Income",
+      "taxRate": "Tax rate",
+      "pension": "Pension",
+      "healthInsurance": "Health Insurance",
+      "care": "Nursing Care Insurance",
+      "communalTax": "Communal Tax",
+      "federalTax": "Federal Tax",
+      "socialInsurance": "Social Insurance",
+      "unemploymentInsuranceSupplementary": "Unemployment Insurance (Supplementary)",
+      "nonOccupationalAccidentInsurance": "Accident Insurance (Non-Occupational)",
+      "nursingCareInsurance": "Nursing Care Insurance",
+      "generalSocialContribution": "General Social Contribution",
+      "socialDebt": "Social Debt",
+      "incomeTax": "Income Tax",
+      "churchTax": "Church Tax",
+      "careInsurance": "Care Insurance",
+      "childBenefit": "Child Benefit",
+      "unemploymentBenefit": "Unemployment Benefit",
+      "totalBenefits": "Total Benefits",
+      "pensionInsurance": "Pension Insurance",
+      "unemploymentInsurance": "Unemployment Insurance",
+      "solidaritySurcharge": "Solidarity Surcharge",
+      "accidentInsurance": "Accident Insurance",
+      "totalTax": "Total Tax",
+      "taxDisclaimer": "NOTE: Withholding tax is calculated based on the tax tables applicable in Germany. For simplification purposes, some variables (such as tax class, tax allowances, solidarity surcharge, church tax, and others) have been assumed or may not be fully accounted for. This calculation does not represent legal authority and shall be used for approximation purposes only. For accurate income tax calculations, especially for individuals with complex financial situations, it is recommended to consult with a tax advisor.",
+      "summaryText1": "If you make",
+      "summaryText2": "a",
+      "summaryText3": "living in",
+      "summaryText4": "you will be taxed",
+      "summaryText5": "That means that your net pay will be",
+      "summaryText6": "per year or ",
+      "summaryText7": "per month. Your average tax rate is",
       "totalDeductions": "Total deductions",
       "selectCountry": "Select your country",
       "selectAccount": "Select account type",
@@ -439,7 +745,14 @@
       "taxSummary": "Tax Summary",
       "taxAmount": "Tax amount",
       "effectiveRate": "Effective rate",
-      "takeHomeAmount": "Take home amount"
+      "takeHomeAmount": "Take home amount",
+      "disclaimer": "The information provided by this tax calculator is for general informational purposes only and should not be used for tax, legal, or accounting purposes. The calculator also does not take into account your specific circumstances (personal allowances, deductions, and so on), which may affect the net income amount.",
+      "noTaxClasses": "No tax classes available",
+      "usageGuide": "Usage Guide",
+      "usageGuide1": "Enter your gross annual salary or income.",
+      "usageGuide2": "Select your country. By default, the output currency is set to the country's official currency.",
+      "usageGuide3": "If prompted, select your tax class from the drop-down.",
+      "usageGuide4": "Then click on Calculate Tax button to get the estimated tax according to the country's official rate."
     },
     "upgradePage": {
       "back": "Back",
@@ -447,42 +760,165 @@
       "upgradePlanDesc": "Choose the perfect plan to support your global relocation journey. Get access to comprehensive tools and insights to make your move seamless.",
       "currentPlan": "Your current plan",
       "getStarted": "Get started",
+      "approx": "Approx.",
       "free": "Free",
       "basic": "Basic",
-      "premium": "Premium",
+      "pro": "Pro",
       "perMonth": "per month",
       "forEveryone": "For everyone",
       "freePlan": {
-        "item1": "3-day trial access",
+        "item1": "24 hours trial access",
         "item2": "Basic country information",
-        "item3": "Community access (read-only)",
-        "item4": "Limited tax calculator",
-        "item5": "Basic cost comparison"
+        "item3": "Limited tax calculator",
+        "item4": "Basic cost comparison"
       },
       "basicPlan": {
         "item1": "Full country information",
-        "item2": "Community participation",
-        "item3": "Complete tax calculator",
-        "item4": "Cost comparison tools",
-        "item5": "Basic relocation guides",
-        "item6": "Email support"
+        "item2": "Complete tax calculator",
+        "item3": "Cost comparison tools",
+        "item4": "Basic relocation guides",
+        "item5": "Email support"
       },
       "premiumPlan": {
         "item1": "All Basic features",
         "item2": "Unlimited country data access",
-        "item3": "Full community participation",
-        "item4": "Advanced tax calculator",
-        "item5": "AI relocation assistant",
-        "item6": "Cost of living insights",
-        "item7": "Visa requirement guides",
-        "item8": "Priority support",
-        "item9": "Custom relocation roadmap"
+        "item3": "Advanced tax calculator",
+        "item4": "AI relocation assistant",
+        "item5": "Cost of living insights",
+        "item6": "Visa requirement guides",
+        "item7": "Priority support",
+        "item8": "Custom relocation roadmap"
       }
     },
     "favorites": {
       "noFavorites": "You have no favorites yet.",
       "addToFavorites": "Add to favorites",
       "removeFromFavorites": "Remove from favorites"
+    },
+    "visaIndex": {
+      "title": "Passport index and visa information",
+      "description": "Here is an accurate and up-to-date passport ranking tool, which ranks the world's passports based on the number of visa-free travel destinations.",
+      "backToVisaIndex": "Back to Visa Index",
+      "searchPlaceholder": "Search for a country...",
+      "noResults": "No results found",
+      "sameCountryError": "Please select different countries.",
+      "countries": {
+        "usa": "United States",
+        "canada": "Canada",
+        "uk": "United Kingdom",
+        "australia": "Australia",
+        "germany": "Germany"
+      },
+      "checkIfYouNeedVisa": "Check if you need a visa",
+      "passportRankings": "Passport Rankings",
+      "passportRanking": "Passport Ranking",
+      "rank": "Rank",
+      "visaFreeDestinations": "Visa-free destinations",
+      "visaRequiredDestinations": "Visa-required destinations",
+      "visaOnArrivalDestinations": "Visa-on-arrival destinations",
+      "etaDestinations": "Electronic travel authorization (eTA) destinations",
+      "visaOnlineDestinations": "E-visa destinations",
+      "explorePassportRanking": "Explore passport ranking",
+      "explorePassportRankingDesc": "Discover the strength of your passport, which countries you can visit without the need for a visa, and the strongest passports in the world.",
+      "mostPowerfulPassports": "Most powerful passports",
+      "doINeedAVisa": "Do i need a visa?",
+      "doINeedAVisaDesc": "Find out if you need a visa to travel to your desired destination",
+      "iHaveAVisaFrom": "I have a visa from",
+      "iWantToTravelTo": "I want to travel to",
+      "viewVisaFreeCountries": "View visa-free countries",
+      "checking": "Checking...",
+      "visaIsRequired": "Visa is required",
+      "visaFree": "Visa Free",
+      "eVisaIsRequired": "e-Visa is required",
+      "visaOnArrivalIsRequired": "Visa on arrival is required",
+      "etaRequired": "eTA required",
+      "noAdmission": "No Admission",
+      "visaNotRequired": "Visa not required",
+      "noDataAvailable": "No data available",
+      "forCitizensOf": "for citizens of",
+      "toTravelTo": "to travel to",
+      "faqs": {
+        "title": "FAQs",
+        "desc": "Here, you will find answers to some of the most frequently asked questions about passport ranking and visas.",
+        "question1": "What are visa-free countries?",
+        "answer1": "Visa-free countries are destinations that passport holders can enter without obtaining a visa beforehand. However, all travelers to visa-free countries must carry a valid passport or identity card to prove their nationality and identity throughout their journey.",
+        "question2": "What does passport ranking mean?",
+        "answer2": "The rank of a passport (passport ranking) refers to the position that the passport occupies in the overall passport ranking index. Compared to the passports of other countries around the world, the strength of a passport depends on the total mobility score that the passport provides to its holders. This is measured by the total number of countries to which its passport holder can travel to, either without a visa (visa-free access), with a visa on arrival, or with an electronic travel authorization. The greater the number of these destinations, the higher the total points for freedom of movement, and therefore the stronger the passport.",
+        "question3": "What are the different types of passports?",
+        "answer3": "There are many types of passports, including ordinary passports, official passports, diplomatic passports, service passports, and emergency passports.",
+        "question4": "Do I need a passport?",
+        "answer4": "Yes, you need a passport if you want to travel to another country. However, there are rare cases in which some countries allow citizens of other specific countries to enter their territory using only a national identification card (ID) instead of a passport.",
+        "question5": "Do I need a visa?",
+        "answer5": "A visa is required if the country you are planning to visit demands that you obtain one prior to entry.",
+        "question6": "What is a biometric passport?",
+        "answer6": "A biometric passport or electronic passport is similar to an ordinary passport. The difference is that it contains a smart chip in its cover or on one of its pages, which includes the passport holder’s data. Biometric passports were created as a way to respond to the growing threat of identity theft and threats to national security."
+      }
+    },
+    "visaRequirements": {
+      "title": "Visa Requirements",
+      "desc": "Find out the visa requirements for your destination country.",
+      "visaFree": {
+        "title": "Passport Visa Free Countries",
+        "desc1": "passport holders can travel to various countries around the world, each with distinct visa requirements. This comprehensive guide offers detailed information on the destinations that citizens of this country can visit without a prior visa, including lists of visa-free countries, visa-on-arrival countries, and Electronic Travel Authorization (eTA) countries. Additionally, this guide provides details on travel destinations that require a prior visa for this country&apos;s passport holders, including both electronic visas (eVisas) and regular visas.",
+        "desc2": "What are the visa-free countries for",
+        "desc3": "passport holders?",
+        "desc4": "Passport holders can travel without a visa to the following",
+        "desc5": "countries:",
+        "desc6": "  The above list shows all the visa-exempt countries for {{ country }} citizens. However, it is important to recognize that the duration of stay and permissible purposes for travel for {{ country }} citizens in each country are subject to the respective nation's visa regulations. It is essential for {{ country }} passport holders to verify if a visa is required for extended stays beyond the allowed duration of stay or for purposes not encompassed within the Visa Waiver Policy of the destination country."
+      },
+      "visaOnArrival": {
+        "title": "What countries provide visa on arrival for {{ country }} passport holders?",
+        "desc1": "{{ country }} nationals are eligible for a visa on arrival in the following {{ count }} countries. In most cases, a visa can be obtained at the airport or border crossing point upon arrival. Fees, validity, and allowed duration of stay may vary.",
+        "desc2": "Upon arrival at the immigration checkpoint in the destination country, travelers may need to complete the requisite paperwork, provide any necessary documentation, and pay the relevant visa fee. The immigration officer will subsequently issue the visa, granting the visitor authorization to enter and remain in the country for the specified duration and purpose."
+      },
+      "eTA": {
+        "title": "Electronic Travel Authorization (eTA) Countries for {{ country }} Citizens",
+        "desc1": "{{ country }} passport holders are eligible to obtain an Electronic Travel Authorization (eTA) prior to visiting the following {{ count }} countries. An eTA is a digital travel document required for eligible travelers who are visa-exempt for a specific country, and it can be obtained online prior to travel.",
+        "desc2": "Many countries with eTA systems have a streamlined and efficient application process, with approval often granted within hours or a few days. It is important to note that eligibility for an eTA varies depending on the traveler&apos;s nationality and the destination country. Travelers are advised to always check the specific entry requirements of the destination country before planning their trip."
+      },
+      "eVisa": {
+        "title": "Which countries do {{ country }} citizens need to apply for an e-visa?",
+        "desc1": "The following {{ count }} countries require {{ country }} nationals to apply for an electronic visa (eVisa) before traveling. An eVisa is a digital visa that can be applied for online and, in most cases, sent to the applicant&apos;s email. Processing times, fees, and validity may vary among different countries.",
+        "desc2": "The process of getting an eVisa typically involves filling out an online form, providing personal and passport information, uploading necessary documents (such as a passport-sized photo), and paying the visa fee. Once the application has been reviewed and approved, the e-Visa is sent to the applicant, usually via email, in a PDF or other electronic format. The traveler may need to print a copy to take with them when traveling. Requirements for e-Visas may vary depending on the traveler's nationality and the destination country. It is important to check the specific visa requirements for your destination country before planning your trip."
+      },
+      "visaRequired": {
+        "title": "List of Countries Requiring Visas for {{ country }} Citizens",
+        "desc1": "{{ country }} passport holders need to apply for a regular visa before traveling to the following {{ count }} countries:",
+        "desc2": "Visa processing times, fees, and required documents vary by the traveler's nationality and the destination country. To obtain a visa, travelers generally need to apply at the destination country's embassy or consulate in their country of origin or country of residence, providing required documents such as a passport, photographs, itinerary, proof of financial means, and other relevant information. It is important to check the specific visa requirements for your destination country before planning your trip to ensure that you have the appropriate documents and permissions for your visit.",
+        "desc3": "The above lists of visa-free destinations for this country passport holders are subject to change from time to time based on visa agreements between countries, temporary travel restrictions, and entry requirements imposed by countries. It is advised to check before traveling for any additional requirements or temporary restrictions that may be imposed by your travel destination country."
+      }
+    },
+    "compareCountries": {
+      "compare": "Compare",
+      "comparison": "Comparison",
+      "overview": "Overview",
+      "internetSpeed": "Internet Speed",
+      "publicTransportEfficiency": "Public Transport Efficiency",
+      "workAndLifeBalance": "Work & Life Balance",
+      "population": "Population",
+      "dialingCodes": "Dialing Codes",
+      "languages": "Languages",
+      "costOfLiving": "Cost of Living",
+      "taxesAndFinances": "Taxes & Finances",
+      "taxType": "Tax Type",
+      "corporateTax": "Corporate Tax",
+      "federalTax": "Federal Tax",
+      "incomeTax": "Income Tax",
+      "federalRate": "Federal Rate",
+      "communalRate": "Communal Rate",
+      "visaAndImmigration": "Visa & Immigration",
+      "longStays": "Long Stays",
+      "shortStays": "Short Stays",
+      "passportAndVisas": "Passport & Visas",
+      "summary": "Summary",
+      "recommendations": "Recommendations",
+      "attribute": "Attribute",
+      "passportVisaInfo": "Passsport & Visas",
+      "internetSpeedDownload": "Internet Speed (Download)",
+      "internetSpeedUpload": "Internet Speed (Upload)",
+      "internetSpeedRanking": "Internet Speed Ranking",
+      "workLifeBalance": "Work-Life Balance",
+      "dialingCode": "Dialing Code"
     }
   },
   "drawers": {
@@ -514,6 +950,27 @@
     "taxesRankings": "Taxes Rankings",
     "residencyPermit": "Residency Permit"
   },
+  "cookieConsentModal": {
+    "title": "We value your privacy",
+    "description": "We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking \"Accept All\", you consent to our use of cookies. Read our {{ privacyPolicy }} for more info.",
+    "privacyPolicy": "Privacy Policy",
+    "accept": "I accept",
+    "decline": "Decline",
+    "necessaryCookies": "Necessary Cookies",
+    "necessaryCookiesMessage": "These cookies are essential for the website to function properly. They ensure basic functionalities and security features of the website, anonymously.",
+    "analyticsCookies": "Analytics Cookies",
+    "analyticsCookiesMessage": "These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.",
+    "marketingCookies": "Marketing Cookies",
+    "marketingCookiesMessage": "These cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.",
+    "rejectAll": "Reject All",
+    "acceptAll": "Accept All",
+    "savePreferences": "Save Preferences",
+    "manageTitle": "Manage Cookies",
+    "manageMessage": "You can manage your cookie preferences here. Please note that blocking some types of cookies may impact your experience on our website.",
+    "managePreferences": "Manage Preferences",
+    "analytics": "Analytics",
+    "advertisment": "Advertisement"
+  },
   "toast": {
     "thanksNewsletter": "Thank you for subscribing to our newsletter!",
     "linkCopied": "Link copied to clipboard!",
@@ -526,7 +983,17 @@
     "sessionDeleteSuccess": "Session deleted successfully!",
     "sessionRenameSuccess": "Session renamed successfully!",
     "sessionRenameFailed": "Failed to rename the session. Please try again.",
-    "enterSessionName": "Enter a new name for this session:"
+    "enterSessionName": "Enter a new name for this session:",
+    "addedCountryToFavorites": "Country added to favorites",
+    "removedCountryFromFavorites": "Country removed from favorites",
+    "profileUpdated": "Profile updated successfully!",
+    "profileUpdateFailed": "Failed to update profile. Please try again.",
+    "imageSizeShouldBeLess": "Image size should be less than {{ size }}",
+    "pleaseSelectImage": "Please select an image",
+    "fullNameRequired": "Full name is required",
+    "usernameRequired": "Username is required",
+    "failedToCreateCheckout": "Failed to create checkout session. Please try again.",
+    "redirectingToCheckout": "Redirecting to checkout..."
   },
   "formErrors": {
     "invalidEmail": "Invalid email format",

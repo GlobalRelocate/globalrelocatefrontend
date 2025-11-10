@@ -1,6 +1,4 @@
 import { useCallback, useState, forwardRef, useEffect } from "react";
-
-// shadcn
 import {
   Command,
   CommandEmpty,
@@ -15,45 +13,40 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-// utils
 import { cn } from "@/lib/utils";
-
-// assets
 import { ChevronDown, ChevronsUpDown, CheckIcon, Globe } from "lucide-react";
-
-// CircleFlag
 import { CircleFlag } from "react-circle-flags";
 
 const languageMap = {
   eng: { name: "English", country: "US" },
-  fra: { name: "French", country: "FR" },
-  spa: { name: "Spanish", country: "ES" },
+  // fra: { name: "French", country: "FR" },
+  // spa: { name: "Spanish", country: "ES" },
   deu: { name: "German", country: "DE" },
-  ita: { name: "Italian", country: "IT" },
-  por: { name: "Portuguese", country: "PT" },
-  rus: { name: "Russian", country: "RU" },
-  jpn: { name: "Japanese", country: "JP" },
-  kor: { name: "Korean", country: "KR" },
-  zho: { name: "Chinese", country: "CN" },
-  ara: { name: "Arabic", country: "SA" },
-  hin: { name: "Hindi", country: "IN" },
-  ben: { name: "Bengali", country: "BD" },
-  tur: { name: "Turkish", country: "TR" },
-  vie: { name: "Vietnamese", country: "VN" },
-  tha: { name: "Thai", country: "TH" },
-  nld: { name: "Dutch", country: "NL" },
-  pol: { name: "Polish", country: "PL" },
-  ukr: { name: "Ukrainian", country: "UA" },
-  swe: { name: "Swedish", country: "SE" },
-  dan: { name: "Danish", country: "DK" },
-  fin: { name: "Finnish", country: "FI" },
-  nor: { name: "Norwegian", country: "NO" },
-  ces: { name: "Czech", country: "CZ" },
-  ron: { name: "Romanian", country: "RO" },
-  hun: { name: "Hungarian", country: "HU" },
-  ind: { name: "Indonesian", country: "ID" },
-  msa: { name: "Malay", country: "MY" },
-  fil: { name: "Filipino", country: "PH" },
+  // ita: { name: "Italian", country: "IT" },
+  // por: { name: "Portuguese", country: "PT" },
+  // rus: { name: "Russian", country: "RU" },
+  // jpn: { name: "Japanese", country: "JP" },
+  // kor: { name: "Korean", country: "KR" },
+  // zho: { name: "Chinese", country: "CN" },
+  // ara: { name: "Arabic", country: "SA" },
+  // hin: { name: "Hindi", country: "IN" },
+  // ben: { name: "Bengali", country: "BD" },
+  // tur: { name: "Turkish", country: "TR" },
+  // vie: { name: "Vietnamese", country: "VN" },
+  // tha: { name: "Thai", country: "TH" },
+  // nld: { name: "Dutch", country: "NL" },
+  // pol: { name: "Polish", country: "PL" },
+  // ukr: { name: "Ukrainian", country: "UA" },
+  // swe: { name: "Swedish", country: "SE" },
+  // dan: { name: "Danish", country: "DK" },
+  // fin: { name: "Finnish", country: "FI" },
+  // nor: { name: "Norwegian", country: "NO" },
+  // ces: { name: "Czech", country: "CZ" },
+  // ron: { name: "Romanian", country: "RO" },
+  // hun: { name: "Hungarian", country: "HU" },
+  // ind: { name: "Indonesian", country: "ID" },
+  // msa: { name: "Malay", country: "MY" },
+  // fil: { name: "Filipino", country: "PH" },
 };
 
 // Create a list of unique languages

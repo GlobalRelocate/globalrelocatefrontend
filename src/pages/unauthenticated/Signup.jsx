@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { useState } from "react";
 import { GoPersonFill } from "react-icons/go";
 import { PiBuildingsFill } from "react-icons/pi";
 import { BsCheck, BsArrowLeft } from "react-icons/bs";
@@ -8,8 +7,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import SignupForm from "../../components/forms/SignupForm";
 import logo from "../../assets/svg/logo.svg";
-// import microsoftIcon from "../../assets/svg/microsoft.svg";
-import { initiateGoogleAuth, initiateMicrosoftAuth } from "../../services/api";
+import { initiateGoogleAuth } from "../../services/api";
 import { useTranslation } from "react-i18next";
 
 export default function Signup() {
@@ -111,7 +109,7 @@ export default function Signup() {
     try {
       setLoading(true);
       setErrorMessage("");
-      await initiateGoogleAuth();
+      await initiateGoogleAuth(formData.userType);
       // No need to handle the response as we're redirecting
     } catch (error) {
       console.error("Google login error:", error);
@@ -280,22 +278,34 @@ export default function Signup() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-50 px-6">
-      {/* Header Section */}
-      <div className="w-full flex justify-between items-center mt-6">
+    <div className="min-h-screen bg-white">
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4">
         <Link to="/">
-          <img src={logo} alt="Global Relocate Logo" className="h-10" />
+          <img src={logo} alt="Global Relocate Logo" className="h-12 ml-5" />
         </Link>
-        <div
-          className="flex items-center cursor-pointer"
+        <button
           onClick={navigate.bind(null, "/login")}
+          className="flex items-center"
+          aria-label="Log In"
         >
-          <i className="far fa-sign-in text-lg mr-2" />
-          <span className="text-gray-700">{t("landingPage.navbar.logIn")}</span>
-        </div>
+          <i className="far fa-user-plus text-lg mr-3" />
+          <span>{t("landingPage.navbar.logIn")}</span>
+        </button>
       </div>
 
-      <div className="mt-14 w-full max-w-md">
+      {/* Desktop Header */}
+      <div className="hidden md:flex items-center justify-between pl-[34px] pr-4 py-4">
+        <Link to="/">
+          <img src={logo} alt="Global Relocate Logo" className="h-12" />
+        </Link>
+        <Link to="/login" className="text-sm font-medium hover:text-gray-600">
+          <i className="far fa-user-plus text-lg mr-3" />
+          <span>{t("landingPage.navbar.logIn")}</span>
+        </Link>
+      </div>
+
+      <div className="max-w-xl mx-auto px-6 pt-8 md:pt-16">
         {(showSignupMethods || showEmailForm) && (
           <button
             className="h-8 w-8 flex items-center justify-center bg-gray-100 rounded-full mb-6"

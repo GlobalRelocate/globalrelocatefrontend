@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
@@ -10,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import { useTranslation } from "react-i18next";
 import DashNav from "@/components/navigation/DashNav";
+import { AuthContext } from "@/context/AuthContextExport";
+import axios from "axios";
+import countryList from "react-select-country-list";
+import countryToCurrency from "country-to-currency";
 
 // Loading component
 const LoadingScreen = () => (
@@ -23,12 +27,50 @@ const Upgrade = () => {
   const [currentPlan, setCurrentPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { user } = useContext(AuthContext);
+  const [exchangeRate, setExchangeRate] = useState(null);
+
+  const userCountry = user?.country || "DE";
+  const userType = user?.userType;
+  const country = countryList().getValue(userCountry);
+  const userCountryCurrency = countryToCurrency[country] || "EUR";
+
+  // Redirect to login if user is not authenticated
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const handleBack = () => {
     navigate(-1);
   };
+
+  // Fetch exchange rate based on user's country currency
+  useEffect(() => {
+    const fetchExchangeRate = async () => {
+      try {
+        if (userCountryCurrency === "EUR") {
+          setExchangeRate(1);
+          return;
+        }
+
+        const response = await axios.get(
+          "https://latest.currency-api.pages.dev/v1/currencies/eur.json"
+        );
+        setExchangeRate(
+          response.data.eur[userCountryCurrency.toLowerCase()] || 1
+        );
+      } catch (err) {
+        console.error("Error fetching exchange rate:", err);
+        setExchangeRate(1); // Fallback to 1 if error occurs
+      }
+    };
+    fetchExchangeRate();
+  }, [userCountryCurrency]);
 
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
@@ -63,8 +105,7 @@ const Upgrade = () => {
     } catch (err) {
       console.error("Error creating checkout session:", err);
       showToast({
-        message:
-          err.message || "Failed to create checkout session. Please try again.",
+        message: err.message || t("toast.failedToCreateCheckout"),
         type: "error",
       });
     }
@@ -79,24 +120,24 @@ const Upgrade = () => {
         t("userDashboard.upgradePage.freePlan.item2"),
         t("userDashboard.upgradePage.freePlan.item3"),
         t("userDashboard.upgradePage.freePlan.item4"),
-        t("userDashboard.upgradePage.freePlan.item5"),
       ],
     },
     {
       title: "Basic",
-      price: "5",
+      price: "15.90",
+      rate: exchangeRate,
       features: [
         t("userDashboard.upgradePage.basicPlan.item1"),
         t("userDashboard.upgradePage.basicPlan.item2"),
         t("userDashboard.upgradePage.basicPlan.item3"),
         t("userDashboard.upgradePage.basicPlan.item4"),
         t("userDashboard.upgradePage.basicPlan.item5"),
-        t("userDashboard.upgradePage.basicPlan.item6"),
       ],
     },
     {
-      title: "Premium",
-      price: "100",
+      title: "Pro",
+      price: "24.90",
+      rate: exchangeRate,
       features: [
         t("userDashboard.upgradePage.premiumPlan.item1"),
         t("userDashboard.upgradePage.premiumPlan.item2"),
@@ -106,7 +147,36 @@ const Upgrade = () => {
         t("userDashboard.upgradePage.premiumPlan.item6"),
         t("userDashboard.upgradePage.premiumPlan.item7"),
         t("userDashboard.upgradePage.premiumPlan.item8"),
-        t("userDashboard.upgradePage.premiumPlan.item9"),
+      ],
+    },
+  ];
+
+  const corporatePlans = [
+    {
+      title: "Basic",
+      price: "79.90",
+      rate: exchangeRate,
+      features: [
+        t("userDashboard.upgradePage.basicPlan.item1"),
+        t("userDashboard.upgradePage.basicPlan.item2"),
+        t("userDashboard.upgradePage.basicPlan.item3"),
+        t("userDashboard.upgradePage.basicPlan.item4"),
+        t("userDashboard.upgradePage.basicPlan.item5"),
+      ],
+    },
+    {
+      title: "Pro",
+      price: "99.90",
+      rate: exchangeRate,
+      features: [
+        t("userDashboard.upgradePage.premiumPlan.item1"),
+        t("userDashboard.upgradePage.premiumPlan.item2"),
+        t("userDashboard.upgradePage.premiumPlan.item3"),
+        t("userDashboard.upgradePage.premiumPlan.item4"),
+        t("userDashboard.upgradePage.premiumPlan.item5"),
+        t("userDashboard.upgradePage.premiumPlan.item6"),
+        t("userDashboard.upgradePage.premiumPlan.item7"),
+        t("userDashboard.upgradePage.premiumPlan.item8"),
       ],
     },
   ];
@@ -126,6 +196,7 @@ const Upgrade = () => {
   const PricingCard = ({
     title,
     price,
+    rate,
     isCurrentPlan,
     features,
     buttonText,
@@ -141,11 +212,22 @@ const Upgrade = () => {
           <h3 className="text-2xl font-semibold mb-2">
             {t(`userDashboard.upgradePage.${title.toLowerCase()}`)}
           </h3>
-          <div className="flex items-end gap-1">
-            <span className="text-2xl font-semibold">${price}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-2xl font-semibold">€{price}</span>
             <span className="text-gray-600">
-              /{t("userDashboard.upgradePage.perMonth")}
+              / {t("userDashboard.upgradePage.perMonth")}
             </span>
+          </div>
+          <div className="text-sm text-gray-500">
+            {rate && userCountryCurrency !== "EUR" && (
+              <em>
+                {t("userDashboard.upgradePage.approx")}:{" "}
+                <span className="font-semibold">
+                  {userCountryCurrency}{" "}
+                  {(parseFloat(price) * rate).toLocaleString()}
+                </span>
+              </em>
+            )}
           </div>
         </div>
 
@@ -185,6 +267,7 @@ const Upgrade = () => {
   PricingCard.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
+    rate: PropTypes.string.isRequired,
     isCurrentPlan: PropTypes.bool.isRequired,
     features: PropTypes.arrayOf(PropTypes.string).isRequired,
     buttonText: PropTypes.string.isRequired,
@@ -213,21 +296,51 @@ const Upgrade = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
-              <PricingCard
-                key={plan.title}
-                {...plan}
-                isCurrentPlan={currentPlan === plan.title.toUpperCase()}
-                buttonText={
-                  currentPlan === plan.title.toUpperCase()
-                    ? t("userDashboard.upgradePage.currentPlan")
-                    : t("userDashboard.upgradePage.getStarted")
-                }
-                onUpgrade={() => handleUpgrade(plan.title.toUpperCase())}
-              />
-            ))}
-          </div>
+          {userType === "INDIVIDUAL" ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {plans.map((plan) => (
+                <PricingCard
+                  key={plan.title}
+                  {...plan}
+                  isCurrentPlan={currentPlan === plan.title.toUpperCase()}
+                  buttonText={
+                    currentPlan === plan.title.toUpperCase()
+                      ? t("userDashboard.upgradePage.currentPlan")
+                      : t("userDashboard.upgradePage.getStarted")
+                  }
+                  onUpgrade={() =>
+                    handleUpgrade(
+                      plan.title.toLowerCase() === "pro"
+                        ? "PREMIUM"
+                        : plan.title.toUpperCase()
+                    )
+                  }
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {corporatePlans.map((plan) => (
+                <PricingCard
+                  key={plan.title}
+                  {...plan}
+                  isCurrentPlan={currentPlan === plan.title.toUpperCase()}
+                  buttonText={
+                    currentPlan === plan.title.toUpperCase()
+                      ? t("userDashboard.upgradePage.currentPlan")
+                      : t("userDashboard.upgradePage.getStarted")
+                  }
+                  onUpgrade={() =>
+                    handleUpgrade(
+                      plan.title.toLowerCase() === "pro"
+                        ? "PREMIUM"
+                        : plan.title.toUpperCase()
+                    )
+                  }
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </MainLayout>

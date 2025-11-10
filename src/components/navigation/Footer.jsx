@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/images/footer_logo.png";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -8,10 +8,33 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import axios from "axios";
+import { getCountryName } from "@/data/country-translations";
+import { useLanguage } from "@/context/LanguageContext";
+
+const api = import.meta.env.VITE_API_URL;
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { selectedLanguage } = useLanguage();
   const [email, setEmail] = useState("");
+  const [randomCountries, setRandomCountries] = useState([]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(`${api}/countries/list`);
+        const countries = response.data.data || [];
+        // Sort the countries randomly
+        countries.sort(() => Math.random() - 0.5);
+        setRandomCountries(countries.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +52,11 @@ export default function Footer() {
     <div className="text-[#7E7E7E] w-full bg-black pt-[64px] pb-[8px] max-900:pt-[48px] max-900:pb-[8px] max-900:px-0 mt-8">
       <div className="max-w-[1440px] mx-auto px-[25px]">
         <div className="flex flex-col">
-          <div className="footerMain">
+          <div className="footerMain flex-wrap">
             <div className="footerCol">
               <img src={logo} alt="logo" width={185} className="h-14" />
-              <div className="mt-auto flex flex-col space-y-3">
-                <div className="flex justify-between">
+              <div className="mt-6 flex flex-col space-y-3">
+                {/* <div className="flex justify-between">
                   <a href="">
                     <i className="fab fa-telegram text-2xl hover:text-white"></i>
                   </a>
@@ -46,7 +69,7 @@ export default function Footer() {
                   <a href="">
                     <i className="fab fa-whatsapp text-2xl hover:text-white"></i>
                   </a>
-                </div>
+                </div> */}
                 <a
                   href="mailto:support@globalrelocate.com"
                   className="flex items-center hover:text-white gap-4"
@@ -63,32 +86,20 @@ export default function Footer() {
                 {t("footer.topCountries")}
               </h4>
               <ul className="flex flex-col gap-2">
-                {[
-                  { to: "", label: "Nigeria" },
-                  {
-                    to: "",
-                    label: "United States",
-                  },
-                  {
-                    to: "",
-                    label: "United Kingdom",
-                  },
-                ].map((item, index) => (
+                {randomCountries.map((country, index) => (
                   <li key={index}>
-                    <div>
-                      <Link
-                        to={item.to}
-                        className="block hover:text-white transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    </div>
+                    <Link
+                      to={`/user/countries/${country.slug}`}
+                      className="block hover:text-white transition-colors"
+                    >
+                      {getCountryName(country.slug, selectedLanguage?.code)}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="footerCol">
+            {/* <div className="footerCol">
               <h4 className="font-semibold text-white mb-3">
                 {t("footer.trends")}
               </h4>
@@ -117,10 +128,10 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/* Rankings Section */}
-            <div className="footerCol">
+            {/* <div className="footerCol">
               <h4 className="font-semibold text-white mb-3">
                 {t("footer.rankings")}
               </h4>
@@ -150,7 +161,7 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             {/* Company Section */}
             <div className="footerCol">
@@ -179,7 +190,22 @@ export default function Footer() {
           </div>
 
           {/* Newsletter Section */}
-          <div className="mt-8 w-full flex justify-between flex-col md:flex-row">
+          <div className="mt-8 w-full flex items-center justify-between flex-col gap-y-6 lg:flex-row lg:gap-y-0">
+            {/* Payment Methods Section */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="mt-8 w-full flex justify-evenly space-x-4 mb-8 md:mb-0 md:mt-0 md:w-fit md:justify-between md:items-center cursor-pointer">
+                  <i className="fab fa-cc-visa text-2xl"></i>
+                  <i className="fab fa-cc-discover text-2xl"></i>
+                  <i className="fab fa-cc-mastercard text-2xl"></i>
+                  <i className="fab fa-cc-amex text-2xl"></i>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>We only support payment by credit card for now.</p>
+              </TooltipContent>
+            </Tooltip>
+
             <div className="w-fit">
               <h3 className="text-white text-lg font-medium mb-3">
                 {t("footer.subscribeNewsletter")}
@@ -205,21 +231,6 @@ export default function Footer() {
                 </button>
               </form>
             </div>
-
-            {/* Payment Methods Section */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="mt-8 w-full flex justify-evenly space-x-4 md:mt-0 md:w-fit md:justify-between md:items-center cursor-pointer">
-                  <i className="fab fa-cc-visa text-2xl"></i>
-                  <i className="fab fa-cc-discover text-2xl"></i>
-                  <i className="fab fa-cc-mastercard text-2xl"></i>
-                  <i className="fab fa-cc-amex text-2xl"></i>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>We only support payment by credit card for now.</p>
-              </TooltipContent>
-            </Tooltip>
           </div>
 
           <div className="text-left md:text-center mt-8 pb-4 text-[0.875rem]">
