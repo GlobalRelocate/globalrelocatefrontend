@@ -8,6 +8,7 @@ import { useCountryData } from "@/context/CountryDataContext";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getEmbassies } from "@/lib/embassies";
 import { ChevronLeft } from "lucide-react";
 import {
   Carousel,
@@ -27,6 +28,7 @@ import CountriesAIAssistant from "@/components/common/countries-ai-assistant";
 import { CarouselIndicators } from "@/lib/helpers";
 import { loadCountryImages } from "@/lib/country-images";
 import { formatTextToParagraphs } from "@/utils/formatText";
+import { countriesQidFlags } from "@/data/countries-qid-flags";
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -51,6 +53,7 @@ function CountryDetails() {
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [passportRanking, setPassportRanking] = useState();
   const [countryImages, setCountryImages] = useState({});
+  const [countryEmbassies, setCountryEmbassies] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -171,6 +174,22 @@ function CountryDetails() {
     Oceania: t("userDashboard.continents.oceania"),
     "South America": t("userDashboard.continents.southAmerica"),
   };
+
+  const fetchEmbassies = async () => {
+    try {
+      const languageCode = selectedLanguage?.code.slice(0, 2);
+      const normalizedId = id.replace(/-/g, " ");
+      const qid = countriesQidFlags[normalizedId]?.qid;
+      const embassies = await getEmbassies(qid, languageCode);
+      setCountryEmbassies(Array.isArray(embassies) ? embassies : []);
+    } catch (error) {
+      console.error("Error fetching embassies:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmbassies();
+  }, [selectedLanguage?.code]);
 
   return (
     <DashboardLayout>
@@ -326,6 +345,12 @@ function CountryDetails() {
                     className="rounded-3xl data-[state=active]:bg-black data-[state=active]:text-white bg-white text-black border border-black shadow-none flex-shrink-0"
                   >
                     {t("userDashboard.country.visaMigration")}
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="embassies"
+                    className="rounded-3xl data-[state=active]:bg-black data-[state=active]:text-white bg-white text-black border border-black shadow-none flex-shrink-0"
+                  >
+                    {t("userDashboard.country.embassies")}
                   </TabsTrigger>
                   <TabsTrigger
                     value="taxes"
@@ -1161,43 +1186,6 @@ function CountryDetails() {
                           </p>
                         </div>
                       )}
-                      {countryData.visaAndImmigration?.embassies && (
-                        <div>
-                          <h3 className="font-semibold text-lg mb-3 flex items-center gap-x-3">
-                            <i className="far fa-plane-departure"></i>{" "}
-                            {t("userDashboard.country.embassies")}
-                          </h3>
-                          {countryData.visaAndImmigration.embassies.length ===
-                          0 ? (
-                            <p>{t("userDashboard.country.noDataAvailable")}</p>
-                          ) : (
-                            <>
-                              <ul className="list-disc [&>li]:mt-2 pl-5">
-                                {countryData.visaAndImmigration.embassies.map(
-                                  (embassy, index) => (
-                                    <li key={index}>
-                                      <span>{embassy.description}</span>
-                                      <div>
-                                        <span className="font-semibold">
-                                          {t("userDashboard.country.link")}:
-                                        </span>{" "}
-                                        <a
-                                          href={embassy.link}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="underline underline-offset-4"
-                                        >
-                                          {embassy.link}
-                                        </a>
-                                      </div>
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </>
-                          )}
-                        </div>
-                      )}
                       {!countryData.visaAndImmigration?.passportsAndVisas &&
                         !countryData.visaAndImmigration?.shortStays &&
                         !countryData.visaAndImmigration?.longStays && (
@@ -1205,6 +1193,93 @@ function CountryDetails() {
                         )}
                     </div>
                   )}
+                </TabsContent>
+
+                <TabsContent value="embassies">
+                  <h2 className="font-medium text-2xl my-7">
+                    <i className="far fa-plane-departure"></i>{" "}
+                    {t("userDashboard.country.embassiesAndConsulates")}
+                  </h2>
+                  <div className="space-y-4 mb-4">
+                    {countryData.visaAndImmigration?.embassies && (
+                      <div>
+                        {countryData.visaAndImmigration.embassies.length ===
+                        0 ? (
+                          <p className="capitalize">
+                            {t("userDashboard.country.noDataAvailable")}
+                          </p>
+                        ) : (
+                          <>
+                            <ul className="list-disc [&>li]:mt-2 pl-5">
+                              {Array.isArray(countryEmbassies) &&
+                                countryEmbassies.map((embassy, index) => (
+                                  <li key={index}>
+                                    <div className="">
+                                      <span className="capitalize flex flex-row items-center gap-5 w-fit px-5 bg-slate-200 rounded-lg">
+                                        {/^Q\d+/.test(embassy.embassyLabel) &&
+                                        countryData?.slug !== "qatar"
+                                          ? // use owner id (Qid) or mapped name if available
+                                            countriesQidFlags[
+                                              embassy.owner
+                                                ?.toLowerCase()
+                                                .replace(/-/g, " ") ||
+                                                embassy.owner
+                                            ]?.name ||
+                                            embassy.owner?.replace() ||
+                                            embassy.owner
+                                          : embassy.embassyLabel}
+                                        {/* Determine owner key (support full URI like .../Q123 or raw id) */}
+                                        <img
+                                          src={(() => {
+                                            const ownerKey =
+                                              embassy.owner
+                                                ?.toLowerCase()
+                                                .replace(/-/g, " ") ||
+                                              embassy.owner;
+                                            return (
+                                              countriesQidFlags[ownerKey]
+                                                ?.flagUrl ||
+                                              "https://flagandbuntingstore.co.uk/cdn/shop/files/white__69233.1738246337.1280.1280.jpg?v=1739974302&width=5000"
+                                            );
+                                          })()}
+                                          alt={`${embassy.embassyLabel} flag`}
+                                          className="w-6 h-4 object-cover inline-block"
+                                        />
+                                      </span>
+                                    </div>
+                                    {embassy.address && (
+                                      <div>
+                                        <span className="font-semibold">
+                                          {t("userDashboard.country.address")}:
+                                        </span>{" "}
+                                        <span className="">
+                                          {embassy.address}
+                                        </span>
+                                      </div>
+                                    )}
+                                    {embassy.website && (
+                                      <div>
+                                        <span className="font-semibold">
+                                          {t("userDashboard.country.link")}:
+                                        </span>{" "}
+                                        <a
+                                          href={embassy.website}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="underline underline-offset-4"
+                                        >
+                                          {embassy.website}
+                                        </a>
+                                      </div>
+                                    )}
+                                  </li>
+                                ))}
+                            </ul>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="taxes">

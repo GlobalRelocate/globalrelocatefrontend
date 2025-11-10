@@ -442,6 +442,8 @@
     },
     "country": {
       "countryIn": "Land in",
+      "embassiesAndConsulates":"Botschaften und Konsulate",
+      "address":"Adresse",
       "addFavorite": "Zu Favoriten hinzufügen",
       "removeFavorite": "Aus Favoriten entfernen",
       "share": "Teilen",

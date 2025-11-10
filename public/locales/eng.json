@@ -457,6 +457,8 @@
     },
     "country": {
       "countryIn": "Country in",
+      "embassiesAndConsulates":"Embassies and Consulates",
+      "address": "Address",
       "addFavorite": "Add to favorites",
       "removeFavorite": "Remove from favorites",
       "share": "Share",
