@@ -284,6 +284,11 @@ export const countriesQidFlags = {
     iso2: "ET",
     flagUrl: "https://flagcdn.com/w320/et.png",
   },
+  "federated states of micronesia": {
+    qid: "Q702",
+    iso2: "FM",
+    flagUrl: "https://flagcdn.com/w320/fm.png",
+  },
   fiji: {
     qid: "Q712",
     iso2: "FJ",
@@ -358,6 +363,11 @@ export const countriesQidFlags = {
     qid: "Q790",
     iso2: "HT",
     flagUrl: "https://flagcdn.com/w320/ht.png",
+  },
+  "holy see": {
+    qid: "Q237",
+    iso2: "VA",
+    flagUrl: "https://flagcdn.com/w320/va.png",
   },
   honduras: {
     qid: "Q783",
@@ -760,6 +770,11 @@ export const countriesQidFlags = {
     flagUrl: "https://flagcdn.com/w320/sm.png",
   },
   "sao tome and principe": {
+    qid: "Q1039",
+    iso2: "ST",
+    flagUrl: "https://flagcdn.com/w320/st.png",
+  },
+  "são tomé and príncipe": {
     qid: "Q1039",
     iso2: "ST",
     flagUrl: "https://flagcdn.com/w320/st.png",
