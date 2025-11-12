@@ -31,16 +31,31 @@ const Navbar = () => {
   const displayName = user?.username || user?.name || "User";
   const drawerRef = useRef(null);
 
-  const navLinks = [
-    { href: "/", label: t("landingPage.navbar.home") },
-    { href: "/user/countries", label: t("landingPage.navbar.countriesData") },
-    // { href: "/user/community", label: t("landingPage.navbar.community") }, // Comment out community
-    {
-      href: "/user/tax-calculator",
-      label: t("userDashboard.sidebar.taxCalculator"),
-    },
-    { href: "/upgrade", label: t("landingPage.navbar.pricing") },
-  ];
+  const navLinks = isAuthenticated
+    ? [
+        { href: "/", label: t("landingPage.navbar.home") },
+        {
+          href: "/user/countries",
+          label: t("landingPage.navbar.countriesData"),
+        },
+        {
+          href: "/user/tax-calculator",
+          label: t("userDashboard.sidebar.taxCalculator"),
+        },
+        { href: "/upgrade", label: t("landingPage.navbar.pricing") },
+      ]
+    : [
+        { href: "/login", label: t("landingPage.navbar.home") },
+        {
+          href: "/login",
+          label: t("landingPage.navbar.countriesData"),
+        },
+        {
+          href: "/login",
+          label: t("userDashboard.sidebar.taxCalculator"),
+        },
+        { href: "/login", label: t("landingPage.navbar.pricing") },
+      ];
 
   useEffect(() => {
     const handleScroll = () => {

@@ -132,7 +132,7 @@ export default function Landing() {
           transition={{ duration: 0.6 }}
           className="text-xl sm:text-2xl md:text-4xl my-3 font-medium px-4 text-center"
         >
-          {t("landingPage.features.title")}
+          <div id="features">{t("landingPage.features.title")}</div>
         </motion.h2>
         <motion.div
           initial="offscreen"
@@ -158,6 +158,7 @@ export default function Landing() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-2xl sm:text-3xl md:text-4xl font-medium mt-10 sm:mt-20 text-center px-4"
+          id="countries"
         >
           {t("landingPage.countries.title")}
         </motion.h2>
@@ -292,6 +293,7 @@ export default function Landing() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-2xl sm:text-3xl md:text-4xl my-3 sm:my-4 font-medium text-center px-4"
+          id="planOverview"
         >
           {t("landingPage.pricing.title")}
         </motion.h2>

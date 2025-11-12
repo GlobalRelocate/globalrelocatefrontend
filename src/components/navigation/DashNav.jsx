@@ -29,7 +29,7 @@ import { useNotifications } from "@/context/NotificationsContext";
 
 function DashNav({ navState, setNavState }) {
   const { t } = useTranslation();
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const { unreadCount } = useNotifications();
@@ -57,15 +57,31 @@ function DashNav({ navState, setNavState }) {
     navigate("/login");
   };
 
-  const quickLinks = [
-    { href: "/", label: t("landingPage.navbar.home") },
-    { href: "/user/countries", label: t("landingPage.navbar.countriesData") },
-    {
-      href: "/user/tax-calculator",
-      label: t("userDashboard.sidebar.taxCalculator"),
-    },
-    { href: "/upgrade", label: t("landingPage.navbar.pricing") },
-  ];
+  const quickLinks = isAuthenticated
+    ? [
+        { href: "/", label: t("landingPage.navbar.home") },
+        {
+          href: "/user/countries",
+          label: t("landingPage.navbar.countriesData"),
+        },
+        {
+          href: "/user/tax-calculator",
+          label: t("userDashboard.sidebar.taxCalculator"),
+        },
+        { href: "/upgrade", label: t("landingPage.navbar.pricing") },
+      ]
+    : [
+        { href: "/login", label: t("landingPage.navbar.home") },
+        {
+          href: "/login",
+          label: t("landingPage.navbar.countriesData"),
+        },
+        {
+          href: "/login",
+          label: t("userDashboard.sidebar.taxCalculator"),
+        },
+        { href: "/login", label: t("landingPage.navbar.pricing") },
+      ];
 
   return (
     <div className="flex justify-between items-center h-20 pl-[34px] pr-4 bg-white text-black w-full fixed z-50 top-0">

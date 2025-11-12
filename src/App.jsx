@@ -148,3 +148,29 @@ function App() {
 }
 
 export default App;
+
+isAuthenticated
+  ? [
+      { href: "/", label: t("landingPage.navbar.home") },
+      {
+        href: "/user/countries",
+        label: t("landingPage.navbar.countriesData"),
+      },
+      {
+        href: "/user/tax-calculator",
+        label: t("userDashboard.sidebar.taxCalculator"),
+      },
+      { href: "/upgrade", label: t("landingPage.navbar.pricing") },
+    ]
+  : [
+      { href: "/login", label: t("landingPage.navbar.home") },
+      {
+        href: "/login",
+        label: t("landingPage.navbar.countriesData"),
+      },
+      {
+        href: "/login",
+        label: t("userDashboard.sidebar.taxCalculator"),
+      },
+      { href: "/login", label: t("landingPage.navbar.pricing") },
+    ];

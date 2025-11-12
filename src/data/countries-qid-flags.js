@@ -159,6 +159,11 @@ export const countriesQidFlags = {
     iso2: "CA",
     flagUrl: "https://flagcdn.com/w320/ca.png",
   },
+  "capo verde": {
+    qid: "Q1011",
+    iso2: "CV",
+    flagUrl: "https://flagcdn.com/w320/cv.png",
+  },
   "central african republic": {
     qid: "Q929",
     iso2: "CF",
@@ -183,16 +188,6 @@ export const countriesQidFlags = {
     qid: "Q970",
     iso2: "KM",
     flagUrl: "https://flagcdn.com/w320/km.png",
-  },
-  "dr congo": {
-    qid: "Q974",
-    iso2: "CD",
-    flagUrl: "https://flagcdn.com/w320/cd.png",
-  },
-  "republic of the congo": {
-    qid: "Q971",
-    iso2: "CG",
-    flagUrl: "https://flagcdn.com/w320/cg.png",
   },
   "costa rica": {
     qid: "Q800",
@@ -243,6 +238,11 @@ export const countriesQidFlags = {
     qid: "Q786",
     iso2: "DO",
     flagUrl: "https://flagcdn.com/w320/do.png",
+  },
+  "dr congo": {
+    qid: "Q974",
+    iso2: "CD",
+    flagUrl: "https://flagcdn.com/w320/cd.png",
   },
   ecuador: {
     qid: "Q736",
@@ -728,6 +728,11 @@ export const countriesQidFlags = {
     qid: "Q846",
     iso2: "QA",
     flagUrl: "https://flagcdn.com/w320/qa.png",
+  },
+  "republic of the congo": {
+    qid: "Q971",
+    iso2: "CG",
+    flagUrl: "https://flagcdn.com/w320/cg.png",
   },
   romania: {
     qid: "Q218",
