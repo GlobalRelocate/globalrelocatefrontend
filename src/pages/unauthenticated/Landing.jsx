@@ -7,6 +7,7 @@ import VisaIndexCard from "@/components/cards/features/visa-index";
 import CompareCountriesCard from "@/components/cards/features/compare-countries";
 import CountriesCard from "@/components/cards/LandingCountriesCard";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
 
 // countries imports
 import nigeria from "../../assets/images/nigeria.png";
@@ -34,6 +35,7 @@ export default function Landing() {
   const [selectedPlan, setSelectedPlan] = useState("basicPlan");
   const planOverview = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const cardVariants = {
     offscreen: {
@@ -50,6 +52,19 @@ export default function Landing() {
       },
     },
   };
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.substring(1);
+    // small timeout to allow layout to settle/render
+    const t = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 80);
+    return () => clearTimeout(t);
+  }, [location.hash]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -130,9 +145,10 @@ export default function Landing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-xl sm:text-2xl md:text-4xl my-3 font-medium px-4 text-center"
+          className="scroll-mt-24 text-xl sm:text-2xl md:text-4xl my-3 font-medium px-4 text-center"
+          id="features"
         >
-          <div id="features">{t("landingPage.features.title")}</div>
+          {t("landingPage.features.title")}
         </motion.h2>
         <motion.div
           initial="offscreen"
@@ -157,7 +173,7 @@ export default function Landing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-medium mt-10 sm:mt-20 text-center px-4"
+          className="scroll-mt-24 text-2xl sm:text-3xl md:text-4xl font-medium mt-10 sm:mt-20 text-center px-4"
           id="countries"
         >
           {t("landingPage.countries.title")}
@@ -292,8 +308,8 @@ export default function Landing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-2xl sm:text-3xl md:text-4xl my-3 sm:my-4 font-medium text-center px-4"
-          id="planOverview"
+          className="scroll-mt-24 text-2xl sm:text-3xl md:text-4xl my-3 sm:my-4 font-medium text-center px-4"
+          id="pricing"
         >
           {t("landingPage.pricing.title")}
         </motion.h2>
