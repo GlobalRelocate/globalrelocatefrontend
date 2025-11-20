@@ -3,6 +3,14 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import swizerland from "../../assets/images/swizerland.png";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { PiShare } from "react-icons/pi";
 import { useCountryData } from "@/context/CountryDataContext";
 import { useState, useEffect } from "react";
@@ -29,6 +37,7 @@ import { CarouselIndicators } from "@/lib/helpers";
 import { loadCountryImages } from "@/lib/country-images";
 import { formatTextToParagraphs } from "@/utils/formatText";
 import { countriesQidFlags } from "@/data/countries-qid-flags";
+import { getCountryCostOfLivingData } from "@/services/api";
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -49,6 +58,7 @@ function CountryDetails() {
   const [count, setCount] = useState(0);
   const { selectedLanguage } = useLanguage();
   const [countryData, setCountryData] = useState(null);
+  const [costOfLivingData, setCostOfLivingData] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [passportRanking, setPassportRanking] = useState();
@@ -61,9 +71,23 @@ function CountryDetails() {
     }
   }, []);
 
+  const fetchCostOfLiving = async (cityData) => {
+    try {
+      const costOfLivingData = await getCountryCostOfLivingData({
+        country: id,
+        city: cityData,
+      });
+      setCostOfLivingData(costOfLivingData.data[0]);
+      // console.log("Cost of living data:", costOfLivingData.data[0]);
+    } catch (error) {
+      console.error("Error fetching cost of living data:", error);
+    }
+  };
+
   useEffect(() => {
     if (singleCountry) {
       setCountryData(singleCountry);
+      fetchCostOfLiving(singleCountry.keyFacts?.capital);
       setCountryCode(getCountryCode(singleCountry?.slug));
     }
   }, [singleCountry]);
@@ -794,6 +818,52 @@ function CountryDetails() {
                       </div>
 
                       <div className="mt-8">
+                        {costOfLivingData &&
+                        typeof costOfLivingData === "object" &&
+                        Object.keys(costOfLivingData).length > 0 ? (
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="font-semibold">
+                                  {t("userDashboard.country.category")}
+                                </TableHead>
+                                <TableHead className="font-semibold">
+                                  {t("userDashboard.country.value")} (USD)
+                                </TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {Object.entries(costOfLivingData)
+                                .filter(
+                                  ([key]) =>
+                                    ![
+                                      "city",
+                                      "country",
+                                      "data_quality",
+                                    ].includes(key)
+                                )
+                                .map(([key, value], index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="font-semibold">
+                                      {t(`${key}`)}
+                                    </TableCell>
+                                    <TableCell>
+                                      $
+                                      {value ??
+                                        t(
+                                          "userDashboard.country.noDataAvailable"
+                                        )}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                            </TableBody>
+                          </Table>
+                        ) : (
+                          <p>{t("userDashboard.country.noDataAvailable")}</p>
+                        )}
+                      </div>
+
+                      {/* <div className="mt-8">
                         <h3 className="text-md font-semibold mb-3">
                           {t("userDashboard.country.rentPerMonth")}
                         </h3>
@@ -841,7 +911,7 @@ function CountryDetails() {
                           {countryData.costOfLiving.childCare ??
                             t("userDashboard.country.noDataAvailable")}
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                     <hr />
                   </div>

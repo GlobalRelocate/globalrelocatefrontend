@@ -1412,6 +1412,48 @@ export const calculateTaxAPI = async (country, data) => {
   }
 };
 
+// Country Cost Of Living Data Endpoints
+export const getCountryCostOfLivingData = async (data) => {
+  const endpoint = `/countries/cost-of-living?city=${data.city}&country=${data.country}`;
+
+  try {
+    if (!data) {
+      throw new CustomAPIError("Country and city are required", 400);
+    }
+
+    const response = await api.get(endpoint);
+    return response;
+  } catch (error) {
+    if (error instanceof CustomAPIError) {
+      throw error;
+    }
+
+    if (axios.isAxiosError(error)) {
+      if (!error.response) {
+        throw new CustomAPIError(
+          "Network error. Please check your connection.",
+          0
+        );
+      }
+
+      const status = error.response?.status || 0;
+      const message =
+        error.response?.data?.message ||
+        getErrorMessage(status, error.response?.data?.error);
+
+      throw new CustomAPIError(message, status, error.response?.data);
+    }
+
+    throw new CustomAPIError(
+      "Failed to get country cost of living data. Please try again.",
+      0,
+      {
+        originalError: error.message,
+      }
+    );
+  }
+};
+
 // Helper function for error handling
 const handleApiError = (error, defaultMessage) => {
   if (error instanceof CustomAPIError) {

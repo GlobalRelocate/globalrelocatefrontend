@@ -466,6 +466,8 @@
       "share": "Share",
       "overview": "Overview",
       "summary": "Summary",
+      "category":"Category",
+      "value":"Cost",
       "map": "Map",
       "keyFacts": "Key facts",
       "visaMigration": "Visa & Immigration",
