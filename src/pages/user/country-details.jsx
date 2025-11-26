@@ -828,7 +828,7 @@ function CountryDetails() {
                                   {t("userDashboard.country.category")}
                                 </TableHead>
                                 <TableHead className="font-semibold">
-                                  {t("userDashboard.country.value")} (USD)
+                                  {t("userDashboard.country.value")} (EUR)
                                 </TableHead>
                               </TableRow>
                             </TableHeader>
@@ -848,11 +848,12 @@ function CountryDetails() {
                                       {t(`${key}`)}
                                     </TableCell>
                                     <TableCell>
-                                      $
-                                      {value ??
-                                        t(
-                                          "userDashboard.country.noDataAvailable"
-                                        )}
+                                      €
+                                      {value
+                                        ? (value * 0.87).toFixed(2)
+                                        : t(
+                                            "userDashboard.country.noDataAvailable"
+                                          )}
                                     </TableCell>
                                   </TableRow>
                                 ))}
