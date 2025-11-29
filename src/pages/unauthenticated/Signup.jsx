@@ -331,6 +331,17 @@ export default function Signup() {
         {/* Signup Methods Section */}
         {showSignupMethods && !showEmailForm && <SignupMethods />}
 
+        {!showEmailForm && (
+          <div className="px-6">
+            <p className="mt-4 text-sm text-gray-600 text-left w-[100%]">
+              {t("signUpPage.viewPricing")}{" "}
+              <Link to="/#pricing" className="text-blue-600 font-medium">
+                {t("landingPage.pricing.title")}
+              </Link>
+            </p>
+          </div>
+        )}
+
         {/* Email Signup Form Section */}
         {showEmailForm && (
           <SignupForm

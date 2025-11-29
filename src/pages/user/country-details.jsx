@@ -840,6 +840,7 @@ function CountryDetails() {
                                       "city",
                                       "country",
                                       "data_quality",
+                                      "Unnamed: 0",
                                     ].includes(key)
                                 )
                                 .map(([key, value], index) => (

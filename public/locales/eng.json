@@ -105,6 +105,8 @@
       "yearly": "Yearly",
       "billedYearly": "Billed yearly",
       "getStarted": "Get Started",
+      "individual": "Individual",
+      "corporate": "Corporate",
       "freePlan": {
         "title": "Free Plan",
         "para": "Perfect for individuals exploring relocation options with basic features.",
@@ -383,7 +385,8 @@
     "chooseUsername": "Choose a username",
     "enterYourFullName": "Enter your full name",
     "confirmPassword": "Confirm password",
-    "country": "Country"
+    "country": "Country",
+"viewPricing":"View Pricing"
   },
   "welcomePage": {
     "welcomeAboard": "Welcome on board",

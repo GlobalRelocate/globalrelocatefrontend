@@ -105,6 +105,8 @@
       "yearly": "Jährlich",
       "billedYearly": "Jährlich abgerechnet",
       "getStarted": "Loslegen",
+      "individual": "Einzelperson",
+      "corporate": "Unternehmen",
       "freePlan": {
         "title": "Kostenloser Plan",
         "para": "Perfekt für Einzelpersonen, die mit grundlegenden Funktionen Umzugsoptionen erkunden.",
@@ -381,7 +383,8 @@
     "chooseUsername": "Wählen Sie einen Benutzernamen",
     "enterYourFullName": "Geben Sie Ihren vollständigen Namen ein",
     "confirmPassword": "Passwort bestätigen",
-    "country": "Land"
+    "country": "Land",
+"viewPricing":"Preise Anzeigen"
   },
   "welcomePage": {
     "welcomeAboard": "Willkommen an Bord",
