@@ -122,6 +122,8 @@
       },
       "basicPlan": {
         "title": "Basis Plan",
+        "para": "Ideal für Personen, die umfassende Umzugsinstrumente und -ressourcen suchen.",
+        "corporatePara": "Perfekt für Unternehmen, die umfass ende Umzugstools und -ressourcen suchen.",
         "price": "15.90",
         "perMonth": "/Monat",
         "features": {
@@ -135,6 +137,8 @@
       },
       "premiumPlan": {
         "title": "Pro Plan",
+        "para": "Ideal für alle, die häufig umziehen und erweiterte Funktionen sowie persönlichen Support benötigen.",
+        "corporatePara": "Ideal für Unternehmen mit häufigen Umzügen und dem Bedarf an erweiterten Funktionen und personalisierter Unterstützung.",
         "price": "24.90",
         "perMonth": "/Monat",
         "features": {
@@ -384,7 +388,7 @@
     "enterYourFullName": "Geben Sie Ihren vollständigen Namen ein",
     "confirmPassword": "Passwort bestätigen",
     "country": "Land",
-"viewPricing":"Preise Anzeigen"
+    "viewPricing":"Preise Anzeigen"
   },
   "welcomePage": {
     "welcomeAboard": "Willkommen an Bord",
@@ -618,7 +622,7 @@
       "childAllowanceFactor": "Kinderfreibetrag",
       "familyAndTaxStatus": "Familien- und Steuerstatus",
       "insuranceAndSurcharges": "Versicherungen und Zuschläge",
-      "state": "Bundesland",
+      "state": "Bundesstaat",
       "occupationalPensionMonthly": "Monatliche betriebliche Altersvorsorge",
       "churchTaxLiability": "Kirchensteuerpflicht",
       "healthInsuranceType": "Art der Krankenversicherung",

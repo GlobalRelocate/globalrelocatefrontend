@@ -123,6 +123,7 @@
       "basicPlan": {
         "title": "Basic Plan",
         "para": "Ideal for individuals seeking comprehensive relocation tools and resources.",
+        "corporatePara": "Perfect for businesses seeking comprehensive relocation tools and resources.",
         "price": "15.90",
         "perMonth": "/month",
         "features": {
@@ -137,6 +138,7 @@
       "premiumPlan": {
         "title": "Pro Plan",
         "para": "Best for frequent relocators and those needing advanced features and personalized support.",
+        "corporatePara": "Ideal for businesses with frequent relocations and a need for advanced features and personalized support.",
         "price": "24.90",
         "perMonth": "/month",
         "features": {

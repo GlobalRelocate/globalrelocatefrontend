@@ -133,6 +133,7 @@ export default function Landing() {
     {
       slug: "basicPlan",
       title: "Basic",
+      para: t("landingPage.pricing.basicPlan.corporatePara"),
       price: "79.90",
       features: [
         t("userDashboard.upgradePage.basicPlan.item1"),
@@ -145,6 +146,7 @@ export default function Landing() {
     {
       slug: "premiumPlan",
       title: "Pro",
+      para: t("landingPage.pricing.premiumPlan.corporatePara"),
       price: "99.90",
       features: [
         t("userDashboard.upgradePage.premiumPlan.item1"),
@@ -524,7 +526,7 @@ export default function Landing() {
                   <h2 className="text-xl font-semibold mb-2 text-center w-full">
                     {card.title}
                   </h2>
-                  <p className="text-lg">Perfect for teams and organizations</p>
+                  <p className="text-lg">{card.para}</p>
 
                   <div className="w-full mt-8">
                     <Button
