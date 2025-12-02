@@ -87,7 +87,7 @@ function CountryDetails() {
   useEffect(() => {
     if (singleCountry) {
       setCountryData(singleCountry);
-      fetchCostOfLiving(singleCountry.keyFacts?.capital);
+      fetchCostOfLiving(singleCountry?.keyFacts?.capital);
       setCountryCode(getCountryCode(singleCountry?.slug));
     }
   }, [singleCountry]);
