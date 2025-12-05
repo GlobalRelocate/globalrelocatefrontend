@@ -1414,7 +1414,7 @@ export const calculateTaxAPI = async (country, data) => {
 
 // Country Cost Of Living Data Endpoints
 export const getCountryCostOfLivingData = async (data) => {
-  const endpoint = `/countries/cost-of-living?city=${data.city}&country=${data.country}`;
+  const endpoint = `/countries/cost-of-living?city=${data.city}&country=${data.country}&language=${data.lang}`;
 
   try {
     if (!data) {

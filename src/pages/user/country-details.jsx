@@ -69,13 +69,14 @@ function CountryDetails() {
     if (id) {
       getSingleCountry(id, selectedLanguage.name);
     }
-  }, []);
+  }, [selectedLanguage.lang, id]);
 
   const fetchCostOfLiving = async (cityData) => {
     try {
       const costOfLivingData = await getCountryCostOfLivingData({
         country: id,
         city: cityData,
+        lang: selectedLanguage?.lang.toLowerCase() || "en",
       });
       setCostOfLivingData(costOfLivingData.data[0]);
       // console.log("Cost of living data:", costOfLivingData.data[0]);
