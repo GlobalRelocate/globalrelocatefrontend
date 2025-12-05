@@ -190,16 +190,6 @@ function CountryDetails() {
     loadCountryImages().then((images) => setCountryImages(images));
   }, [countryCode]);
 
-  const continents = {
-    Africa: t("userDashboard.continents.africa"),
-    Antarctica: t("userDashboard.continents.antarctica"),
-    Asia: t("userDashboard.continents.asia"),
-    Europe: t("userDashboard.continents.europe"),
-    "North America": t("userDashboard.continents.northAmerica"),
-    Oceania: t("userDashboard.continents.oceania"),
-    "South America": t("userDashboard.continents.southAmerica"),
-  };
-
   const fetchEmbassies = async () => {
     try {
       const languageCode = selectedLanguage?.code.slice(0, 2);
@@ -215,6 +205,16 @@ function CountryDetails() {
   useEffect(() => {
     fetchEmbassies();
   }, [selectedLanguage?.code]);
+
+  const continents = {
+    Africa: t("userDashboard.continents.africa"),
+    Antarctica: t("userDashboard.continents.antarctica"),
+    Asia: t("userDashboard.continents.asia"),
+    Europe: t("userDashboard.continents.europe"),
+    "North America": t("userDashboard.continents.northAmerica"),
+    Oceania: t("userDashboard.continents.oceania"),
+    "South America": t("userDashboard.continents.southAmerica"),
+  };
 
   return (
     <DashboardLayout>
