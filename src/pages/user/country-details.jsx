@@ -1320,16 +1320,18 @@ function CountryDetails() {
                                         />
                                       </span>
                                     </div>
-                                    {embassy.address && (
-                                      <div>
-                                        <span className="font-semibold">
-                                          {t("userDashboard.country.address")}:
-                                        </span>{" "}
-                                        <span className="">
-                                          {embassy.address}
-                                        </span>
-                                      </div>
-                                    )}
+                                    {embassy.address &&
+                                      embassy.address !== "â" && (
+                                        <div>
+                                          <span className="font-semibold">
+                                            {t("userDashboard.country.address")}
+                                            :
+                                          </span>{" "}
+                                          <span className="">
+                                            {embassy.address}
+                                          </span>
+                                        </div>
+                                      )}
                                     {embassy.website && (
                                       <div>
                                         <span className="font-semibold">
