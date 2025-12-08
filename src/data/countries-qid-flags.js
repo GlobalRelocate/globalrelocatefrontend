@@ -9,7 +9,17 @@ export const countriesQidFlags = {
     iso2: "AL",
     flagUrl: "https://flagcdn.com/w320/al.png",
   },
+  albanien: {
+    qid: "Q222",
+    iso2: "AL",
+    flagUrl: "https://flagcdn.com/w320/al.png",
+  },
   algeria: {
+    qid: "Q262",
+    iso2: "DZ",
+    flagUrl: "https://flagcdn.com/w320/dz.png",
+  },
+  algerien: {
     qid: "Q262",
     iso2: "DZ",
     flagUrl: "https://flagcdn.com/w320/dz.png",
@@ -29,7 +39,17 @@ export const countriesQidFlags = {
     iso2: "AG",
     flagUrl: "https://flagcdn.com/w320/ag.png",
   },
+  "antigua und barbuda": {
+    qid: "Q781",
+    iso2: "AG",
+    flagUrl: "https://flagcdn.com/w320/ag.png",
+  },
   argentina: {
+    qid: "Q414",
+    iso2: "AR",
+    flagUrl: "https://flagcdn.com/w320/ar.png",
+  },
+  argentinien: {
     qid: "Q414",
     iso2: "AR",
     flagUrl: "https://flagcdn.com/w320/ar.png",
@@ -39,7 +59,17 @@ export const countriesQidFlags = {
     iso2: "AM",
     flagUrl: "https://flagcdn.com/w320/am.png",
   },
+  armenien: {
+    qid: "Q399",
+    iso2: "AM",
+    flagUrl: "https://flagcdn.com/w320/am.png",
+  },
   australia: {
+    qid: "Q408",
+    iso2: "AU",
+    flagUrl: "https://flagcdn.com/w320/au.png",
+  },
+  australien: {
     qid: "Q408",
     iso2: "AU",
     flagUrl: "https://flagcdn.com/w320/au.png",
@@ -49,7 +79,17 @@ export const countriesQidFlags = {
     iso2: "AT",
     flagUrl: "https://flagcdn.com/w320/at.png",
   },
+  österreich: {
+    qid: "Q40",
+    iso2: "AT",
+    flagUrl: "https://flagcdn.com/w320/at.png",
+  },
   azerbaijan: {
+    qid: "Q227",
+    iso2: "AZ",
+    flagUrl: "https://flagcdn.com/w320/az.png",
+  },
+  aserbaidschan: {
     qid: "Q227",
     iso2: "AZ",
     flagUrl: "https://flagcdn.com/w320/az.png",
@@ -69,6 +109,11 @@ export const countriesQidFlags = {
     iso2: "BD",
     flagUrl: "https://flagcdn.com/w320/bd.png",
   },
+  bangladesch: {
+    qid: "Q902",
+    iso2: "BD",
+    flagUrl: "https://flagcdn.com/w320/bd.png",
+  },
   barbados: {
     qid: "Q244",
     iso2: "BB",
@@ -80,6 +125,11 @@ export const countriesQidFlags = {
     flagUrl: "https://flagcdn.com/w320/by.png",
   },
   belgium: {
+    qid: "Q31",
+    iso2: "BE",
+    flagUrl: "https://flagcdn.com/w320/be.png",
+  },
+  belgien: {
     qid: "Q31",
     iso2: "BE",
     flagUrl: "https://flagcdn.com/w320/be.png",
@@ -104,7 +154,17 @@ export const countriesQidFlags = {
     iso2: "BO",
     flagUrl: "https://flagcdn.com/w320/bo.png",
   },
+  bolivien: {
+    qid: "Q750",
+    iso2: "BO",
+    flagUrl: "https://flagcdn.com/w320/bo.png",
+  },
   "bosnia and herzegovina": {
+    qid: "Q225",
+    iso2: "BA",
+    flagUrl: "https://flagcdn.com/w320/ba.png",
+  },
+  "bosnien und herzegowina": {
     qid: "Q225",
     iso2: "BA",
     flagUrl: "https://flagcdn.com/w320/ba.png",
@@ -119,12 +179,22 @@ export const countriesQidFlags = {
     iso2: "BR",
     flagUrl: "https://flagcdn.com/w320/br.png",
   },
+  brasilien: {
+    qid: "Q155",
+    iso2: "BR",
+    flagUrl: "https://flagcdn.com/w320/br.png",
+  },
   brunei: {
     qid: "Q921",
     iso2: "BN",
     flagUrl: "https://flagcdn.com/w320/bn.png",
   },
   bulgaria: {
+    qid: "Q219",
+    iso2: "BG",
+    flagUrl: "https://flagcdn.com/w320/bg.png",
+  },
+  bulgarien: {
     qid: "Q219",
     iso2: "BG",
     flagUrl: "https://flagcdn.com/w320/bg.png",
@@ -149,7 +219,17 @@ export const countriesQidFlags = {
     iso2: "KH",
     flagUrl: "https://flagcdn.com/w320/kh.png",
   },
+  kambodscha: {
+    qid: "Q424",
+    iso2: "KH",
+    flagUrl: "https://flagcdn.com/w320/kh.png",
+  },
   cameroon: {
+    qid: "Q1009",
+    iso2: "CM",
+    flagUrl: "https://flagcdn.com/w320/cm.png",
+  },
+  kamerun: {
     qid: "Q1009",
     iso2: "CM",
     flagUrl: "https://flagcdn.com/w320/cm.png",
@@ -159,7 +239,17 @@ export const countriesQidFlags = {
     iso2: "CA",
     flagUrl: "https://flagcdn.com/w320/ca.png",
   },
+  kanada: {
+    qid: "Q16",
+    iso2: "CA",
+    flagUrl: "https://flagcdn.com/w320/ca.png",
+  },
   "capo verde": {
+    qid: "Q1011",
+    iso2: "CV",
+    flagUrl: "https://flagcdn.com/w320/cv.png",
+  },
+  "kap verde": {
     qid: "Q1011",
     iso2: "CV",
     flagUrl: "https://flagcdn.com/w320/cv.png",
@@ -169,7 +259,17 @@ export const countriesQidFlags = {
     iso2: "CF",
     flagUrl: "https://flagcdn.com/w320/cf.png",
   },
+  "zentralafrikanischen republik": {
+    qid: "Q929",
+    iso2: "CF",
+    flagUrl: "https://flagcdn.com/w320/cf.png",
+  },
   chad: {
+    qid: "Q657",
+    iso2: "TD",
+    flagUrl: "https://flagcdn.com/w320/td.png",
+  },
+  tschad: {
     qid: "Q657",
     iso2: "TD",
     flagUrl: "https://flagcdn.com/w320/td.png",
@@ -180,6 +280,11 @@ export const countriesQidFlags = {
     flagUrl: "https://flagcdn.com/w320/cl.png",
   },
   colombia: {
+    qid: "Q739",
+    iso2: "CO",
+    flagUrl: "https://flagcdn.com/w320/co.png",
+  },
+  kolumbien: {
     qid: "Q739",
     iso2: "CO",
     flagUrl: "https://flagcdn.com/w320/co.png",
@@ -199,7 +304,17 @@ export const countriesQidFlags = {
     iso2: "CI",
     flagUrl: "https://flagcdn.com/w320/ci.png",
   },
+  elfenbeinküste: {
+    qid: "Q1008",
+    iso2: "CI",
+    flagUrl: "https://flagcdn.com/w320/ci.png",
+  },
   croatia: {
+    qid: "Q224",
+    iso2: "HR",
+    flagUrl: "https://flagcdn.com/w320/hr.png",
+  },
+  kroatien: {
     qid: "Q224",
     iso2: "HR",
     flagUrl: "https://flagcdn.com/w320/hr.png",
@@ -209,7 +324,17 @@ export const countriesQidFlags = {
     iso2: "CU",
     flagUrl: "https://flagcdn.com/w320/cu.png",
   },
+  kuba: {
+    qid: "Q241",
+    iso2: "CU",
+    flagUrl: "https://flagcdn.com/w320/cu.png",
+  },
   cyprus: {
+    qid: "Q229",
+    iso2: "CY",
+    flagUrl: "https://flagcdn.com/w320/cy.png",
+  },
+  zypern: {
     qid: "Q229",
     iso2: "CY",
     flagUrl: "https://flagcdn.com/w320/cy.png",
@@ -219,12 +344,27 @@ export const countriesQidFlags = {
     iso2: "CZ",
     flagUrl: "https://flagcdn.com/w320/cz.png",
   },
+  tschechien: {
+    qid: "Q213",
+    iso2: "CZ",
+    flagUrl: "https://flagcdn.com/w320/cz.png",
+  },
   denmark: {
     qid: "Q35",
     iso2: "DK",
     flagUrl: "https://flagcdn.com/w320/dk.png",
   },
+  dänemark: {
+    qid: "Q35",
+    iso2: "DK",
+    flagUrl: "https://flagcdn.com/w320/dk.png",
+  },
   djibouti: {
+    qid: "Q977",
+    iso2: "DJ",
+    flagUrl: "https://flagcdn.com/w320/dj.png",
+  },
+  dschibuti: {
     qid: "Q977",
     iso2: "DJ",
     flagUrl: "https://flagcdn.com/w320/dj.png",
@@ -239,7 +379,17 @@ export const countriesQidFlags = {
     iso2: "DO",
     flagUrl: "https://flagcdn.com/w320/do.png",
   },
+  "dominikanische republik": {
+    qid: "Q786",
+    iso2: "DO",
+    flagUrl: "https://flagcdn.com/w320/do.png",
+  },
   "dr congo": {
+    qid: "Q974",
+    iso2: "CD",
+    flagUrl: "https://flagcdn.com/w320/cd.png",
+  },
+  "demokratischen republik kongo": {
     qid: "Q974",
     iso2: "CD",
     flagUrl: "https://flagcdn.com/w320/cd.png",
@@ -254,12 +404,22 @@ export const countriesQidFlags = {
     iso2: "EG",
     flagUrl: "https://flagcdn.com/w320/eg.png",
   },
+  ägypten: {
+    qid: "Q79",
+    iso2: "EG",
+    flagUrl: "https://flagcdn.com/w320/eg.png",
+  },
   "el salvador": {
     qid: "Q792",
     iso2: "SV",
     flagUrl: "https://flagcdn.com/w320/sv.png",
   },
   "equatorial guinea": {
+    qid: "Q983",
+    iso2: "GQ",
+    flagUrl: "https://flagcdn.com/w320/gq.png",
+  },
+  äquatorialguinea: {
     qid: "Q983",
     iso2: "GQ",
     flagUrl: "https://flagcdn.com/w320/gq.png",
@@ -274,12 +434,22 @@ export const countriesQidFlags = {
     iso2: "EE",
     flagUrl: "https://flagcdn.com/w320/ee.png",
   },
+  estland: {
+    qid: "Q191",
+    iso2: "EE",
+    flagUrl: "https://flagcdn.com/w320/ee.png",
+  },
   eswatini: {
     qid: "Q1050",
     iso2: "SZ",
     flagUrl: "https://flagcdn.com/w320/sz.png",
   },
   ethiopia: {
+    qid: "Q115",
+    iso2: "ET",
+    flagUrl: "https://flagcdn.com/w320/et.png",
+  },
+  äthiopien: {
     qid: "Q115",
     iso2: "ET",
     flagUrl: "https://flagcdn.com/w320/et.png",
@@ -294,7 +464,17 @@ export const countriesQidFlags = {
     iso2: "FJ",
     flagUrl: "https://flagcdn.com/w320/fj.png",
   },
+  fidschi: {
+    qid: "Q712",
+    iso2: "FJ",
+    flagUrl: "https://flagcdn.com/w320/fj.png",
+  },
   finland: {
+    qid: "Q33",
+    iso2: "FI",
+    flagUrl: "https://flagcdn.com/w320/fi.png",
+  },
+  finnland: {
     qid: "Q33",
     iso2: "FI",
     flagUrl: "https://flagcdn.com/w320/fi.png",
@@ -304,7 +484,17 @@ export const countriesQidFlags = {
     iso2: "FR",
     flagUrl: "https://flagcdn.com/w320/fr.png",
   },
+  frankreich: {
+    qid: "Q142",
+    iso2: "FR",
+    flagUrl: "https://flagcdn.com/w320/fr.png",
+  },
   gabon: {
+    qid: "Q1000",
+    iso2: "GA",
+    flagUrl: "https://flagcdn.com/w320/ga.png",
+  },
+  gabun: {
     qid: "Q1000",
     iso2: "GA",
     flagUrl: "https://flagcdn.com/w320/ga.png",
@@ -319,7 +509,27 @@ export const countriesQidFlags = {
     iso2: "GE",
     flagUrl: "https://flagcdn.com/w320/ge.png",
   },
+  georgien: {
+    qid: "Q230",
+    iso2: "GE",
+    flagUrl: "https://flagcdn.com/w320/ge.png",
+  },
   germany: {
+    qid: "Q183",
+    iso2: "DE",
+    flagUrl: "https://flagcdn.com/w320/de.png",
+  },
+  deutschland: {
+    qid: "Q183",
+    iso2: "DE",
+    flagUrl: "https://flagcdn.com/w320/de.png",
+  },
+  "deutsche demokratische republik": {
+    qid: "Q183",
+    iso2: "DE",
+    flagUrl: "https://flagcdn.com/w320/de.png",
+  },
+  "bundesrepublik deutschland bis 1990": {
     qid: "Q183",
     iso2: "DE",
     flagUrl: "https://flagcdn.com/w320/de.png",
@@ -330,6 +540,11 @@ export const countriesQidFlags = {
     flagUrl: "https://flagcdn.com/w320/gh.png",
   },
   greece: {
+    qid: "Q41",
+    iso2: "GR",
+    flagUrl: "https://flagcdn.com/w320/gr.png",
+  },
+  griechenland: {
     qid: "Q41",
     iso2: "GR",
     flagUrl: "https://flagcdn.com/w320/gr.png",
@@ -379,7 +594,17 @@ export const countriesQidFlags = {
     iso2: "HU",
     flagUrl: "https://flagcdn.com/w320/hu.png",
   },
+  ungarn: {
+    qid: "Q28",
+    iso2: "HU",
+    flagUrl: "https://flagcdn.com/w320/hu.png",
+  },
   iceland: {
+    qid: "Q189",
+    iso2: "IS",
+    flagUrl: "https://flagcdn.com/w320/is.png",
+  },
+  island: {
     qid: "Q189",
     iso2: "IS",
     flagUrl: "https://flagcdn.com/w320/is.png",
@@ -389,7 +614,17 @@ export const countriesQidFlags = {
     iso2: "IN",
     flagUrl: "https://flagcdn.com/w320/in.png",
   },
+  indien: {
+    qid: "Q668",
+    iso2: "IN",
+    flagUrl: "https://flagcdn.com/w320/in.png",
+  },
   indonesia: {
+    qid: "Q252",
+    iso2: "ID",
+    flagUrl: "https://flagcdn.com/w320/id.png",
+  },
+  indonesien: {
     qid: "Q252",
     iso2: "ID",
     flagUrl: "https://flagcdn.com/w320/id.png",
@@ -404,7 +639,17 @@ export const countriesQidFlags = {
     iso2: "IQ",
     flagUrl: "https://flagcdn.com/w320/iq.png",
   },
+  irak: {
+    qid: "Q796",
+    iso2: "IQ",
+    flagUrl: "https://flagcdn.com/w320/iq.png",
+  },
   ireland: {
+    qid: "Q27",
+    iso2: "IE",
+    flagUrl: "https://flagcdn.com/w320/ie.png",
+  },
+  irland: {
     qid: "Q27",
     iso2: "IE",
     flagUrl: "https://flagcdn.com/w320/ie.png",
@@ -419,12 +664,22 @@ export const countriesQidFlags = {
     iso2: "IT",
     flagUrl: "https://flagcdn.com/w320/it.png",
   },
+  italien: {
+    qid: "Q38",
+    iso2: "IT",
+    flagUrl: "https://flagcdn.com/w320/it.png",
+  },
   "ivory coast": {
     qid: "Q1008",
     iso2: "CI",
     flagUrl: "https://flagcdn.com/w320/ci.png",
   },
   jamaica: {
+    qid: "Q766",
+    iso2: "JM",
+    flagUrl: "https://flagcdn.com/w320/jm.png",
+  },
+  jamaika: {
     qid: "Q766",
     iso2: "JM",
     flagUrl: "https://flagcdn.com/w320/jm.png",
@@ -439,12 +694,27 @@ export const countriesQidFlags = {
     iso2: "JO",
     flagUrl: "https://flagcdn.com/w320/jo.png",
   },
+  jordanien: {
+    qid: "Q810",
+    iso2: "JO",
+    flagUrl: "https://flagcdn.com/w320/jo.png",
+  },
   kazakhstan: {
     qid: "Q232",
     iso2: "KZ",
     flagUrl: "https://flagcdn.com/w320/kz.png",
   },
+  kasachstan: {
+    qid: "Q232",
+    iso2: "KZ",
+    flagUrl: "https://flagcdn.com/w320/kz.png",
+  },
   kenya: {
+    qid: "Q114",
+    iso2: "KE",
+    flagUrl: "https://flagcdn.com/w320/ke.png",
+  },
+  kenia: {
     qid: "Q114",
     iso2: "KE",
     flagUrl: "https://flagcdn.com/w320/ke.png",
@@ -464,12 +734,22 @@ export const countriesQidFlags = {
     iso2: "KI",
     flagUrl: "https://flagcdn.com/w320/ki.png",
   },
+  kosovo: {
+    qid: "Q1246",
+    iso2: "XK",
+    flagUrl: "https://flagcdn.com/w320/xk.png",
+  },
   kuwait: {
     qid: "Q817",
     iso2: "KW",
     flagUrl: "https://flagcdn.com/w320/kw.png",
   },
   kyrgyzstan: {
+    qid: "Q813",
+    iso2: "KG",
+    flagUrl: "https://flagcdn.com/w320/kg.png",
+  },
+  kirgisistan: {
     qid: "Q813",
     iso2: "KG",
     flagUrl: "https://flagcdn.com/w320/kg.png",
@@ -484,7 +764,17 @@ export const countriesQidFlags = {
     iso2: "LV",
     flagUrl: "https://flagcdn.com/w320/lv.png",
   },
+  lettland: {
+    qid: "Q211",
+    iso2: "LV",
+    flagUrl: "https://flagcdn.com/w320/lv.png",
+  },
   lebanon: {
+    qid: "Q822",
+    iso2: "LB",
+    flagUrl: "https://flagcdn.com/w320/lb.png",
+  },
+  libanon: {
     qid: "Q822",
     iso2: "LB",
     flagUrl: "https://flagcdn.com/w320/lb.png",
@@ -504,6 +794,11 @@ export const countriesQidFlags = {
     iso2: "LY",
     flagUrl: "https://flagcdn.com/w320/ly.png",
   },
+  libyen: {
+    qid: "Q1016",
+    iso2: "LY",
+    flagUrl: "https://flagcdn.com/w320/ly.png",
+  },
   liechtenstein: {
     qid: "Q347",
     iso2: "LI",
@@ -514,12 +809,27 @@ export const countriesQidFlags = {
     iso2: "LT",
     flagUrl: "https://flagcdn.com/w320/lt.png",
   },
+  litauen: {
+    qid: "Q37",
+    iso2: "LT",
+    flagUrl: "https://flagcdn.com/w320/lt.png",
+  },
   luxembourg: {
     qid: "Q32",
     iso2: "LU",
     flagUrl: "https://flagcdn.com/w320/lu.png",
   },
+  luxemburg: {
+    qid: "Q32",
+    iso2: "LU",
+    flagUrl: "https://flagcdn.com/w320/lu.png",
+  },
   madagascar: {
+    qid: "Q1019",
+    iso2: "MG",
+    flagUrl: "https://flagcdn.com/w320/mg.png",
+  },
+  madagaskar: {
     qid: "Q1019",
     iso2: "MG",
     flagUrl: "https://flagcdn.com/w320/mg.png",
@@ -539,6 +849,11 @@ export const countriesQidFlags = {
     iso2: "MV",
     flagUrl: "https://flagcdn.com/w320/mv.png",
   },
+  malediven: {
+    qid: "Q826",
+    iso2: "MV",
+    flagUrl: "https://flagcdn.com/w320/mv.png",
+  },
   mali: {
     qid: "Q912",
     iso2: "ML",
@@ -554,7 +869,17 @@ export const countriesQidFlags = {
     iso2: "MH",
     flagUrl: "https://flagcdn.com/w320/mh.png",
   },
+  marshallinseln: {
+    qid: "Q709",
+    iso2: "MH",
+    flagUrl: "https://flagcdn.com/w320/mh.png",
+  },
   mauritania: {
+    qid: "Q1025",
+    iso2: "MR",
+    flagUrl: "https://flagcdn.com/w320/mr.png",
+  },
+  mauretanien: {
     qid: "Q1025",
     iso2: "MR",
     flagUrl: "https://flagcdn.com/w320/mr.png",
@@ -569,12 +894,27 @@ export const countriesQidFlags = {
     iso2: "MX",
     flagUrl: "https://flagcdn.com/w320/mx.png",
   },
+  mexiko: {
+    qid: "Q96",
+    iso2: "MX",
+    flagUrl: "https://flagcdn.com/w320/mx.png",
+  },
   micronesia: {
     qid: "Q702",
     iso2: "FM",
     flagUrl: "https://flagcdn.com/w320/fm.png",
   },
+  mikronesien: {
+    qid: "Q702",
+    iso2: "FM",
+    flagUrl: "https://flagcdn.com/w320/fm.png",
+  },
   moldova: {
+    qid: "Q217",
+    iso2: "MD",
+    flagUrl: "https://flagcdn.com/w320/md.png",
+  },
+  moldau: {
     qid: "Q217",
     iso2: "MD",
     flagUrl: "https://flagcdn.com/w320/md.png",
@@ -589,6 +929,11 @@ export const countriesQidFlags = {
     iso2: "MN",
     flagUrl: "https://flagcdn.com/w320/mn.png",
   },
+  mongolei: {
+    qid: "Q711",
+    iso2: "MN",
+    flagUrl: "https://flagcdn.com/w320/mn.png",
+  },
   montenegro: {
     qid: "Q236",
     iso2: "ME",
@@ -599,7 +944,17 @@ export const countriesQidFlags = {
     iso2: "MA",
     flagUrl: "https://flagcdn.com/w320/ma.png",
   },
+  marokko: {
+    qid: "Q1028",
+    iso2: "MA",
+    flagUrl: "https://flagcdn.com/w320/ma.png",
+  },
   mozambique: {
+    qid: "Q1029",
+    iso2: "MZ",
+    flagUrl: "https://flagcdn.com/w320/mz.png",
+  },
+  mosambik: {
     qid: "Q1029",
     iso2: "MZ",
     flagUrl: "https://flagcdn.com/w320/mz.png",
@@ -629,7 +984,17 @@ export const countriesQidFlags = {
     iso2: "NL",
     flagUrl: "https://flagcdn.com/w320/nl.png",
   },
+  niederlande: {
+    qid: "Q55",
+    iso2: "NL",
+    flagUrl: "https://flagcdn.com/w320/nl.png",
+  },
   "new zealand": {
+    qid: "Q664",
+    iso2: "NZ",
+    flagUrl: "https://flagcdn.com/w320/nz.png",
+  },
+  neuseeland: {
     qid: "Q664",
     iso2: "NZ",
     flagUrl: "https://flagcdn.com/w320/nz.png",
@@ -654,12 +1019,27 @@ export const countriesQidFlags = {
     iso2: "KP",
     flagUrl: "https://flagcdn.com/w320/kp.png",
   },
+  nordkorea: {
+    qid: "Q423",
+    iso2: "KP",
+    flagUrl: "https://flagcdn.com/w320/kp.png",
+  },
   "north macedonia": {
     qid: "Q221",
     iso2: "MK",
     flagUrl: "https://flagcdn.com/w320/mk.png",
   },
+  nordmazedonien: {
+    qid: "Q221",
+    iso2: "MK",
+    flagUrl: "https://flagcdn.com/w320/mk.png",
+  },
   norway: {
+    qid: "Q20",
+    iso2: "NO",
+    flagUrl: "https://flagcdn.com/w320/no.png",
+  },
+  norwegen: {
     qid: "Q20",
     iso2: "NO",
     flagUrl: "https://flagcdn.com/w320/no.png",
@@ -694,12 +1074,27 @@ export const countriesQidFlags = {
     iso2: "PG",
     flagUrl: "https://flagcdn.com/w320/pg.png",
   },
+  "papua neuguinea": {
+    qid: "Q691",
+    iso2: "PG",
+    flagUrl: "https://flagcdn.com/w320/pg.png",
+  },
   paraguay: {
     qid: "Q733",
     iso2: "PY",
     flagUrl: "https://flagcdn.com/w320/py.png",
   },
   "people's republic of china": {
+    qid: "Q148",
+    iso2: "CN",
+    flagUrl: "https://flagcdn.com/w320/cn.png",
+  },
+  "volksrepublik china": {
+    qid: "Q148",
+    iso2: "CN",
+    flagUrl: "https://flagcdn.com/w320/cn.png",
+  },
+  "republik china": {
     qid: "Q148",
     iso2: "CN",
     flagUrl: "https://flagcdn.com/w320/cn.png",
@@ -714,7 +1109,17 @@ export const countriesQidFlags = {
     iso2: "PH",
     flagUrl: "https://flagcdn.com/w320/ph.png",
   },
+  philippinen: {
+    qid: "Q928",
+    iso2: "PH",
+    flagUrl: "https://flagcdn.com/w320/ph.png",
+  },
   poland: {
+    qid: "Q36",
+    iso2: "PL",
+    flagUrl: "https://flagcdn.com/w320/pl.png",
+  },
+  polen: {
     qid: "Q36",
     iso2: "PL",
     flagUrl: "https://flagcdn.com/w320/pl.png",
@@ -729,6 +1134,11 @@ export const countriesQidFlags = {
     iso2: "QA",
     flagUrl: "https://flagcdn.com/w320/qa.png",
   },
+  katar: {
+    qid: "Q846",
+    iso2: "QA",
+    flagUrl: "https://flagcdn.com/w320/qa.png",
+  },
   "republic of the congo": {
     qid: "Q971",
     iso2: "CG",
@@ -739,12 +1149,27 @@ export const countriesQidFlags = {
     iso2: "RO",
     flagUrl: "https://flagcdn.com/w320/ro.png",
   },
+  rumänien: {
+    qid: "Q218",
+    iso2: "RO",
+    flagUrl: "https://flagcdn.com/w320/ro.png",
+  },
   russia: {
     qid: "Q159",
     iso2: "RU",
     flagUrl: "https://flagcdn.com/w320/ru.png",
   },
+  russland: {
+    qid: "Q159",
+    iso2: "RU",
+    flagUrl: "https://flagcdn.com/w320/ru.png",
+  },
   rwanda: {
+    qid: "Q1037",
+    iso2: "RW",
+    flagUrl: "https://flagcdn.com/w320/rw.png",
+  },
+  ruanda: {
     qid: "Q1037",
     iso2: "RW",
     flagUrl: "https://flagcdn.com/w320/rw.png",
@@ -759,7 +1184,22 @@ export const countriesQidFlags = {
     iso2: "LC",
     flagUrl: "https://flagcdn.com/w320/lc.png",
   },
+  "st. lucia": {
+    qid: "Q760",
+    iso2: "LC",
+    flagUrl: "https://flagcdn.com/w320/lc.png",
+  },
   "saint vincent and the grenadines": {
+    qid: "Q757",
+    iso2: "VC",
+    flagUrl: "https://flagcdn.com/w320/vc.png",
+  },
+  "saint vincent und the grenadines": {
+    qid: "Q757",
+    iso2: "VC",
+    flagUrl: "https://flagcdn.com/w320/vc.png",
+  },
+  "st. vincent und die grenadinen": {
     qid: "Q757",
     iso2: "VC",
     flagUrl: "https://flagcdn.com/w320/vc.png",
@@ -779,12 +1219,27 @@ export const countriesQidFlags = {
     iso2: "ST",
     flagUrl: "https://flagcdn.com/w320/st.png",
   },
+  "são tomé und príncipe": {
+    qid: "Q1039",
+    iso2: "ST",
+    flagUrl: "https://flagcdn.com/w320/st.png",
+  },
   "são tomé and príncipe": {
     qid: "Q1039",
     iso2: "ST",
     flagUrl: "https://flagcdn.com/w320/st.png",
   },
   "saudi arabia": {
+    qid: "Q851",
+    iso2: "SA",
+    flagUrl: "https://flagcdn.com/w320/sa.png",
+  },
+  "saudi-arabien": {
+    qid: "Q851",
+    iso2: "SA",
+    flagUrl: "https://flagcdn.com/w320/sa.png",
+  },
+  "saudi arabien": {
     qid: "Q851",
     iso2: "SA",
     flagUrl: "https://flagcdn.com/w320/sa.png",
@@ -799,7 +1254,17 @@ export const countriesQidFlags = {
     iso2: "RS",
     flagUrl: "https://flagcdn.com/w320/rs.png",
   },
+  serbien: {
+    qid: "Q403",
+    iso2: "RS",
+    flagUrl: "https://flagcdn.com/w320/rs.png",
+  },
   seychelles: {
+    qid: "Q1042",
+    iso2: "SC",
+    flagUrl: "https://flagcdn.com/w320/sc.png",
+  },
+  seychellen: {
     qid: "Q1042",
     iso2: "SC",
     flagUrl: "https://flagcdn.com/w320/sc.png",
@@ -814,7 +1279,17 @@ export const countriesQidFlags = {
     iso2: "SG",
     flagUrl: "https://flagcdn.com/w320/sg.png",
   },
+  singapur: {
+    qid: "Q334",
+    iso2: "SG",
+    flagUrl: "https://flagcdn.com/w320/sg.png",
+  },
   slovakia: {
+    qid: "Q214",
+    iso2: "SK",
+    flagUrl: "https://flagcdn.com/w320/sk.png",
+  },
+  slowakei: {
     qid: "Q214",
     iso2: "SK",
     flagUrl: "https://flagcdn.com/w320/sk.png",
@@ -824,7 +1299,17 @@ export const countriesQidFlags = {
     iso2: "SI",
     flagUrl: "https://flagcdn.com/w320/si.png",
   },
+  slowenien: {
+    qid: "Q215",
+    iso2: "SI",
+    flagUrl: "https://flagcdn.com/w320/si.png",
+  },
   "solomon islands": {
+    qid: "Q685",
+    iso2: "SB",
+    flagUrl: "https://flagcdn.com/w320/sb.png",
+  },
+  salomonen: {
     qid: "Q685",
     iso2: "SB",
     flagUrl: "https://flagcdn.com/w320/sb.png",
@@ -839,7 +1324,17 @@ export const countriesQidFlags = {
     iso2: "ZA",
     flagUrl: "https://flagcdn.com/w320/za.png",
   },
+  südafrika: {
+    qid: "Q258",
+    iso2: "ZA",
+    flagUrl: "https://flagcdn.com/w320/za.png",
+  },
   "south korea": {
+    qid: "Q884",
+    iso2: "KR",
+    flagUrl: "https://flagcdn.com/w320/kr.png",
+  },
+  südkorea: {
     qid: "Q884",
     iso2: "KR",
     flagUrl: "https://flagcdn.com/w320/kr.png",
@@ -849,7 +1344,17 @@ export const countriesQidFlags = {
     iso2: "SS",
     flagUrl: "https://flagcdn.com/w320/ss.png",
   },
+  südsudan: {
+    qid: "Q958",
+    iso2: "SS",
+    flagUrl: "https://flagcdn.com/w320/ss.png",
+  },
   spain: {
+    qid: "Q29",
+    iso2: "ES",
+    flagUrl: "https://flagcdn.com/w320/es.png",
+  },
+  spanien: {
     qid: "Q29",
     iso2: "ES",
     flagUrl: "https://flagcdn.com/w320/es.png",
@@ -874,7 +1379,17 @@ export const countriesQidFlags = {
     iso2: "SE",
     flagUrl: "https://flagcdn.com/w320/se.png",
   },
+  schweden: {
+    qid: "Q34",
+    iso2: "SE",
+    flagUrl: "https://flagcdn.com/w320/se.png",
+  },
   switzerland: {
+    qid: "Q39",
+    iso2: "CH",
+    flagUrl: "https://flagcdn.com/w320/ch.png",
+  },
+  schweiz: {
     qid: "Q39",
     iso2: "CH",
     flagUrl: "https://flagcdn.com/w320/ch.png",
@@ -884,12 +1399,27 @@ export const countriesQidFlags = {
     iso2: "SY",
     flagUrl: "https://flagcdn.com/w320/sy.png",
   },
+  syrien: {
+    qid: "Q858",
+    iso2: "SY",
+    flagUrl: "https://flagcdn.com/w320/sy.png",
+  },
   tajikistan: {
     qid: "Q863",
     iso2: "TJ",
     flagUrl: "https://flagcdn.com/w320/tj.png",
   },
+  tadschikistan: {
+    qid: "Q863",
+    iso2: "TJ",
+    flagUrl: "https://flagcdn.com/w320/tj.png",
+  },
   tanzania: {
+    qid: "Q924",
+    iso2: "TZ",
+    flagUrl: "https://flagcdn.com/w320/tz.png",
+  },
+  tansania: {
     qid: "Q924",
     iso2: "TZ",
     flagUrl: "https://flagcdn.com/w320/tz.png",
@@ -909,6 +1439,16 @@ export const countriesQidFlags = {
     iso2: "TL",
     flagUrl: "https://flagcdn.com/w320/tl.png",
   },
+  "timor leste": {
+    qid: "Q574",
+    iso2: "TL",
+    flagUrl: "https://flagcdn.com/w320/tl.png",
+  },
+  osttimor: {
+    qid: "Q574",
+    iso2: "TL",
+    flagUrl: "https://flagcdn.com/w320/tl.png",
+  },
   togo: {
     qid: "Q945",
     iso2: "TG",
@@ -924,12 +1464,27 @@ export const countriesQidFlags = {
     iso2: "TT",
     flagUrl: "https://flagcdn.com/w320/tt.png",
   },
+  "trinidad und tobago": {
+    qid: "Q754",
+    iso2: "TT",
+    flagUrl: "https://flagcdn.com/w320/tt.png",
+  },
   tunisia: {
     qid: "Q948",
     iso2: "TN",
     flagUrl: "https://flagcdn.com/w320/tn.png",
   },
+  tunesien: {
+    qid: "Q948",
+    iso2: "TN",
+    flagUrl: "https://flagcdn.com/w320/tn.png",
+  },
   turkey: {
+    qid: "Q43",
+    iso2: "TR",
+    flagUrl: "https://flagcdn.com/w320/tr.png",
+  },
+  türkei: {
     qid: "Q43",
     iso2: "TR",
     flagUrl: "https://flagcdn.com/w320/tr.png",
@@ -959,12 +1514,27 @@ export const countriesQidFlags = {
     iso2: "AE",
     flagUrl: "https://flagcdn.com/w320/ae.png",
   },
+  "vereinigte arabische emirate": {
+    qid: "Q878",
+    iso2: "AE",
+    flagUrl: "https://flagcdn.com/w320/ae.png",
+  },
   "united kingdom": {
     qid: "Q145",
     iso2: "GB",
     flagUrl: "https://flagcdn.com/w320/gb.png",
   },
+  "vereinigtes königreich": {
+    qid: "Q145",
+    iso2: "GB",
+    flagUrl: "https://flagcdn.com/w320/gb.png",
+  },
   "united states": {
+    qid: "Q30",
+    iso2: "US",
+    flagUrl: "https://flagcdn.com/w320/us.png",
+  },
+  "vereinigte staaten": {
     qid: "Q30",
     iso2: "US",
     flagUrl: "https://flagcdn.com/w320/us.png",
@@ -975,6 +1545,11 @@ export const countriesQidFlags = {
     flagUrl: "https://flagcdn.com/w320/uy.png",
   },
   uzbekistan: {
+    qid: "Q265",
+    iso2: "UZ",
+    flagUrl: "https://flagcdn.com/w320/uz.png",
+  },
+  usbekistan: {
     qid: "Q265",
     iso2: "UZ",
     flagUrl: "https://flagcdn.com/w320/uz.png",
@@ -999,7 +1574,17 @@ export const countriesQidFlags = {
     iso2: "VN",
     flagUrl: "https://flagcdn.com/w320/vn.png",
   },
+  südvietnam: {
+    qid: "Q881",
+    iso2: "VN",
+    flagUrl: "https://flagcdn.com/w320/vn.png",
+  },
   yemen: {
+    qid: "Q805",
+    iso2: "YE",
+    flagUrl: "https://flagcdn.com/w320/ye.png",
+  },
+  jemen: {
     qid: "Q805",
     iso2: "YE",
     flagUrl: "https://flagcdn.com/w320/ye.png",
@@ -1009,7 +1594,17 @@ export const countriesQidFlags = {
     iso2: "ZM",
     flagUrl: "https://flagcdn.com/w320/zm.png",
   },
+  sambia: {
+    qid: "Q953",
+    iso2: "ZM",
+    flagUrl: "https://flagcdn.com/w320/zm.png",
+  },
   zimbabwe: {
+    qid: "Q954",
+    iso2: "ZW",
+    flagUrl: "https://flagcdn.com/w320/zw.png",
+  },
+  simbabwe: {
     qid: "Q954",
     iso2: "ZW",
     flagUrl: "https://flagcdn.com/w320/zw.png",
