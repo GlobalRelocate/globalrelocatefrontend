@@ -216,6 +216,18 @@ function CountryDetails() {
     "South America": t("userDashboard.continents.southAmerica"),
   };
 
+  // Format number based on selected language (German uses comma as decimal separator)
+  const formatGermanNumber = (value) => {
+    if (!value || typeof value !== "string") return value;
+    if (
+      selectedLanguage?.code?.toLowerCase() === "deu" ||
+      selectedLanguage?.code?.toLowerCase()?.startsWith("de")
+    ) {
+      return value.replace(/\./g, ",");
+    }
+    return value;
+  };
+
   return (
     <DashboardLayout>
       <button
@@ -852,7 +864,9 @@ function CountryDetails() {
                                     <TableCell>
                                       €
                                       {value
-                                        ? (value * 0.87).toFixed(2)
+                                        ? formatGermanNumber(
+                                            (value * 0.87).toFixed(2)
+                                          )
                                         : t(
                                             "userDashboard.country.noDataAvailable"
                                           )}
