@@ -216,16 +216,44 @@ function CountryDetails() {
     "South America": t("userDashboard.continents.southAmerica"),
   };
 
-  // Format number based on selected language (German uses comma as decimal separator)
+  // Format number based on selected language (German uses comma as decimal separator and . for thousands)
   const formatGermanNumber = (value) => {
-    if (!value || typeof value !== "string") return value;
-    if (
+    if (!value) return value;
+
+    // Check if language is German
+    const isGerman =
       selectedLanguage?.code?.toLowerCase() === "deu" ||
-      selectedLanguage?.code?.toLowerCase()?.startsWith("de")
-    ) {
-      return value.replace(/\./g, ",");
+      selectedLanguage?.code?.toLowerCase()?.startsWith("de");
+
+    if (!isGerman) {
+      // Convert to string if it's a number
+      const stringValue = typeof value === "number" ? value.toString() : value;
+
+      // Split into integer and decimal parts
+      const parts = stringValue.split(",");
+      let integerPart = parts[0];
+      const decimalPart = parts[1] || "";
+
+      // Add thousands separator (.) to integer part
+      integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // Combine with German decimal separator (,)
+      return decimalPart ? `${integerPart}.${decimalPart}` : integerPart;
     }
-    return value;
+
+    // Convert to string if it's a number
+    const stringValue = typeof value === "number" ? value.toString() : value;
+
+    // Split into integer and decimal parts
+    const parts = stringValue.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1] || "";
+
+    // Add thousands separator (.) to integer part
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    // Combine with German decimal separator (,)
+    return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
   };
 
   return (
@@ -837,10 +865,10 @@ function CountryDetails() {
                           <Table>
                             <TableHeader>
                               <TableRow>
-                                <TableHead className="font-semibold">
+                                <TableHead className="font-semibold capitalize">
                                   {t("userDashboard.country.category")}
                                 </TableHead>
-                                <TableHead className="font-semibold">
+                                <TableHead className="font-semibold capitalize">
                                   {t("userDashboard.country.value")} (EUR)
                                 </TableHead>
                               </TableRow>
@@ -862,14 +890,10 @@ function CountryDetails() {
                                       {t(`${key}`)}
                                     </TableCell>
                                     <TableCell>
-                                      €
-                                      {value
-                                        ? formatGermanNumber(
-                                            (value * 0.87).toFixed(2)
-                                          )
-                                        : t(
-                                            "userDashboard.country.noDataAvailable"
-                                          )}
+                                      {value &&
+                                        `€${formatGermanNumber(
+                                          (value * 0.87).toFixed(2)
+                                        )}`}
                                     </TableCell>
                                   </TableRow>
                                 ))}
